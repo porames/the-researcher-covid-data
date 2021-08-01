@@ -5,6 +5,9 @@ orbs:
   python: circleci/python@1.2
 
 workflows:
+  data_scraper:
+    jobs:
+      - build-and-test
   nightly:
     triggers:
       - schedule:
