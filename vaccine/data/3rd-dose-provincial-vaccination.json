@@ -1,0 +1,618 @@
+[
+  {
+    "AstraZeneca":18184.0,
+    "Sinopharm":182.0,
+    "Johnson & Johnson":2.0,
+    "Sinovac":2.0,
+    "total-3rd-dose":18370,
+    "province":"กรุงเทพมหานคร"
+  },
+  {
+    "AstraZeneca":2280.0,
+    "Sinopharm":25.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":2.0,
+    "total-3rd-dose":2307,
+    "province":"สมุทรปราการ"
+  },
+  {
+    "AstraZeneca":2466.0,
+    "Sinopharm":9.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":2475,
+    "province":"นนทบุรี"
+  },
+  {
+    "AstraZeneca":1281.0,
+    "Sinopharm":11.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":1292,
+    "province":"ปทุมธานี"
+  },
+  {
+    "AstraZeneca":1870.0,
+    "Sinopharm":3.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":1873,
+    "province":"พระนครศรีอยุธยา"
+  },
+  {
+    "AstraZeneca":239.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":239,
+    "province":"อ่างทอง"
+  },
+  {
+    "AstraZeneca":1242.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":1242,
+    "province":"ลพบุรี"
+  },
+  {
+    "AstraZeneca":453.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":453,
+    "province":"สิงห์บุรี"
+  },
+  {
+    "AstraZeneca":569.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":569,
+    "province":"ชัยนาท"
+  },
+  {
+    "AstraZeneca":1039.0,
+    "Sinopharm":1.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":1.0,
+    "total-3rd-dose":1041,
+    "province":"สระบุรี"
+  },
+  {
+    "AstraZeneca":12693.0,
+    "Sinopharm":6.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":12699,
+    "province":"ชลบุรี"
+  },
+  {
+    "AstraZeneca":529.0,
+    "Sinopharm":2.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":531,
+    "province":"ระยอง"
+  },
+  {
+    "AstraZeneca":1422.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":1422,
+    "province":"จันทบุรี"
+  },
+  {
+    "AstraZeneca":752.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":752,
+    "province":"ตราด"
+  },
+  {
+    "AstraZeneca":826.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":826,
+    "province":"ฉะเชิงเทรา"
+  },
+  {
+    "AstraZeneca":359.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":359,
+    "province":"ปราจีนบุรี"
+  },
+  {
+    "AstraZeneca":318.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":318,
+    "province":"นครนายก"
+  },
+  {
+    "AstraZeneca":442.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":442,
+    "province":"สระแก้ว"
+  },
+  {
+    "AstraZeneca":714.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":714,
+    "province":"ราชบุรี"
+  },
+  {
+    "AstraZeneca":1106.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":1106,
+    "province":"กาญจนบุรี"
+  },
+  {
+    "AstraZeneca":1784.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":1784,
+    "province":"สุพรรณบุรี"
+  },
+  {
+    "AstraZeneca":1253.0,
+    "Sinopharm":4.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":1257,
+    "province":"นครปฐม"
+  },
+  {
+    "AstraZeneca":1903.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":1903,
+    "province":"สมุทรสาคร"
+  },
+  {
+    "AstraZeneca":256.0,
+    "Sinopharm":2.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":258,
+    "province":"สมุทรสงคราม"
+  },
+  {
+    "AstraZeneca":787.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":787,
+    "province":"เพชรบุรี"
+  },
+  {
+    "AstraZeneca":399.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":399,
+    "province":"ประจวบคีรีขันธ์"
+  },
+  {
+    "AstraZeneca":4535.0,
+    "Sinopharm":1.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":4536,
+    "province":"เชียงใหม่"
+  },
+  {
+    "AstraZeneca":556.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":556,
+    "province":"ลำพูน"
+  },
+  {
+    "AstraZeneca":726.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":726,
+    "province":"ลำปาง"
+  },
+  {
+    "AstraZeneca":465.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":465,
+    "province":"อุตรดิตถ์"
+  },
+  {
+    "AstraZeneca":544.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":544,
+    "province":"แพร่"
+  },
+  {
+    "AstraZeneca":535.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":535,
+    "province":"น่าน"
+  },
+  {
+    "AstraZeneca":678.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":678,
+    "province":"พะเยา"
+  },
+  {
+    "AstraZeneca":1396.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":1.0,
+    "total-3rd-dose":1397,
+    "province":"เชียงราย"
+  },
+  {
+    "AstraZeneca":300.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":300,
+    "province":"แม่ฮ่องสอน"
+  },
+  {
+    "AstraZeneca":1819.0,
+    "Sinopharm":1.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":1820,
+    "province":"นครสวรรค์"
+  },
+  {
+    "AstraZeneca":519.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":519,
+    "province":"อุทัยธานี"
+  },
+  {
+    "AstraZeneca":621.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":621,
+    "province":"กำแพงเพชร"
+  },
+  {
+    "AstraZeneca":603.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":603,
+    "province":"ตาก"
+  },
+  {
+    "AstraZeneca":592.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":592,
+    "province":"สุโขทัย"
+  },
+  {
+    "AstraZeneca":1469.0,
+    "Sinopharm":4.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":1.0,
+    "total-3rd-dose":1474,
+    "province":"พิษณุโลก"
+  },
+  {
+    "AstraZeneca":0.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":0,
+    "province":"พิจิตร"
+  },
+  {
+    "AstraZeneca":1069.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":1069,
+    "province":"เพชรบูรณ์"
+  },
+  {
+    "AstraZeneca":1774.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":1774,
+    "province":"นครราชสีมา"
+  },
+  {
+    "AstraZeneca":1870.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":1.0,
+    "total-3rd-dose":1871,
+    "province":"บุรีรัมย์"
+  },
+  {
+    "AstraZeneca":1760.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":1760,
+    "province":"สุรินทร์"
+  },
+  {
+    "AstraZeneca":672.0,
+    "Sinopharm":1.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":673,
+    "province":"ศรีสะเกษ"
+  },
+  {
+    "AstraZeneca":3487.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":1.0,
+    "total-3rd-dose":3488,
+    "province":"อุบลราชธานี"
+  },
+  {
+    "AstraZeneca":141.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":141,
+    "province":"ยโสธร"
+  },
+  {
+    "AstraZeneca":1223.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":1.0,
+    "total-3rd-dose":1224,
+    "province":"ชัยภูมิ"
+  },
+  {
+    "AstraZeneca":573.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":573,
+    "province":"อำนาจเจริญ"
+  },
+  {
+    "AstraZeneca":263.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":263,
+    "province":"บึงกาฬ"
+  },
+  {
+    "AstraZeneca":615.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":615,
+    "province":"หนองบัวลำภู"
+  },
+  {
+    "AstraZeneca":3335.0,
+    "Sinopharm":1.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":3336,
+    "province":"ขอนแก่น"
+  },
+  {
+    "AstraZeneca":1927.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":1927,
+    "province":"อุดรธานี"
+  },
+  {
+    "AstraZeneca":1117.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":1.0,
+    "total-3rd-dose":1118,
+    "province":"เลย"
+  },
+  {
+    "AstraZeneca":499.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":499,
+    "province":"หนองคาย"
+  },
+  {
+    "AstraZeneca":1143.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":1143,
+    "province":"มหาสารคาม"
+  },
+  {
+    "AstraZeneca":804.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":804,
+    "province":"ร้อยเอ็ด"
+  },
+  {
+    "AstraZeneca":373.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":373,
+    "province":"กาฬสินธุ์"
+  },
+  {
+    "AstraZeneca":2019.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":2019,
+    "province":"สกลนคร"
+  },
+  {
+    "AstraZeneca":530.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":530,
+    "province":"นครพนม"
+  },
+  {
+    "AstraZeneca":585.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":585,
+    "province":"มุกดาหาร"
+  },
+  {
+    "AstraZeneca":3256.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":3256,
+    "province":"นครศรีธรรมราช"
+  },
+  {
+    "AstraZeneca":489.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":489,
+    "province":"กระบี่"
+  },
+  {
+    "AstraZeneca":689.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":689,
+    "province":"พังงา"
+  },
+  {
+    "AstraZeneca":3637.0,
+    "Sinopharm":9.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":3646,
+    "province":"ภูเก็ต"
+  },
+  {
+    "AstraZeneca":2203.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":1.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":2204,
+    "province":"สุราษฎร์ธานี"
+  },
+  {
+    "AstraZeneca":740.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":740,
+    "province":"ระนอง"
+  },
+  {
+    "AstraZeneca":1298.0,
+    "Sinopharm":2.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":1300,
+    "province":"ชุมพร"
+  },
+  {
+    "AstraZeneca":3887.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":1.0,
+    "total-3rd-dose":3888,
+    "province":"สงขลา"
+  },
+  {
+    "AstraZeneca":101.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":101,
+    "province":"สตูล"
+  },
+  {
+    "AstraZeneca":2984.0,
+    "Sinopharm":1.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":2985,
+    "province":"ตรัง"
+  },
+  {
+    "AstraZeneca":384.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":384,
+    "province":"พัทลุง"
+  },
+  {
+    "AstraZeneca":2966.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":2966,
+    "province":"ปัตตานี"
+  },
+  {
+    "AstraZeneca":599.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":599,
+    "province":"ยะลา"
+  },
+  {
+    "AstraZeneca":869.0,
+    "Sinopharm":0.0,
+    "Johnson & Johnson":0.0,
+    "Sinovac":0.0,
+    "total-3rd-dose":869,
+    "province":"นราธิวาส"
+  }
+]
