@@ -11,6 +11,6 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--window-size=1000,3000")
 
 wd = webdriver.Chrome("chromedriver", options=chrome_options)
-wd.get("https://dashboard-vaccine.moph.go.th/dashboard.html")
+wd.get("https://google.com")
 time.sleep(5)
 wd.get_screenshot_as_file("test.png")
