@@ -5,7 +5,14 @@ orbs:
   python: circleci/python@1.2
 
 workflows:
-  sample:
+  nightly:
+    triggers:
+      - schedule:
+          cron: '0 1 * * *' #01 Hour UTC = 8 Hour GMT+7
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - build-and-test
 
