@@ -1,0 +1,39 @@
+version: 2.1
+
+orbs:
+  browser-tools: circleci/browser-tools@1.1.3
+  python: circleci/python@1.2
+
+workflows:
+  sample:
+    jobs:
+      - build-and-test
+
+
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/python:3.8
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+      - browser-tools/install-browser-tools:
+          chrome-version: latest
+      - run:
+          name: Install dependencies
+          command: |
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+            sudo apt install chromium-chromedriver      
+      - run:
+          name: Scrape
+          working_directory: vaccine
+          command: python scrape-moh-prompt.py
+      - deploy:
+          name: Push to GitHub repo
+          command: |
+            git config user.email "porames@users.noreply.github.com"
+            git config user.name "the-researcher-bot"
+            git commit -m "[Bot 🤖] build data from today's dataset $(date)"
+            git push -q https://${DOCS_GITHUB_TOKEN}@github.com/porames/the-researcher-covid-data.git master
