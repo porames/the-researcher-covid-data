@@ -29,5 +29,5 @@ jobs:
       - run:
           name: Scrape
           working_directory: vaccine
-          command: python test.py
+          command: python scrape-moh-prompt.py
 
