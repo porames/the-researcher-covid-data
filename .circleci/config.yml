@@ -30,4 +30,10 @@ jobs:
           name: Scrape
           working_directory: vaccine
           command: python scrape-moh-prompt.py
-
+      - deploy:
+          name: Push to GitHub repo
+          command: |
+            git config user.email "porames@users.noreply.github.com"
+            git config user.name "the-researcher-bot"
+            git commit -m "[Bot 🤖] build data from today's dataset $(date)"
+            git push -q https://${DOCS_GITHUB_TOKEN}@github.com/porames/the-researcher-covid-data.git master
