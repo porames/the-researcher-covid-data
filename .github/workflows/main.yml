@@ -21,7 +21,7 @@ jobs:
         uses: nanasess/setup-chromedriver@master
       - name: Scrape data from หมอพร้อม dashboard using selenium
         working-directory: vaccine
-        run: python test.py
+        run: python scrape-moh-prompt.py
       - name: Commit Changes to Git Repo
         run: |
           git config --global user.name "porames"
