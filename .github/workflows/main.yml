@@ -19,7 +19,7 @@ jobs:
           pip install -r requirements.txt
           sudo apt install chromium-chromedriver
       - name: Scrape data from หมอพร้อม dashboard using selenium
-        working-directory: vaccination
+        working-directory: vaccine
         run: python scrape-moh-prompt.py
       - name: Commit Changes to Git Repo
         run: |
