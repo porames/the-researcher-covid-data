@@ -106,7 +106,8 @@ def get_update_date(wd) -> str:
         "พฤศจิกายน": "11",
         "ธันวาคม": "12",
     }
-    return f"{int(update_date_thai[3])-543}-{MONTH_MAPPING[update_date_thai[2]]}-{update_date_thai[1].zfill(2)}"
+    time = update_date_thai[5].split(":")
+    return f"{int(update_date_thai[3])-543}-{MONTH_MAPPING[update_date_thai[2]]}-{update_date_thai[1].zfill(2)}T{time[0].zfill(2)}:{time[1]}"
 
 wd = webdriver.Chrome("chromedriver", options=chrome_options)
 wd.get("https://app.powerbi.com/view?r=eyJrIjoiOGFhYzhhMTUtMjBiNS00MWZiLTg4MmUtZTczZGEyMzIzMWYyIiwidCI6ImY3MjkwODU5LTIyNzAtNDc4ZS1iOTc3LTdmZTAzNTE0ZGQ4YiIsImMiOjEwfQ%3D%3D")
