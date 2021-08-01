@@ -1,30 +1,30 @@
 name: bot-taks-scheduler
 on:
-    schedule:
-        - cron: '0 1 * * *' #01 Hour UTC = 8 Hour GMT+7
-        - cron: '0 6 * * *' #06 Hour UTC = 13 Hour GMT+7
-        - cron: '0 12 * * *' #06 Hour UTC = 19 Hour GMT+7
-    workflow_dispatch:
+  schedule:
+    - cron: '0 1 * * *' #01 Hour UTC = 8 Hour GMT+7
+    - cron: '0 6 * * *' #06 Hour UTC = 13 Hour GMT+7
+    - cron: '0 12 * * *' #06 Hour UTC = 19 Hour GMT+7
+  workflow_dispatch:
 jobs:
-    cron:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Check Repo
-              uses: actions/checkout@v2.3.4
-            - name: Setup Python Environment
-              uses: actions/setup-python@v2.2.2
-            - name: Install Python dependencies
-              run: |
-                  python -m pip install --upgrade pip
-                  pip install -r requirements.txt
-                  apt install chromium-chromedriver
-            - name: Scrape data from หมอพร้อม dashboard using selenium
-              working-directory: vaccination
-              run: python scrape-moh-prompt.py
-            - name: Commit Changes to Git Repo
-              run: |
-                  git config --global user.name "porames"
-                  git config --global user.email "porames@users.noreply.github.com"
-                  git add -A
-                  git commit -m "[Bot 🤖] build data from today's dataset $(date)"
-                  git push
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Repo
+        uses: actions/checkout@v2.3.4
+      - name: Setup Python Environment
+        uses: actions/setup-python@v2.2.2
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          sudo apt install chromium-chromedriver
+      - name: Scrape data from หมอพร้อม dashboard using selenium
+        working-directory: vaccination
+        run: python scrape-moh-prompt.py
+      - name: Commit Changes to Git Repo
+        run: |
+          git config --global user.name "porames"
+          git config --global user.email "porames@users.noreply.github.com"
+          git add -A
+          git commit -m "[Bot 🤖] build data from today's dataset $(date)"
+          git push
