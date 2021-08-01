@@ -9,7 +9,6 @@ workflows:
     jobs:
       - build-and-test
 
-
 jobs:
   build-and-test:
     docker:
@@ -25,7 +24,7 @@ jobs:
           command: |
             python -m pip install --upgrade pip
             pip install -r requirements.txt
-            sudo apt install chromium-chromedriver      
+            sudo apt install chromium-chromedriver
       - run:
           name: Scrape
           working_directory: vaccine
