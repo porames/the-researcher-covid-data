@@ -31,7 +31,21 @@ census=json.load(f)
 
 
 # In[16]:
+def get_age_group(wd):
+    iframe=wd.find_element_by_css_selector(".visual-sandbox")
+    age_chart=BeautifulSoup(iframe.get_attribute("innerHTML"))
+    age_groups=[">80","61-80","41-60","21-40","18-20"]
+    age_group_doses={}
+    i=0
+    for label in age_chart.find("g",{"class":"labels"}).findAll("text"):
+        if label.get_text():
+            if age_groups[i%5] in age_group_doses.keys():
+                age_group_doses[age_groups[i%5]]+=(to_number(label.get_text()))            
+            else:
+                age_group_doses[age_groups[i%5]]=(to_number(label.get_text()))
 
+            i+=1
+    return age_group_doses
 
 def search_doses_num(wd):
     totalDose = 0
