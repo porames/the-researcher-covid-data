@@ -49,3 +49,5 @@ __pycache__/
 /.ipynb_checkpoints
 /bot_jobs/.ipynb_checkpoints
 bot_jobs/vaccination/tmp/tika-server.jar
+
+wiki

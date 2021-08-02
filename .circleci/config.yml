@@ -5,6 +5,9 @@ orbs:
   python: circleci/python@1.2
 
 workflows:
+  commit:
+    jobs:
+      - build
   nightly:
     triggers:
       - schedule:
@@ -33,6 +36,12 @@ jobs:
       - browser-tools/install-browser-tools:
           chrome-version: latest
       - run:
+          name: Clone wiki repo
+          command: |
+            git config user.email "porames@users.noreply.github.com"
+            git config user.name "the-researcher-bot"
+            git clone https://github.com/porames/the-researcher-covid-data.wiki.git wiki
+      - run:
           name: Install dependencies
           command: |
             python -m pip install --upgrade pip
@@ -42,10 +51,9 @@ jobs:
           working_directory: vaccine
           command: python scrape-moh-prompt.py
       - deploy:
-          name: Push to GitHub repo
+          name: Push to GitHub wiki repo for storage
+          working_directory: wiki
           command: |
-            git config user.email "porames@users.noreply.github.com"
-            git config user.name "the-researcher-bot"
             git add .
             git commit -m "[Bot 🤖] build data from today's dataset $(date)"
-            git push -q https://${DOCS_GITHUB_TOKEN}@github.com/porames/the-researcher-covid-data.git master
+            git push -q https://${DOCS_GITHUB_TOKEN}@github.com/porames/the-researcher-covid-data.wiki.git master

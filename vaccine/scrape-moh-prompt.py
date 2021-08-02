@@ -216,13 +216,13 @@ def scrape_and_save_moh_prompt(dose_num):
         "data": dataset.to_dict(orient="records"),
     }
     if(dose_num==1):
-        with open("data/1st-dose-provincial-vaccination.json", "w+") as json_file:
+        with open("../wiki/dataset/vaccination/1st-dose-provincial-vaccination.json", "w+") as json_file:
             json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
     elif(dose_num==2):
-        with open("data/2nd-dose-provincial-vaccination.json", "w+") as json_file:
+        with open("../wiki/dataset/vaccination/2nd-dose-provincial-vaccination.json", "w+") as json_file:
             json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
     elif(dose_num==3):
-        with open("data/3rd-dose-provincial-vaccination.json", "w+") as json_file:
+        with open("../wiki/dataset/vaccination/3rd-dose-provincial-vaccination.json", "w+") as json_file:
             json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
     return data_dict
 
