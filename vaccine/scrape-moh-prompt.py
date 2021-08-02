@@ -99,9 +99,10 @@ def get_province(prov_th,wd):
             elm.clear()
             elm.send_keys(prov_th)
             break
-    time.sleep(1.5)
-    wd.find_elements_by_class_name("slicerText")[-1].click()
-    time.sleep(1.5)
+    wait = WebDriverWait(wd, 10)
+    wait.until(EC.element_to_be_clickable((By.XPATH, "//span[@title='"+prov_th+"']"))).click()
+    #wd.find_elements_by_class_name("slicerText")[-1].click()
+    time.sleep(1)
     doses = search_doses_num(wd)
     mf = search_manufacturer(wd)
     groups = get_age_group(wd)
@@ -110,7 +111,7 @@ def get_province(prov_th,wd):
     data["province"] = prov_th
     data.update(groups)
     time.sleep(1)
-    wd.find_elements_by_class_name("slicerText")[-1].click()
+    wait.until(EC.element_to_be_clickable((By.XPATH, "//span[@title='"+prov_th+"']"))).click()
     return data
 
 
@@ -151,9 +152,9 @@ def scrape_and_save_moh_prompt(dose_num):
     wd = webdriver.Chrome("chromedriver", options=chrome_options)
     wd.get("https://app.powerbi.com/view?r=eyJrIjoiOGFhYzhhMTUtMjBiNS00MWZiLTg4MmUtZTczZGEyMzIzMWYyIiwidCI6ImY3MjkwODU5LTIyNzAtNDc4ZS1iOTc3LTdmZTAzNTE0ZGQ4YiIsImMiOjEwfQ%3D%3D")
     print("Rendering JS")
-    time.sleep(10)
-    print("Selecting Button")
     wait = WebDriverWait(wd, 10)
+    wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME,"shapeMap")))
+    print("Selecting Button")
     if(dose_num==1):
         wait.until(EC.visibility_of_element_located((By.XPATH, "//div[contains(@title,'เข็มหนึ่ง')]"))).click()
         print("เข็มหนึ่ง Found")
@@ -167,10 +168,15 @@ def scrape_and_save_moh_prompt(dose_num):
     open_province_dropdown(wd)
     dataset = pd.DataFrame()
     time.sleep(2)
+    start=time.time()
+    i=0
     for p in census:
         province_data = get_province(p["province"],wd)
         dataset = dataset.append(province_data, ignore_index=True)
-        print(p["province"], province_data)
+        #print(p["province"], province_data)
+        print(str(i+1)+"/77 Provinces")
+        print("Time elapsed: "+str(round(time.time()-start,2))+"s")
+        i+=1
 
     dataset = dataset.fillna(0)
     dataset[[
@@ -225,7 +231,6 @@ def scrape_and_save_moh_prompt(dose_num):
         with open("../wiki/dataset/vaccination/3rd-dose-provincial-vaccination.json", "w+") as json_file:
             json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
     return data_dict
-
 
 # In[14]:
 
