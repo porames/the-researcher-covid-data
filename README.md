@@ -1,3 +1,7 @@
 # The Researcher COVID data
-[![CircleCI](https://circleci.com/gh/porames/the-researcher-covid-data/tree/master.svg?style=svg)](https://circleci.com/gh/porames/the-researcher-covid-data/tree/master)  
+[bot-task-scheduler](https://github.com/porames/the-researcher-covid-data/actions/workflows/main.yml/badge.svg)\
 Automated data scraper for Thailand COVID-19 data  
+## Accessing the Data
+- [1st Dose Provincial Vaccination Data](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/dataset/vaccination/1st-dose-provincial-vaccination.json)
+- [2nd Dose Provincial Vaccination Data](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/dataset/vaccination/2nd-dose-provincial-vaccination.json)
+- [3rd Dose Provincial Vaccination Data](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/dataset/vaccination/3rd-dose-provincial-vaccination.json)
