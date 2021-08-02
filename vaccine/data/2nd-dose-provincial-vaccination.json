@@ -1,0 +1,621 @@
+{
+  "update_date": "2021-08-01T23:16",
+  "data": [
+    {
+      "province": "กรุงเทพมหานคร",
+      "AstraZeneca": 64000,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 110000,
+      "Sinovac": 908000,
+      "total-dose": 1081735
+    },
+    {
+      "province": "สมุทรปราการ",
+      "AstraZeneca": 9510,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 6570,
+      "Sinovac": 91664,
+      "total-dose": 107744
+    },
+    {
+      "province": "นนทบุรี",
+      "AstraZeneca": 21135,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 3613,
+      "Sinovac": 146051,
+      "total-dose": 170799
+    },
+    {
+      "province": "ปทุมธานี",
+      "AstraZeneca": 7030,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 9092,
+      "Sinovac": 67830,
+      "total-dose": 83952
+    },
+    {
+      "province": "พระนครศรีอยุธยา",
+      "AstraZeneca": 1235,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 2736,
+      "Sinovac": 22553,
+      "total-dose": 26524
+    },
+    {
+      "province": "อ่างทอง",
+      "AstraZeneca": 1500,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 10,
+      "Sinovac": 9499,
+      "total-dose": 11009
+    },
+    {
+      "province": "ลพบุรี",
+      "AstraZeneca": 161,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 835,
+      "Sinovac": 18924,
+      "total-dose": 19920
+    },
+    {
+      "province": "สิงห์บุรี",
+      "AstraZeneca": 2009,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 577,
+      "Sinovac": 7213,
+      "total-dose": 9800
+    },
+    {
+      "province": "ชัยนาท",
+      "AstraZeneca": 20,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 13,
+      "Sinovac": 6469,
+      "total-dose": 6502
+    },
+    {
+      "province": "สระบุรี",
+      "AstraZeneca": 1255,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 2554,
+      "Sinovac": 24870,
+      "total-dose": 28679
+    },
+    {
+      "province": "ชลบุรี",
+      "AstraZeneca": 9750,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 10912,
+      "Sinovac": 110667,
+      "total-dose": 131329
+    },
+    {
+      "province": "ระยอง",
+      "AstraZeneca": 4287,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 986,
+      "Sinovac": 37220,
+      "total-dose": 42493
+    },
+    {
+      "province": "จันทบุรี",
+      "AstraZeneca": 7345,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 552,
+      "Sinovac": 26130,
+      "total-dose": 34027
+    },
+    {
+      "province": "ตราด",
+      "AstraZeneca": 969,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 1173,
+      "Sinovac": 6277,
+      "total-dose": 8419
+    },
+    {
+      "province": "ฉะเชิงเทรา",
+      "AstraZeneca": 2809,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 552,
+      "Sinovac": 23855,
+      "total-dose": 27216
+    },
+    {
+      "province": "ปราจีนบุรี",
+      "AstraZeneca": 2247,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 1441,
+      "Sinovac": 17694,
+      "total-dose": 21382
+    },
+    {
+      "province": "นครนายก",
+      "AstraZeneca": 992,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 234,
+      "Sinovac": 13151,
+      "total-dose": 14377
+    },
+    {
+      "province": "สระแก้ว",
+      "AstraZeneca": 2736,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 176,
+      "Sinovac": 17819,
+      "total-dose": 20731
+    },
+    {
+      "province": "ราชบุรี",
+      "AstraZeneca": 1518,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 17,
+      "Sinovac": 20268,
+      "total-dose": 21803
+    },
+    {
+      "province": "กาญจนบุรี",
+      "AstraZeneca": 546,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 26,
+      "Sinovac": 16420,
+      "total-dose": 16992
+    },
+    {
+      "province": "สุพรรณบุรี",
+      "AstraZeneca": 2865,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 196,
+      "Sinovac": 18615,
+      "total-dose": 21676
+    },
+    {
+      "province": "นครปฐม",
+      "AstraZeneca": 4086,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 1731,
+      "Sinovac": 28104,
+      "total-dose": 33921
+    },
+    {
+      "province": "สมุทรสาคร",
+      "AstraZeneca": 18004,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 339,
+      "Sinovac": 106465,
+      "total-dose": 124808
+    },
+    {
+      "province": "สมุทรสงคราม",
+      "AstraZeneca": 404,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 198,
+      "Sinovac": 9012,
+      "total-dose": 9614
+    },
+    {
+      "province": "เพชรบุรี",
+      "AstraZeneca": 3618,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 139,
+      "Sinovac": 25666,
+      "total-dose": 29423
+    },
+    {
+      "province": "ประจวบคีรีขันธ์",
+      "AstraZeneca": 6273,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 1695,
+      "Sinovac": 23174,
+      "total-dose": 31142
+    },
+    {
+      "province": "เชียงใหม่",
+      "AstraZeneca": 6329,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 3394,
+      "Sinovac": 83805,
+      "total-dose": 93528
+    },
+    {
+      "province": "ลำพูน",
+      "AstraZeneca": 2021,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 390,
+      "Sinovac": 6787,
+      "total-dose": 9198
+    },
+    {
+      "province": "ลำปาง",
+      "AstraZeneca": 565,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 26,
+      "Sinovac": 15702,
+      "total-dose": 16293
+    },
+    {
+      "province": "อุตรดิตถ์",
+      "AstraZeneca": 2995,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 165,
+      "Sinovac": 10373,
+      "total-dose": 13533
+    },
+    {
+      "province": "แพร่",
+      "AstraZeneca": 1057,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 63,
+      "Sinovac": 7813,
+      "total-dose": 8933
+    },
+    {
+      "province": "น่าน",
+      "AstraZeneca": 2077,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 0,
+      "Sinovac": 7805,
+      "total-dose": 9882
+    },
+    {
+      "province": "พะเยา",
+      "AstraZeneca": 17,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 241,
+      "Sinovac": 12044,
+      "total-dose": 12302
+    },
+    {
+      "province": "เชียงราย",
+      "AstraZeneca": 8005,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 856,
+      "Sinovac": 31661,
+      "total-dose": 40522
+    },
+    {
+      "province": "แม่ฮ่องสอน",
+      "AstraZeneca": 1288,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 0,
+      "Sinovac": 6557,
+      "total-dose": 7845
+    },
+    {
+      "province": "นครสวรรค์",
+      "AstraZeneca": 3237,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 1092,
+      "Sinovac": 19831,
+      "total-dose": 24160
+    },
+    {
+      "province": "อุทัยธานี",
+      "AstraZeneca": 1605,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 0,
+      "Sinovac": 9256,
+      "total-dose": 10861
+    },
+    {
+      "province": "กำแพงเพชร",
+      "AstraZeneca": 565,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 1,
+      "Sinovac": 11642,
+      "total-dose": 12208
+    },
+    {
+      "province": "ตาก",
+      "AstraZeneca": 2834,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 0,
+      "Sinovac": 55715,
+      "total-dose": 58549
+    },
+    {
+      "province": "สุโขทัย",
+      "AstraZeneca": 554,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 0,
+      "Sinovac": 14131,
+      "total-dose": 14685
+    },
+    {
+      "province": "พิษณุโลก",
+      "AstraZeneca": 6084,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 667,
+      "Sinovac": 23075,
+      "total-dose": 29826
+    },
+    {
+      "province": "พิจิตร",
+      "AstraZeneca": 6,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 445,
+      "Sinovac": 11672,
+      "total-dose": 12123
+    },
+    {
+      "province": "เพชรบูรณ์",
+      "AstraZeneca": 4435,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 0,
+      "Sinovac": 19995,
+      "total-dose": 24430
+    },
+    {
+      "province": "นครราชสีมา",
+      "AstraZeneca": 1565,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 1640,
+      "Sinovac": 128988,
+      "total-dose": 132193
+    },
+    {
+      "province": "บุรีรัมย์",
+      "AstraZeneca": 8244,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 204,
+      "Sinovac": 110540,
+      "total-dose": 118988
+    },
+    {
+      "province": "สุรินทร์",
+      "AstraZeneca": 2168,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 210,
+      "Sinovac": 22391,
+      "total-dose": 24769
+    },
+    {
+      "province": "ศรีสะเกษ",
+      "AstraZeneca": 6140,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 0,
+      "Sinovac": 23937,
+      "total-dose": 30077
+    },
+    {
+      "province": "อุบลราชธานี",
+      "AstraZeneca": 3527,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 1045,
+      "Sinovac": 34578,
+      "total-dose": 39150
+    },
+    {
+      "province": "ยโสธร",
+      "AstraZeneca": 471,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 0,
+      "Sinovac": 9543,
+      "total-dose": 10014
+    },
+    {
+      "province": "ชัยภูมิ",
+      "AstraZeneca": 32,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 63,
+      "Sinovac": 22697,
+      "total-dose": 22792
+    },
+    {
+      "province": "อำนาจเจริญ",
+      "AstraZeneca": 1020,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 0,
+      "Sinovac": 8239,
+      "total-dose": 9260
+    },
+    {
+      "province": "บึงกาฬ",
+      "AstraZeneca": 1116,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 0,
+      "Sinovac": 7347,
+      "total-dose": 8463
+    },
+    {
+      "province": "หนองบัวลำภู",
+      "AstraZeneca": 545,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 0,
+      "Sinovac": 7872,
+      "total-dose": 8417
+    },
+    {
+      "province": "ขอนแก่น",
+      "AstraZeneca": 2293,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 900,
+      "Sinovac": 39884,
+      "total-dose": 43077
+    },
+    {
+      "province": "อุดรธานี",
+      "AstraZeneca": 3152,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 1382,
+      "Sinovac": 34520,
+      "total-dose": 39054
+    },
+    {
+      "province": "เลย",
+      "AstraZeneca": 1637,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 233,
+      "Sinovac": 10952,
+      "total-dose": 12822
+    },
+    {
+      "province": "หนองคาย",
+      "AstraZeneca": 1385,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 6,
+      "Sinovac": 17182,
+      "total-dose": 18573
+    },
+    {
+      "province": "มหาสารคาม",
+      "AstraZeneca": 2078,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 30,
+      "Sinovac": 16529,
+      "total-dose": 18637
+    },
+    {
+      "province": "ร้อยเอ็ด",
+      "AstraZeneca": 1889,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 337,
+      "Sinovac": 23669,
+      "total-dose": 25895
+    },
+    {
+      "province": "กาฬสินธุ์",
+      "AstraZeneca": 383,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 48,
+      "Sinovac": 15273,
+      "total-dose": 15704
+    },
+    {
+      "province": "สกลนคร",
+      "AstraZeneca": 205,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 268,
+      "Sinovac": 21947,
+      "total-dose": 22420
+    },
+    {
+      "province": "นครพนม",
+      "AstraZeneca": 3395,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 4,
+      "Sinovac": 14963,
+      "total-dose": 18362
+    },
+    {
+      "province": "มุกดาหาร",
+      "AstraZeneca": 634,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 85,
+      "Sinovac": 14922,
+      "total-dose": 15641
+    },
+    {
+      "province": "นครศรีธรรมราช",
+      "AstraZeneca": 634,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 85,
+      "Sinovac": 14922,
+      "total-dose": 15641
+    },
+    {
+      "province": "กระบี่",
+      "AstraZeneca": 2716,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 304,
+      "Sinovac": 25552,
+      "total-dose": 28572
+    },
+    {
+      "province": "พังงา",
+      "AstraZeneca": 28,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 293,
+      "Sinovac": 28505,
+      "total-dose": 28826
+    },
+    {
+      "province": "ภูเก็ต",
+      "AstraZeneca": 0,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 0,
+      "Sinovac": 324000,
+      "total-dose": 324210
+    },
+    {
+      "province": "สุราษฎร์ธานี",
+      "AstraZeneca": 9956,
+      "Johnson & Johnson": 3,
+      "Sinopharm": 727,
+      "Sinovac": 79930,
+      "total-dose": 90616
+    },
+    {
+      "province": "ระนอง",
+      "AstraZeneca": 5443,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 0,
+      "Sinovac": 21022,
+      "total-dose": 26465
+    },
+    {
+      "province": "ชุมพร",
+      "AstraZeneca": 1022,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 274,
+      "Sinovac": 11932,
+      "total-dose": 13229
+    },
+    {
+      "province": "สงขลา",
+      "AstraZeneca": 12279,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 5317,
+      "Sinovac": 47483,
+      "total-dose": 65079
+    },
+    {
+      "province": "สตูล",
+      "AstraZeneca": 1362,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 0,
+      "Sinovac": 13059,
+      "total-dose": 14421
+    },
+    {
+      "province": "ตรัง",
+      "AstraZeneca": 163,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 2045,
+      "Sinovac": 17688,
+      "total-dose": 19897
+    },
+    {
+      "province": "พัทลุง",
+      "AstraZeneca": 4898,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 0,
+      "Sinovac": 13927,
+      "total-dose": 18825
+    },
+    {
+      "province": "ปัตตานี",
+      "AstraZeneca": 5857,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 37,
+      "Sinovac": 17613,
+      "total-dose": 23507
+    },
+    {
+      "province": "ยะลา",
+      "AstraZeneca": 10925,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 2,
+      "Sinovac": 14860,
+      "total-dose": 25787
+    },
+    {
+      "province": "นราธิวาส",
+      "AstraZeneca": 4269,
+      "Johnson & Johnson": 0,
+      "Sinopharm": 0,
+      "Sinovac": 22091,
+      "total-dose": 26360
+    }
+  ]
+}

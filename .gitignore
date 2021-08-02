@@ -7,11 +7,8 @@
 .pnp.js
 next.config.js
 /styles/css
-/components/gis/geo/mapbox_exports
 *.ipynb
-
-# testing
-/coverage
+*tmp
 
 # next.js
 /.next/

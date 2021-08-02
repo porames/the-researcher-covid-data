@@ -7,7 +7,7 @@
       "Johnson & Johnson": 2,
       "Sinopharm": 182,
       "Sinovac": 2,
-      "total-3rd-dose": 18687
+      "total-dose": 18687
     },
     {
       "province": "สมุทรปราการ",
@@ -15,7 +15,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 25,
       "Sinovac": 2,
-      "total-3rd-dose": 2307
+      "total-dose": 2307
     },
     {
       "province": "นนทบุรี",
@@ -23,7 +23,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 9,
       "Sinovac": 0,
-      "total-3rd-dose": 2475
+      "total-dose": 2475
     },
     {
       "province": "ปทุมธานี",
@@ -31,7 +31,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 11,
       "Sinovac": 0,
-      "total-3rd-dose": 1292
+      "total-dose": 1292
     },
     {
       "province": "พระนครศรีอยุธยา",
@@ -39,7 +39,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 3,
       "Sinovac": 0,
-      "total-3rd-dose": 1873
+      "total-dose": 1873
     },
     {
       "province": "อ่างทอง",
@@ -47,7 +47,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 239
+      "total-dose": 239
     },
     {
       "province": "ลพบุรี",
@@ -55,7 +55,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 1242
+      "total-dose": 1242
     },
     {
       "province": "สิงห์บุรี",
@@ -63,7 +63,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 453
+      "total-dose": 453
     },
     {
       "province": "ชัยนาท",
@@ -71,7 +71,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 569
+      "total-dose": 569
     },
     {
       "province": "สระบุรี",
@@ -79,7 +79,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 1,
       "Sinovac": 1,
-      "total-3rd-dose": 1041
+      "total-dose": 1041
     },
     {
       "province": "ชลบุรี",
@@ -87,7 +87,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 6,
       "Sinovac": 0,
-      "total-3rd-dose": 12716
+      "total-dose": 12716
     },
     {
       "province": "ระยอง",
@@ -95,7 +95,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 2,
       "Sinovac": 0,
-      "total-3rd-dose": 531
+      "total-dose": 531
     },
     {
       "province": "จันทบุรี",
@@ -103,7 +103,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 1422
+      "total-dose": 1422
     },
     {
       "province": "ตราด",
@@ -111,7 +111,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 752
+      "total-dose": 752
     },
     {
       "province": "ฉะเชิงเทรา",
@@ -119,7 +119,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 826
+      "total-dose": 826
     },
     {
       "province": "ปราจีนบุรี",
@@ -127,7 +127,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 359
+      "total-dose": 359
     },
     {
       "province": "นครนายก",
@@ -135,7 +135,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 318
+      "total-dose": 318
     },
     {
       "province": "สระแก้ว",
@@ -143,7 +143,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 442
+      "total-dose": 442
     },
     {
       "province": "ราชบุรี",
@@ -151,7 +151,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 714
+      "total-dose": 714
     },
     {
       "province": "กาญจนบุรี",
@@ -159,7 +159,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 1106
+      "total-dose": 1106
     },
     {
       "province": "สุพรรณบุรี",
@@ -167,7 +167,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 1784
+      "total-dose": 1784
     },
     {
       "province": "นครปฐม",
@@ -175,7 +175,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 4,
       "Sinovac": 0,
-      "total-3rd-dose": 1257
+      "total-dose": 1257
     },
     {
       "province": "สมุทรสาคร",
@@ -183,7 +183,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 1903
+      "total-dose": 1903
     },
     {
       "province": "สมุทรสงคราม",
@@ -191,7 +191,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 2,
       "Sinovac": 0,
-      "total-3rd-dose": 258
+      "total-dose": 258
     },
     {
       "province": "เพชรบุรี",
@@ -199,7 +199,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 787
+      "total-dose": 787
     },
     {
       "province": "ประจวบคีรีขันธ์",
@@ -207,7 +207,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 399
+      "total-dose": 399
     },
     {
       "province": "เชียงใหม่",
@@ -215,7 +215,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 1,
       "Sinovac": 0,
-      "total-3rd-dose": 4536
+      "total-dose": 4536
     },
     {
       "province": "ลำพูน",
@@ -223,7 +223,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 556
+      "total-dose": 556
     },
     {
       "province": "ลำปาง",
@@ -231,7 +231,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 726
+      "total-dose": 726
     },
     {
       "province": "อุตรดิตถ์",
@@ -239,7 +239,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 465
+      "total-dose": 465
     },
     {
       "province": "แพร่",
@@ -247,7 +247,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 544
+      "total-dose": 544
     },
     {
       "province": "น่าน",
@@ -255,7 +255,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 535
+      "total-dose": 535
     },
     {
       "province": "พะเยา",
@@ -263,7 +263,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 678
+      "total-dose": 678
     },
     {
       "province": "เชียงราย",
@@ -271,7 +271,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 1,
-      "total-3rd-dose": 1397
+      "total-dose": 1397
     },
     {
       "province": "แม่ฮ่องสอน",
@@ -279,7 +279,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 300
+      "total-dose": 300
     },
     {
       "province": "นครสวรรค์",
@@ -287,7 +287,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 1,
       "Sinovac": 0,
-      "total-3rd-dose": 1820
+      "total-dose": 1820
     },
     {
       "province": "อุทัยธานี",
@@ -295,7 +295,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 519
+      "total-dose": 519
     },
     {
       "province": "กำแพงเพชร",
@@ -303,7 +303,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 621
+      "total-dose": 621
     },
     {
       "province": "ตาก",
@@ -311,7 +311,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 603
+      "total-dose": 603
     },
     {
       "province": "สุโขทัย",
@@ -319,7 +319,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 592
+      "total-dose": 592
     },
     {
       "province": "พิษณุโลก",
@@ -327,7 +327,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 4,
       "Sinovac": 1,
-      "total-3rd-dose": 1474
+      "total-dose": 1474
     },
     {
       "province": "พิจิตร",
@@ -335,7 +335,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 0
+      "total-dose": 0
     },
     {
       "province": "เพชรบูรณ์",
@@ -343,7 +343,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 1069
+      "total-dose": 1069
     },
     {
       "province": "นครราชสีมา",
@@ -351,7 +351,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 1775
+      "total-dose": 1775
     },
     {
       "province": "บุรีรัมย์",
@@ -359,7 +359,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 1,
-      "total-3rd-dose": 1871
+      "total-dose": 1871
     },
     {
       "province": "สุรินทร์",
@@ -367,7 +367,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 1760
+      "total-dose": 1760
     },
     {
       "province": "ศรีสะเกษ",
@@ -375,7 +375,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 1,
       "Sinovac": 0,
-      "total-3rd-dose": 673
+      "total-dose": 673
     },
     {
       "province": "อุบลราชธานี",
@@ -383,7 +383,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 1,
-      "total-3rd-dose": 3488
+      "total-dose": 3488
     },
     {
       "province": "ยโสธร",
@@ -391,7 +391,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 141
+      "total-dose": 141
     },
     {
       "province": "ชัยภูมิ",
@@ -399,7 +399,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 1,
-      "total-3rd-dose": 1224
+      "total-dose": 1224
     },
     {
       "province": "อำนาจเจริญ",
@@ -407,7 +407,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 573
+      "total-dose": 573
     },
     {
       "province": "บึงกาฬ",
@@ -415,7 +415,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 263
+      "total-dose": 263
     },
     {
       "province": "หนองบัวลำภู",
@@ -423,7 +423,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 615
+      "total-dose": 615
     },
     {
       "province": "ขอนแก่น",
@@ -431,7 +431,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 1,
       "Sinovac": 0,
-      "total-3rd-dose": 3336
+      "total-dose": 3336
     },
     {
       "province": "อุดรธานี",
@@ -439,7 +439,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 1946
+      "total-dose": 1946
     },
     {
       "province": "เลย",
@@ -447,7 +447,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 1,
-      "total-3rd-dose": 1118
+      "total-dose": 1118
     },
     {
       "province": "หนองคาย",
@@ -455,7 +455,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 499
+      "total-dose": 499
     },
     {
       "province": "มหาสารคาม",
@@ -463,7 +463,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 1143
+      "total-dose": 1143
     },
     {
       "province": "ร้อยเอ็ด",
@@ -471,7 +471,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 804
+      "total-dose": 804
     },
     {
       "province": "กาฬสินธุ์",
@@ -479,7 +479,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 373
+      "total-dose": 373
     },
     {
       "province": "สกลนคร",
@@ -487,7 +487,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 2019
+      "total-dose": 2019
     },
     {
       "province": "นครพนม",
@@ -495,7 +495,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 530
+      "total-dose": 530
     },
     {
       "province": "มุกดาหาร",
@@ -503,7 +503,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 585
+      "total-dose": 585
     },
     {
       "province": "นครศรีธรรมราช",
@@ -511,7 +511,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 3256
+      "total-dose": 3256
     },
     {
       "province": "กระบี่",
@@ -519,7 +519,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 489
+      "total-dose": 489
     },
     {
       "province": "พังงา",
@@ -527,7 +527,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 691
+      "total-dose": 691
     },
     {
       "province": "ภูเก็ต",
@@ -535,7 +535,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 9,
       "Sinovac": 0,
-      "total-3rd-dose": 3646
+      "total-dose": 3646
     },
     {
       "province": "สุราษฎร์ธานี",
@@ -543,7 +543,7 @@
       "Johnson & Johnson": 1,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 2210
+      "total-dose": 2210
     },
     {
       "province": "ระนอง",
@@ -551,7 +551,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 740
+      "total-dose": 740
     },
     {
       "province": "ชุมพร",
@@ -559,7 +559,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 2,
       "Sinovac": 0,
-      "total-3rd-dose": 1300
+      "total-dose": 1300
     },
     {
       "province": "สงขลา",
@@ -567,7 +567,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 1,
-      "total-3rd-dose": 3921
+      "total-dose": 3921
     },
     {
       "province": "สตูล",
@@ -575,7 +575,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 101
+      "total-dose": 101
     },
     {
       "province": "ตรัง",
@@ -583,7 +583,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 1,
       "Sinovac": 0,
-      "total-3rd-dose": 2985
+      "total-dose": 2985
     },
     {
       "province": "พัทลุง",
@@ -591,7 +591,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 384
+      "total-dose": 384
     },
     {
       "province": "ปัตตานี",
@@ -599,7 +599,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 2966
+      "total-dose": 2966
     },
     {
       "province": "ยะลา",
@@ -607,7 +607,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 606
+      "total-dose": 606
     },
     {
       "province": "นราธิวาส",
@@ -615,7 +615,7 @@
       "Johnson & Johnson": 0,
       "Sinopharm": 0,
       "Sinovac": 0,
-      "total-3rd-dose": 869
+      "total-dose": 869
     }
   ]
 }
