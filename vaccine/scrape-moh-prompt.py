@@ -140,15 +140,12 @@ def scrape_and_save_moh_prompt(dose_num):
     print("Selecting Button")
     wait = WebDriverWait(wd, 10)
     if(dose_num==1):
-        wd.get_screenshot_as_file('debug-1.png')
         wait.until(EC.visibility_of_element_located((By.XPATH, "//div[contains(@title,'เข็มหนึ่ง')]"))).click()
         print("เข็มหนึ่ง Found")
     elif(dose_num==2):
-        wd.get_screenshot_as_file('debug-2.png')
         wait.until(EC.visibility_of_element_located((By.XPATH, "//div[contains(@title,'เข็มสอง')]"))).click()
         print("เข็มสอง Found")
     elif(dose_num==3):
-        wd.get_screenshot_as_file('debug-3.png')
         wait.until(EC.visibility_of_element_located((By.XPATH, "//div[contains(@title,'เข็มสาม')]"))).click()
         print("เข็มสาม Found")
     time.sleep(2)

@@ -13,6 +13,18 @@ workflows:
             branches:
               only:
                 - master
+      - schedule:
+          cron: '0 7 * * *' #05 Hour UTC = 14 Hour GMT+7
+          filters:
+            branches:
+              only:
+                - master
+      - schedule:
+          cron: '0 13 * * *' #01 Hour UTC = 20 Hour GMT+7
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - build
 
