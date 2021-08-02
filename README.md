@@ -1,3 +1,3 @@
 # The Researcher COVID data
-[![<the-researcher-covid-data>](https://circleci.com/gh/porames/the-researcher-covid-data.svg?style=svg)](<https://github.com/porames/the-researcher-covid-data>)  
+[![CircleCI](https://circleci.com/gh/porames/the-researcher-covid-data/tree/master.svg?style=svg)](https://circleci.com/gh/porames/the-researcher-covid-data/tree/master)  
 Automated data scraper for Thailand COVID-19 data  
