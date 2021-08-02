@@ -230,6 +230,7 @@ def scrape_and_save_moh_prompt(dose_num):
     elif(dose_num==3):
         with open("../wiki/dataset/vaccination/3rd-dose-provincial-vaccination.json", "w+") as json_file:
             json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
+    wd.quit()
     return data_dict
 
 # In[14]:
@@ -237,4 +238,5 @@ def scrape_and_save_moh_prompt(dose_num):
 if __name__ == '__main__':
    with Pool(3) as p:
        print(p.map(scrape_and_save_moh_prompt, [1, 2, 3]))
+    
 # %%
