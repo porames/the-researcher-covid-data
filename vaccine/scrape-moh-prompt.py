@@ -51,7 +51,7 @@ def search_doses_num(wd):
 
 def search_manufacturer(wd):
     df = pd.DataFrame()
-    soup = BeautifulSoup(wd.page_source, features="lxml")
+    soup = BeautifulSoup(wd.page_source)
     for svg in soup.findAll("g", {"class": "labelGraphicsContext"})[1]:
         x = svg["transform"].replace("translate(", "").replace(")", "").split(",")[0]
         df = df.append(
