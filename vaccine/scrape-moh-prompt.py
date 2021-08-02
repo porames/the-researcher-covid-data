@@ -25,10 +25,8 @@ chrome_options.add_argument("--window-size=1000,3000")
 
 # In[3]:
 
-
-f = open('../population_data/th-census-data.json','r')
-census=json.load(f)
-
+with open('../population_data/th-census-data.json', encoding='utf-8') as file:
+    census = json.load(file)
 
 # In[16]:
 def get_age_group(wd):
@@ -222,14 +220,15 @@ def scrape_and_save_moh_prompt(dose_num):
         "data": dataset.to_dict(orient="records"),
     }
     if(dose_num==1):
-        with open("../wiki/dataset/vaccination/1st-dose-provincial-vaccination.json", "w+") as json_file:
+        with open("../wiki/dataset/vaccination/1st-dose-provincial-vaccination.json", "w+", encoding="utf-8") as json_file:
             json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
     elif(dose_num==2):
-        with open("../wiki/dataset/vaccination/2nd-dose-provincial-vaccination.json", "w+") as json_file:
+        with open("../wiki/dataset/vaccination/2nd-dose-provincial-vaccination.json", "w+", encoding="utf-8") as json_file:
             json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
     elif(dose_num==3):
-        with open("../wiki/dataset/vaccination/3rd-dose-provincial-vaccination.json", "w+") as json_file:
+        with open("../wiki/dataset/vaccination/3rd-dose-provincial-vaccination.json", "w+", encoding="utf-8") as json_file:
             json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
+    wd.quit()
     return data_dict
 
 # In[14]:
@@ -237,4 +236,5 @@ def scrape_and_save_moh_prompt(dose_num):
 if __name__ == '__main__':
    with Pool(3) as p:
        print(p.map(scrape_and_save_moh_prompt, [1, 2, 3]))
+    
 # %%
