@@ -1,70 +1,55 @@
-
-# In[1]:
-
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import os
 import time
 import json
 import pandas as pd
 from bs4 import BeautifulSoup
 from multiprocessing import Pool
 
-
-# In[2]:
-
-
 chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument('--headless')
-chrome_options.add_argument('--no-sandbox')
-chrome_options.add_argument('--disable-dev-shm-usage')
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--window-size=1000,3000")
 
-
-# In[3]:
-
-with open('../population_data/th-census-data.json', encoding='utf-8') as file:
+with open("../population_data/th-census-data.json", encoding="utf-8") as file:
     census = json.load(file)
 
-# In[16]:
+
 def get_age_group(wd):
     wd.switch_to.frame(wd.find_element_by_css_selector(".visual-sandbox"))
-    age_chart=BeautifulSoup(wd.page_source, "html.parser")
-    age_groups=[">80","61-80","41-60","21-40","18-20"]
-    age_group_doses={}
-    i=0
-    for label in age_chart.find("g",{"class":"labels"}).findAll("text"):
+    age_chart = BeautifulSoup(wd.page_source, "html.parser")
+    age_groups = [">80", "61-80", "41-60", "21-40", "18-20"]
+    age_group_doses = {}
+    i = 0
+    for label in age_chart.find("g", {"class": "labels"}).findAll("text"):
         if label.get_text():
-            if age_groups[i%5] in age_group_doses.keys():
-                age_group_doses[age_groups[i%5]]+=(to_number(label.get_text()))            
+            if age_groups[i % 5] in age_group_doses.keys():
+                age_group_doses[age_groups[i % 5]] += (to_number(label.get_text()))
             else:
-                age_group_doses[age_groups[i%5]]=(to_number(label.get_text()))
+                age_group_doses[age_groups[i % 5]] = (to_number(label.get_text()))
 
-            i+=1
+            i += 1
     wd.switch_to.default_content()
     return age_group_doses
 
-def search_doses_num(wd):
-    totalDose = 0
+
+def search_doses_num(wd) -> int:
+    total_dose = 0
     for svg in wd.find_elements_by_tag_name("svg"):
         label = svg.get_attribute("aria-label")
         if "totalDose" in str(label):
-            totalDose = (
-                label.replace("totalDose", "")
-                .replace(",", "")
-                .replace(" ", "")
-                .replace(".", "")
-            )
-            totalDose = int(totalDose)
+            total_dose = int(label.replace("totalDose", "").replace(",", "").replace(" ", "").replace(".", ""))
             break
-    return totalDose
+    return total_dose
 
 
-def search_manufacturer(wd):
+def search_manufacturer(wd) -> dict:
     df = pd.DataFrame()
-    soup = BeautifulSoup(wd.page_source,  "html.parser")
+    soup = BeautifulSoup(wd.page_source, "html.parser")
     for svg in soup.findAll("g", {"class": "labelGraphicsContext"})[1]:
         x = svg["transform"].replace("translate(", "").replace(")", "").split(",")[0]
         df = df.append(
@@ -77,13 +62,10 @@ def search_manufacturer(wd):
             df.loc[i, "manufacturer"] = texts.get_text()
             i += 1
     mf = df.drop("x", axis=1).set_index("manufacturer").transpose().to_dict()
-    mf_dict = {}
-    for key, value in mf.items():
-        mf_dict[key] = value["3rd-dose"]
-    return mf_dict
+    return {key: value["3rd-dose"] for key, value in mf.items()}
 
 
-def open_province_dropdown(wd):
+def open_province_dropdown(wd) -> None:
     for menu in wd.find_elements_by_class_name("slicer-dropdown-menu"):
         label = menu.get_attribute("aria-label")
         if "จังหวัด" in label:
@@ -91,15 +73,15 @@ def open_province_dropdown(wd):
             break
 
 
-def get_province(prov_th,wd):
+def get_province(prov_th: str, wd) -> dict:
     for elm in wd.find_elements_by_class_name("searchInput"):
         if elm.get_attribute("style") != "":
             elm.clear()
             elm.send_keys(prov_th)
             break
     wait = WebDriverWait(wd, 10)
-    wait.until(EC.element_to_be_clickable((By.XPATH, "//span[@title='"+prov_th+"']"))).click()
-    #wd.find_elements_by_class_name("slicerText")[-1].click()
+    wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
+    # wd.find_elements_by_class_name("slicerText")[-1].click()
     time.sleep(1)
     doses = search_doses_num(wd)
     mf = search_manufacturer(wd)
@@ -109,11 +91,11 @@ def get_province(prov_th,wd):
     data["province"] = prov_th
     data.update(groups)
     time.sleep(1)
-    wait.until(EC.element_to_be_clickable((By.XPATH, "//span[@title='"+prov_th+"']"))).click()
+    wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
     return data
 
 
-def to_number(string : str) -> int :
+def to_number(string: str) -> int:
     string = string.replace(",", "")
     if "K" in string:
         number = float(string.replace("K", "")) * 1000
@@ -124,10 +106,10 @@ def to_number(string : str) -> int :
     else:
         return int(float(string))
 
+
 def get_update_date(wd) -> str:
-# TODO : Maybe a better solution or move somewhere else?
-    update_date_thai = wd.find_element_by_css_selector("h3").get_attribute("innerHTML").split(" ")
-    MONTH_MAPPING = {
+    # TODO : Maybe a better solution or move somewhere else?
+    month_mapping = {
         "มกราคม": "01",
         "กุมภาพันธ์": "02",
         "มีนาคม": "03",
@@ -141,40 +123,45 @@ def get_update_date(wd) -> str:
         "พฤศจิกายน": "11",
         "ธันวาคม": "12",
     }
-    time = update_date_thai[5].split(":")
-    return f"{int(update_date_thai[3])-543}-{MONTH_MAPPING[update_date_thai[2]]}-{update_date_thai[1].zfill(2)}T{time[0].zfill(2)}:{time[1]}"
+    update_date_th = wd.find_element_by_css_selector("h3").get_attribute("innerHTML").split(" ")
+    year = int(update_date_th[3]) - 543
+    month = month_mapping[update_date_th[2]]
+    day = update_date_th[1].zfill(2)
+    hour, minute = update_date_th[5].split(":")
+    return f"{year}-{month}-{day}T{hour.zfill(2)}:{minute}"
 
-# In[17]:
+
 def scrape_and_save_moh_prompt(dose_num):
     print("Spawning Chromium")
     wd = webdriver.Chrome("chromedriver", options=chrome_options)
-    wd.get("https://app.powerbi.com/view?r=eyJrIjoiOGFhYzhhMTUtMjBiNS00MWZiLTg4MmUtZTczZGEyMzIzMWYyIiwidCI6ImY3MjkwODU5LTIyNzAtNDc4ZS1iOTc3LTdmZTAzNTE0ZGQ4YiIsImMiOjEwfQ%3D%3D")
+    wd.get(
+        "https://app.powerbi.com/view?r=eyJrIjoiOGFhYzhhMTUtMjBiNS00MWZiLTg4MmUtZTczZGEyMzIzMWYyIiwidCI6ImY3MjkwODU5LTIyNzAtNDc4ZS1iOTc3LTdmZTAzNTE0ZGQ4YiIsImMiOjEwfQ%3D%3D")
     print("Rendering JS for 10 s")
     wait = WebDriverWait(wd, 10)
     time.sleep(10)
     print("Selecting Button")
-    if(dose_num==1):
-        wait.until(EC.visibility_of_element_located((By.XPATH, "//div[contains(@title,'เข็มหนึ่ง')]"))).click()
-        print("เข็มหนึ่ง Found")
-    elif(dose_num==2):
-        wait.until(EC.visibility_of_element_located((By.XPATH, "//div[contains(@title,'เข็มสอง')]"))).click()
-        print("เข็มสอง Found")
-    elif(dose_num==3):
-        wait.until(EC.visibility_of_element_located((By.XPATH, "//div[contains(@title,'เข็มสาม')]"))).click()
-        print("เข็มสาม Found")
+    dose_to_khem = {
+        1: "เข็มหนึ่ง",
+        2: "เข็มสอง",
+        3: "เข็มสาม"
+    }
+    wait.until(
+        EC.visibility_of_element_located((By.XPATH, f"//div[contains(@title,'{dose_to_khem[dose_num]}')]"))).click()
+    print(f"{dose_to_khem[dose_num]} Found")
+
     time.sleep(2)
     open_province_dropdown(wd)
     dataset = pd.DataFrame()
     time.sleep(2)
-    start=time.time()
-    i=0
-    for p in census:
-        province_data = get_province(p["province"],wd)
+    start = time.time()
+    i = 0
+    for province_name in census:
+        province_data = get_province(province_name["province"], wd)
         dataset = dataset.append(province_data, ignore_index=True)
-        #print(p["province"], province_data)
-        print(str(i+1)+"/77 Provinces")
-        print("Time elapsed: "+str(round(time.time()-start,2))+"s")
-        i+=1
+        # print(p["province"], province_data)
+        print(str(i + 1) + "/77 Provinces")
+        print("Time elapsed: " + str(round(time.time() - start, 2)) + "s")
+        i += 1
 
     dataset = dataset.fillna(0)
     dataset[[
@@ -198,9 +185,10 @@ def scrape_and_save_moh_prompt(dose_num):
         "61-80",
         "41-60",
         "21-40",
-        "18-20"        
+        "18-20"
     ]].astype(int)
 
+    # Sort dataframe row for json
     dataset = dataset[[
         "province",
         "AstraZeneca",
@@ -213,28 +201,28 @@ def scrape_and_save_moh_prompt(dose_num):
         "41-60",
         "21-40",
         "18-20"
-        ]]
+    ]]
 
     data_dict = {
         "update_date": get_update_date(wd),
         "data": dataset.to_dict(orient="records"),
     }
-    if(dose_num==1):
-        with open("../wiki/dataset/vaccination/1st-dose-provincial-vaccination.json", "w+", encoding="utf-8") as json_file:
-            json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
-    elif(dose_num==2):
-        with open("../wiki/dataset/vaccination/2nd-dose-provincial-vaccination.json", "w+", encoding="utf-8") as json_file:
-            json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
-    elif(dose_num==3):
-        with open("../wiki/dataset/vaccination/3rd-dose-provincial-vaccination.json", "w+", encoding="utf-8") as json_file:
-            json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
+
+    # JSON file name according to dose number
+    car_to_or = {
+        1: "1st",
+        2: "2nd",
+        3: "3rd",
+    }
+    json_dir = "../wiki/dataset/vaccination/"
+    os.makedirs(json_dir, exist_ok=True)  # Make sure that we ABSOLUTELY have the target dir
+    with open(f"{json_dir}{car_to_or[dose_num]}-dose-provincial-vaccination.json", "w+") as json_file:
+        json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
+
     wd.quit()
     return data_dict
 
-# In[14]:
 
-if __name__ == '__main__':
-   with Pool(3) as p:
-       print(p.map(scrape_and_save_moh_prompt, [1, 2, 3]))
-    
-# %%
+if __name__ == "__main__":
+    with Pool(3) as p:
+        print(p.map(scrape_and_save_moh_prompt, [1, 2, 3]))
