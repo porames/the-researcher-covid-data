@@ -17,11 +17,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+      - name: Create wiki folder
+        run: mkdir wiki
       - name: Use 1.1.1.1 DNS
         run: echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf
       - name: Setup Chromedriver
         uses: nanasess/setup-chromedriver@master
-
       - name: Scrape data from หมอพร้อม dashboard using selenium
         working-directory: vaccine
         run: python scrape-moh-prompt.py
