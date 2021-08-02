@@ -38,8 +38,8 @@ jobs:
       - run:
           name: Clone wiki repo
           command: |
-            git config user.email "porames@users.noreply.github.com"
-            git config user.name "the-researcher-bot"
+            git config --global user.email "porames@users.noreply.github.com"
+            git config --global user.name "the-researcher-bot"
             git clone https://github.com/porames/the-researcher-covid-data.wiki.git wiki
       - run:
           name: Install dependencies
