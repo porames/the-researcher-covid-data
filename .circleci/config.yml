@@ -21,8 +21,8 @@ workflows:
 
 jobs:
   build:
-    machine:
-      image: ubuntu-2004:202107-01
+    docker:
+      - image: cimg/python:3.8
     steps:
       - checkout
       - python/install-packages:
