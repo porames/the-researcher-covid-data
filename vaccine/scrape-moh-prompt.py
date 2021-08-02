@@ -151,9 +151,9 @@ def scrape_and_save_moh_prompt(dose_num):
     print("Spawning Chromium")
     wd = webdriver.Chrome("chromedriver", options=chrome_options)
     wd.get("https://app.powerbi.com/view?r=eyJrIjoiOGFhYzhhMTUtMjBiNS00MWZiLTg4MmUtZTczZGEyMzIzMWYyIiwidCI6ImY3MjkwODU5LTIyNzAtNDc4ZS1iOTc3LTdmZTAzNTE0ZGQ4YiIsImMiOjEwfQ%3D%3D")
-    print("Rendering JS")
+    print("Rendering JS for 10 s")
     wait = WebDriverWait(wd, 10)
-    wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME,"shapeMap")))
+    time.sleep(10)
     print("Selecting Button")
     if(dose_num==1):
         wait.until(EC.visibility_of_element_located((By.XPATH, "//div[contains(@title,'เข็มหนึ่ง')]"))).click()
