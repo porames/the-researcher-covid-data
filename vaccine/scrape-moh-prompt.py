@@ -32,8 +32,8 @@ census=json.load(f)
 
 # In[16]:
 def get_age_group(wd):
-    iframe=wd.find_element_by_css_selector(".visual-sandbox")
-    age_chart=BeautifulSoup(iframe.get_attribute("innerHTML"))
+    wd.switch_to.frame(wd.find_element_by_css_selector(".visual-sandbox"))
+    age_chart=BeautifulSoup(wd.page_source, "html.parser")
     age_groups=[">80","61-80","41-60","21-40","18-20"]
     age_group_doses={}
     i=0
@@ -45,6 +45,7 @@ def get_age_group(wd):
                 age_group_doses[age_groups[i%5]]=(to_number(label.get_text()))
 
             i+=1
+    wd.switch_to.default_content()
     return age_group_doses
 
 def search_doses_num(wd):
@@ -65,7 +66,7 @@ def search_doses_num(wd):
 
 def search_manufacturer(wd):
     df = pd.DataFrame()
-    soup = BeautifulSoup(wd.page_source)
+    soup = BeautifulSoup(wd.page_source,  "html.parser")
     for svg in soup.findAll("g", {"class": "labelGraphicsContext"})[1]:
         x = svg["transform"].replace("translate(", "").replace(")", "").split(",")[0]
         df = df.append(
@@ -92,7 +93,7 @@ def open_province_dropdown(wd):
             break
 
 
-def select_province(prov_th,wd):
+def get_province(prov_th,wd):
     for elm in wd.find_elements_by_class_name("searchInput"):
         if elm.get_attribute("style") != "":
             elm.clear()
@@ -103,9 +104,11 @@ def select_province(prov_th,wd):
     time.sleep(1.5)
     doses = search_doses_num(wd)
     mf = search_manufacturer(wd)
+    groups = get_age_group(wd)
     data = mf
     data["total-dose"] = doses
     data["province"] = prov_th
+    data.update(groups)
     time.sleep(1)
     wd.find_elements_by_class_name("slicerText")[-1].click()
     return data
@@ -143,8 +146,6 @@ def get_update_date(wd) -> str:
     return f"{int(update_date_thai[3])-543}-{MONTH_MAPPING[update_date_thai[2]]}-{update_date_thai[1].zfill(2)}T{time[0].zfill(2)}:{time[1]}"
 
 # In[17]:
-
-
 def scrape_and_save_moh_prompt(dose_num):
     print("Spawning Chromium")
     wd = webdriver.Chrome("chromedriver", options=chrome_options)
@@ -167,13 +168,48 @@ def scrape_and_save_moh_prompt(dose_num):
     dataset = pd.DataFrame()
     time.sleep(2)
     for p in census:
-        province_data = select_province(p["province"],wd)
+        province_data = get_province(p["province"],wd)
         dataset = dataset.append(province_data, ignore_index=True)
         print(p["province"], province_data)
 
     dataset = dataset.fillna(0)
-    dataset[["AstraZeneca","Johnson & Johnson","Sinopharm","Sinovac","total-dose"]] = dataset[["AstraZeneca","Johnson & Johnson","Sinopharm","Sinovac","total-dose"]].astype(int)
-    dataset = dataset[["province","AstraZeneca","Johnson & Johnson","Sinopharm","Sinovac","total-dose"]]
+    dataset[[
+        "AstraZeneca",
+        "Johnson & Johnson",
+        "Sinopharm",
+        "Sinovac",
+        "total-dose",
+        ">80",
+        "61-80",
+        "41-60",
+        "21-40",
+        "18-20"
+    ]] = dataset[[
+        "AstraZeneca",
+        "Johnson & Johnson",
+        "Sinopharm",
+        "Sinovac",
+        "total-dose",
+        ">80",
+        "61-80",
+        "41-60",
+        "21-40",
+        "18-20"        
+    ]].astype(int)
+
+    dataset = dataset[[
+        "province",
+        "AstraZeneca",
+        "Johnson & Johnson",
+        "Sinopharm",
+        "Sinovac",
+        "total-dose",
+        ">80",
+        "61-80",
+        "41-60",
+        "21-40",
+        "18-20"
+        ]]
 
     data_dict = {
         "update_date": get_update_date(wd),
@@ -193,8 +229,7 @@ def scrape_and_save_moh_prompt(dose_num):
 
 # In[14]:
 
-
 if __name__ == '__main__':
-   with Pool(5) as p:
+   with Pool(3) as p:
        print(p.map(scrape_and_save_moh_prompt, [1, 2, 3]))
-
+# %%
