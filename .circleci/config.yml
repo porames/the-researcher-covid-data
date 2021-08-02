@@ -5,6 +5,9 @@ orbs:
   python: circleci/python@1.2
 
 workflows:
+  commit:
+    jobs:
+      - build
   nightly:
     triggers:
       - schedule:
@@ -14,12 +17,12 @@ workflows:
               only:
                 - master
     jobs:
-      - build-and-test
+      - build
 
 jobs:
-  build-and-test:
-    machine:
-      image: ubuntu-2004:202107-01
+  build:
+    docker:
+      - image: cimg/python:3.8
     steps:
       - checkout
       - python/install-packages:
