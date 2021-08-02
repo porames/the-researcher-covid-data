@@ -5,9 +5,6 @@ orbs:
   python: circleci/python@1.2
 
 workflows:
-  commit:
-    jobs:
-      - build
   nightly:
     triggers:
       - schedule:
