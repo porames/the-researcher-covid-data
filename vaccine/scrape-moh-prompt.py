@@ -78,7 +78,7 @@ def select_province(prov_th):
     return data
 
 
-def to_number(string):
+def to_number(string : str) -> int :
     string = string.replace(",", "")
     if "K" in string:
         number = float(string.replace("K", "")) * 1000
@@ -89,6 +89,25 @@ def to_number(string):
     else:
         return int(float(string))
 
+def get_update_date(wd) -> str:
+# TODO : Maybe a better solution or move somewhere else?
+    update_date_thai = wd.find_element_by_css_selector("h3").get_attribute("innerHTML").split(" ")
+    MONTH_MAPPING = {
+        "มกราคม": "01",
+        "กุมภาพันธ์": "02",
+        "มีนาคม": "03",
+        "เมษายน": "04",
+        "พฤษภาคม": "05",
+        "มิถุนายน": "06",
+        "กรกฎาคม": "07",
+        "สิงหาคม": "08",
+        "กันยายน": "09",
+        "ตุลาคม": "10",
+        "พฤศจิกายน": "11",
+        "ธันวาคม": "12",
+    }
+    time = update_date_thai[5].split(":")
+    return f"{int(update_date_thai[3])-543}-{MONTH_MAPPING[update_date_thai[2]]}-{update_date_thai[1].zfill(2)}T{time[0].zfill(2)}:{time[1]}"
 
 wd = webdriver.Chrome("chromedriver", options=chrome_options)
 wd.get("https://app.powerbi.com/view?r=eyJrIjoiOGFhYzhhMTUtMjBiNS00MWZiLTg4MmUtZTczZGEyMzIzMWYyIiwidCI6ImY3MjkwODU5LTIyNzAtNDc4ZS1iOTc3LTdmZTAzNTE0ZGQ4YiIsImMiOjEwfQ%3D%3D")
@@ -96,16 +115,21 @@ time.sleep(5)
 wd.find_element_by_xpath("//div[@title='เข็มสาม']").click()
 time.sleep(2)
 open_province_dropdown()
-dataset = []
+dataset = pd.DataFrame()
 time.sleep(2)
 for p in census:
     province_data = select_province(p["province"])
-    dataset.append(province_data)
+    dataset = dataset.append(province_data, ignore_index=True)
     print(p["province"], province_data)
 
-pd.DataFrame(dataset).fillna(0).to_json(
-    "data/3rd-dose-provincial-vaccination.json",
-    orient="records",
-    indent=2,
-    force_ascii=False,
-)
+dataset = dataset.fillna(0)
+dataset[["AstraZeneca","Johnson & Johnson","Sinopharm","Sinovac","total-3rd-dose"]] = dataset[["AstraZeneca","Johnson & Johnson","Sinopharm","Sinovac","total-3rd-dose"]].astype(int)
+dataset = dataset[["province","AstraZeneca","Johnson & Johnson","Sinopharm","Sinovac","total-3rd-dose"]]
+
+data_dict = {
+    "update_date": get_update_date(wd),
+    "data": dataset.to_dict(orient="records"),
+}
+
+with open("data/3rd-dose-provincial-vaccination.json", "w+") as json_file:
+    json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
