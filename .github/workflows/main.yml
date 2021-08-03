@@ -43,12 +43,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Get national timeseries from djay/covidthailand
-        working_dicrectory: cases
+        working-directory: cases
         run: |
           python get-national-timeseries.py
           python build-province-deaths.py
       - name: Build province and district cases
-        working_directory: cases
+        working-directory: cases
         run: python build-province-and-district-cases.py
       - name: Upload artifact
         uses: actions/upload-artifact@v2
