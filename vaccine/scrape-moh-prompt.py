@@ -214,7 +214,7 @@ def scrape_and_save_moh_prompt(dose_num):
         2: "2nd",
         3: "3rd",
     }
-    json_dir = "../wiki/dataset/vaccination/"
+    json_dir = "../wiki/dataset/"
     os.makedirs(json_dir, exist_ok=True)  # Make sure that we ABSOLUTELY have the target dir
     with open(f"{json_dir}{car_to_or[dose_num]}-dose-provincial-vaccination.json", "w+") as json_file:
         json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
