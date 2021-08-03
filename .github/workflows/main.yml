@@ -17,6 +17,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          mkdir dataset
       - name: Use 1.1.1.1 DNS
         run: echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf
       - name: Setup Chromedriver
@@ -27,7 +28,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: moh-prompt-data
+          name: vaccination
           path: |
             dataset/*.json
 
@@ -42,7 +43,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          mkdir -p wiki/dataset
+          mkdir dataset
       - name: Get national timeseries from djay/covidthailand
         working-directory: cases
         run: |
