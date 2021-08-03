@@ -1,11 +1,9 @@
 #%%
-from numpy import disp
+from numpy import NaN, disp
 import pandas as pd
 import os
 import json
-
-#%%
-
+import numpy as np
 
 #%%
 def json_load(file_path: str) -> dict:
@@ -41,6 +39,14 @@ def calculate_national_sum(data):
         "total_doses": total_doses,
     }
 
+def get_delivery_data():
+    delivery_data = pd.read_csv(
+        "https://raw.githubusercontent.com/wiki/djay/covidthailand/vac_timeline.csv"
+    )
+    delivery_data["Date"] = pd.to_datetime(delivery_data["Date"])
+    delivery_data=delivery_data.rename(columns={"Date": "date", "Vac Given 1 Cum": "first_dose", "Vac Given 2 Cum": "second_dose"})
+    delivery_data["total_doses"] = delivery_data["first_dose"] + delivery_data["second_dose"]
+    delivery_data=delivery_data[["date","first_dose","second_dose","total_doses"]]
 
 if __name__ == "__main__":
     MAIN_URL = (
@@ -50,28 +56,58 @@ if __name__ == "__main__":
     print(moh_prompt_data["update_date"])
     national_sum = calculate_national_sum(moh_prompt_data)
     print(national_sum)
-
-    # %%
-
-    delivery_data = pd.read_csv(
-        "https://raw.githubusercontent.com/wiki/djay/covidthailand/vac_timeline.csv"
-    )
-
     vaccination_timeseries = pd.read_json(
         MAIN_URL + "/vaccination/national-vaccination-timeseries.json"
     )
     vaccination_timeseries["date"] = pd.to_datetime(vaccination_timeseries["date"])
-    moh_prompt_data["update_date"] = pd.to_datetime(moh_prompt_data["update_date"])
-    delivery_data["Date"] = pd.to_datetime(delivery_data["Date"])
-
+    
     # Add data from moh prompt
-
-    # Add delivery data from DDC PDF report
-    delivery_latest_update = delivery_data.iloc[-1]["Date"]
-    moh_prompt_latest_update = moh_prompt_data["update_date"][0]
-    delivery_data = delivery_data[
-        delivery_data["Date"] > vaccination_timeseries.iloc[-1]["date"]
+    vaccination_timeseries = vaccination_timeseries.rename(
+        columns={
+            "AstraZeneca-supply": "AstraZeneca_supply",
+            "Sinovac-supply": "Sinovac_supply",
+        }
+    )
+    vaccination_timeseries = vaccination_timeseries[
+        ["date", "total_doses", "first_dose", "second_dose"]
     ]
+    
+    today_data = vaccination_timeseries[
+        vaccination_timeseries["date"]
+        == pd.to_datetime(moh_prompt_data["update_date"]).floor("D")
+    ]
+    
+    if len(today_data) == 0:
+        vaccination_timeseries = vaccination_timeseries.append(
+            {
+                "date": pd.to_datetime(moh_prompt_data["update_date"]).floor("D"),
+                "total_doses": national_sum["total_doses"],
+                "first_dose": national_sum["first_dose"],
+                "second_dose": national_sum["second_dose"],
+                "third_dose": national_sum["third_dose"],
+            },
+            ignore_index=True,
+        )
+    else:
+        vaccination_timeseries.loc[
+            vaccination_timeseries["date"]
+            == pd.to_datetime(moh_prompt_data["update_date"]).floor("D")
+        ]["total_doses"] = national_sum["total_doses"]
+        vaccination_timeseries.loc[
+            vaccination_timeseries["date"]
+            == pd.to_datetime(moh_prompt_data["update_date"]).floor("D")
+        ]["first_dose"] = national_sum["first_dose"]
+        vaccination_timeseries.loc[
+            vaccination_timeseries["date"]
+            == pd.to_datetime(moh_prompt_data["update_date"]).floor("D")
+        ]["second_dose"] = national_sum["second_dose"]
+        vaccination_timeseries.loc[
+            vaccination_timeseries["date"]
+            == pd.to_datetime(moh_prompt_data["update_date"]).floor("D")
+        ]["third_dose"] = national_sum["third_dose"]
 
-
-# %%
+    vaccination_timeseries["daily_vaccinations"] = vaccination_timeseries["total_doses"].diff()
+    vaccination_timeseries=vaccination_timeseries.fillna(0)
+    vaccination_timeseries['date'] = vaccination_timeseries['date'].dt.strftime('%Y-%m-%d')
+    vaccination_timeseries.to_json("../dataset/national-vaccination-timeseries.json",orient="records",indent=2)
+    
