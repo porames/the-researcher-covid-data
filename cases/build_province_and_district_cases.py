@@ -10,9 +10,9 @@ XLS_URL = "https://data.go.th/dataset/8a956917-436d-4afd-a2d4-59e4dd8e906e/resou
 CSV_URL = "https://data.go.th/dataset/8a956917-436d-4afd-a2d4-59e4dd8e906e/resource/be19a8ad-ab48-4081-b04a-8035b5b2b8d6/download/confirmed-cases.csv"
 DEATHS_URL = "https://github.com/djay/covidthailand/wiki/cases_by_province.csv"
 
-district_data_14days_out_path = "../wiki/dataset/district-cases-data-14days.json"
-province_data_14days_out_path = "../wiki/dataset/province-cases-data-14days.json"
-province_data_21days_out_path = "../wiki/dataset/province-cases-data-21days.json"
+district_data_14days_out_path = "../dataset/district-cases-data-14days.json"
+province_data_14days_out_path = "../dataset/province-cases-data-14days.json"
+province_data_21days_out_path = "../dataset/province-cases-data-21days.json"
 dataset_path = "./dataset.csv"
 
 PROVINCE_MAP_PATH = "../geo-data/th-map-provinces-points.geojson"

@@ -29,7 +29,7 @@ jobs:
         with:
           name: moh-prompt-data
           path: |
-            *wiki/dataset/*.json
+            dataset/*.json
 
   get-cases-and-testing-data:
     runs-on: ubuntu-latest
@@ -53,9 +53,9 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: cases-and-testing-data
+          name: cases
           path: |
-            *wiki/dataset/*.json
+            dataset/*.json
 
   commit-files-to-wiki:
     needs: [get-moh-prompt, get-cases-and-testing-data]

@@ -23,4 +23,4 @@ df["Confirmed"] = df["NewConfirmed"].cumsum()
 df = df[df["date"] >= START_DATE]
 
 # Write data to json
-df.to_json("../wiki/dataset/national-timeseries.json", orient="records", indent=2)
+df.to_json("../dataset/national-timeseries.json", orient="records", indent=2)
