@@ -2,12 +2,15 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver import ActionChains
+import sys
 import os
 import time
 import json
 import pandas as pd
 from bs4 import BeautifulSoup
 from multiprocessing import Pool
+
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--headless")
@@ -64,6 +67,28 @@ def search_manufacturer(wd) -> dict:
     mf = df.drop("x", axis=1).set_index("manufacturer").transpose().to_dict()
     return {key: value["3rd-dose"] for key, value in mf.items()}
 
+def get_mf(wd):    
+    actionChains = ActionChains(wd)
+    az=wd.find_element_by_xpath("//*[text()[contains(.,'AstraZeneca')]]")
+    actionChains.context_click(az).perform()
+    time.sleep(0.5)
+    wd.find_element_by_xpath("//*[text()[contains(.,'Show as a table')]]").click()
+    time.sleep(1)
+    wait = WebDriverWait(wd, 10)
+    wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, "rowHeaders")))
+    mf_dict = {}
+    names = []
+    doses = []
+    for cell in wd.find_element_by_class_name("rowHeaders").find_elements_by_tag_name("div"):
+        mf=cell.get_attribute("title")
+        if mf: names.append(mf)
+    for cell in wd.find_element_by_class_name("bodyCells").find_elements_by_tag_name("div"):
+        dose = cell.get_attribute("title").replace(",","")
+        if dose: doses.append(dose)
+    for i in range(len(names)):
+        mf_dict[names[i]] = doses[i]        
+    wd.find_element_by_xpath("//*[text()[contains(.,'Back to report')]]").click()
+    return mf_dict
 
 def open_province_dropdown(wd) -> None:
     for menu in wd.find_elements_by_class_name("slicer-dropdown-menu"):
@@ -74,6 +99,8 @@ def open_province_dropdown(wd) -> None:
 
 
 def get_province(prov_th: str, wd) -> dict:
+    open_province_dropdown(wd)
+    time.sleep(0.5)
     for elm in wd.find_elements_by_class_name("searchInput"):
         if elm.get_attribute("style") != "":
             elm.clear()
@@ -83,15 +110,14 @@ def get_province(prov_th: str, wd) -> dict:
     wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
     # wd.find_elements_by_class_name("slicerText")[-1].click()
     time.sleep(1)
-    doses = search_doses_num(wd)
-    mf = search_manufacturer(wd)
+    doses = search_doses_num(wd)    
     groups = get_age_group(wd)
+    mf = get_mf(wd)
     data = mf
     data["total-dose"] = doses
     data["province"] = prov_th
     data.update(groups)
     time.sleep(1)
-    wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
     return data
 
 
@@ -131,7 +157,13 @@ def get_update_date(wd) -> str:
     return f"{year}-{month}-{day}T{hour.zfill(2)}:{minute}"
 
 
-def scrape_and_save_moh_prompt(dose_num):
+def scrape_and_save_moh_prompt(dose_num:int):
+    dose_to_khem = {
+        1: "เข็มหนึ่ง",
+        2: "เข็มสอง",
+        3: "เข็มสาม"
+    }
+    print(dose_to_khem[dose_num])
     print("Spawning Chromium")
     wd = webdriver.Chrome("chromedriver", options=chrome_options)
     wd.get(
@@ -140,25 +172,19 @@ def scrape_and_save_moh_prompt(dose_num):
     wait = WebDriverWait(wd, 10)
     time.sleep(10)
     print("Selecting Button")
-    dose_to_khem = {
-        1: "เข็มหนึ่ง",
-        2: "เข็มสอง",
-        3: "เข็มสาม"
-    }
+    
     wait.until(
         EC.visibility_of_element_located((By.XPATH, f"//div[contains(@title,'{dose_to_khem[dose_num]}')]"))).click()
     print(f"{dose_to_khem[dose_num]} Found")
-
     time.sleep(2)
-    open_province_dropdown(wd)
     dataset = pd.DataFrame()
-    time.sleep(2)
+    
     start = time.time()
     i = 0
     for province_name in census:
         province_data = get_province(province_name["province"], wd)
         dataset = dataset.append(province_data, ignore_index=True)
-        # print(p["province"], province_data)
+        print(province_data)
         print(str(i + 1) + "/77 Provinces")
         print("Time elapsed: " + str(round(time.time() - start, 2)) + "s")
         i += 1
@@ -224,5 +250,4 @@ def scrape_and_save_moh_prompt(dose_num):
 
 
 if __name__ == "__main__":
-    with Pool(3) as p:
-        print(p.map(scrape_and_save_moh_prompt, [1, 2, 3]))
+    scrape_and_save_moh_prompt(int(sys.argv[1]))
