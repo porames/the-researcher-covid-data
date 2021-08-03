@@ -10,7 +10,6 @@ def json_load(file_path: str) -> dict:
 
 if __name__ == '__main__':
     vaccination_data_dir = "../wiki/vaccination/"
-
     first_dose = json_load(os.path.join(vaccination_data_dir, "1st-dose-provincial-vaccination.json"))
     second_dose = json_load(os.path.join(vaccination_data_dir, "2nd-dose-provincial-vaccination.json"))
     third_dose = json_load(os.path.join(vaccination_data_dir, "3rd-dose-provincial-vaccination.json"))
@@ -23,7 +22,7 @@ if __name__ == '__main__':
     df_third_dose = pd.DataFrame(third_dose["data"]).set_index("province").T
     manufacturer = ["AstraZeneca", "Johnson & Johnson", "Sinopharm", "Sinovac", "total-dose"]
     df_all_dose = df_first_dose.loc[manufacturer, :] + df_second_dose.loc[manufacturer, :] + df_third_dose.loc[manufacturer, :]
-
+    
     combined_data = {
         "update_date": first_dose["update_date"],
         "data": [

@@ -29,7 +29,7 @@ jobs:
         uses: nanasess/setup-chromedriver@master
       - name: Scrape data from หมอพร้อม dashboard using selenium
         working-directory: vaccine
-        run: python scrape_moh_prompt_1.py
+        run: python scrape_moh_prompt.py 1
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
@@ -59,7 +59,7 @@ jobs:
         uses: nanasess/setup-chromedriver@master
       - name: Scrape data from หมอพร้อม dashboard using selenium
         working-directory: vaccine
-        run: python scrape_moh_prompt_2.py
+        run: python scrape_moh_prompt.py 2
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
@@ -90,7 +90,7 @@ jobs:
         uses: nanasess/setup-chromedriver@master
       - name: Scrape data from หมอพร้อม dashboard using selenium
         working-directory: vaccine
-        run: python scrape_moh_prompt_3.py
+        run: python scrape_moh_prompt.py 3
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
@@ -118,6 +118,10 @@ jobs:
         working-directory: cases
         run: |
           python get_national_timeseries.py
+      - name: Get testing data from the government database
+        working-directory: testing
+        run: |
+          python get_lab_data.py
       - name: Build province and district cases
         working-directory: cases
         run: python build_province_and_district_cases.py
@@ -128,7 +132,7 @@ jobs:
           path: |
             dataset/*.json
   combine-moh-prompt:
-    needs: [get-moh-prompt-1,get-moh-prompt-2, get-moh-prompt-3]
+    needs: [get-moh-prompt-1, get-moh-prompt-2, get-moh-prompt-3]
     runs-on: ubuntu-latest
     steps:
       - name: Check Repo
