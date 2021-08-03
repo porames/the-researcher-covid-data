@@ -2,3 +2,8 @@ selenium
 pandas
 bs4
 requests
+matplotlib
+numpy
+openpyxl
+PyPDF2
+pdfplumber
