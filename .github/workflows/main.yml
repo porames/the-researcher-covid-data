@@ -58,7 +58,7 @@ jobs:
             *wiki/dataset/*.json
 
   commit-files-to-wiki:
-    need: [get-moh-prompt, get-cases-and-testing-data]
+    needs: [get-moh-prompt, get-cases-and-testing-data]
     runs-on: ubuntu-latest
     steps:
       - name: Download Provincial Vaccination Data
