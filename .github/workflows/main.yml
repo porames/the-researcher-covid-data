@@ -27,7 +27,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: testing-data
+          name: moh-prompt-data
           path: |
             *wiki/dataset/*.json
 
@@ -58,13 +58,11 @@ jobs:
             *wiki/dataset/*.json
 
   commit-files-to-wiki:
-    need: [get-moh-prompt, get-cases-data]
+    need: [get-moh-prompt, get-cases-and-testing-data]
     runs-on: ubuntu-latest
     steps:
       - name: Download Provincial Vaccination Data
-         uses: actions/download-artifact@v2
-         with:
-           name: cases-and-testing-data
+        uses: actions/download-artifact@v2
       - name: Upload json to wiki
         uses: kai-tub/external-repo-sync-action@v1
         with:
