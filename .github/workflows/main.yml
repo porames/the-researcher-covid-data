@@ -6,13 +6,18 @@ on:
     - cron: '0 12 * * *' #06 Hour UTC = 19 Hour GMT+7
   workflow_dispatch:
 jobs:
-  get-moh-prompt:
+  get-moh-prompt-1:
     runs-on: ubuntu-latest
     steps:
       - name: Check Repo
         uses: actions/checkout@v2.3.4
       - name: Setup Python Environment
         uses: actions/setup-python@v2.2.2
+      - name: Cache Python Environment
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
@@ -24,14 +29,74 @@ jobs:
         uses: nanasess/setup-chromedriver@master
       - name: Scrape data from หมอพร้อม dashboard using selenium
         working-directory: vaccine
-        run: python scrape_moh_prompt.py
+        run: python scrape_moh_prompt_1.py
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: vaccination
+          name: vaccination-1
+          path: |
+            dataset/*.json
+  get-moh-prompt-2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Repo
+        uses: actions/checkout@v2.3.4
+      - name: Setup Python Environment
+        uses: actions/setup-python@v2.2.2
+      - name: Cache Python Environment
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          mkdir dataset
+      - name: Use 1.1.1.1 DNS
+        run: echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf
+      - name: Setup Chromedriver
+        uses: nanasess/setup-chromedriver@master
+      - name: Scrape data from หมอพร้อม dashboard using selenium
+        working-directory: vaccine
+        run: python scrape_moh_prompt_2.py
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: vaccination-2
           path: |
             dataset/*.json
 
+  get-moh-prompt-3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Repo
+        uses: actions/checkout@v2.3.4
+      - name: Setup Python Environment
+        uses: actions/setup-python@v2.2.2
+      - name: Cache Python Environment
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          mkdir dataset
+      - name: Use 1.1.1.1 DNS
+        run: echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf
+      - name: Setup Chromedriver
+        uses: nanasess/setup-chromedriver@master
+      - name: Scrape data from หมอพร้อม dashboard using selenium
+        working-directory: vaccine
+        run: python scrape_moh_prompt_3.py
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: vaccination-3
+          path: |
+            dataset/*.json
   get-cases-and-testing-data:
     runs-on: ubuntu-latest
     steps:
@@ -39,6 +104,11 @@ jobs:
         uses: actions/checkout@v2.3.4
       - name: Setup Python Environment
         uses: actions/setup-python@v2.2.2
+      - name: Cache Python Environment
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
@@ -59,13 +129,29 @@ jobs:
             dataset/*.json
 
   commit-files-to-wiki:
-    needs: [get-moh-prompt, get-cases-and-testing-data]
+    needs: [get-moh-prompt-1,get-moh-prompt-2, get-moh-prompt-3, get-cases-and-testing-data]
     runs-on: ubuntu-latest
     steps:
-      - name: Download Artifacts
+      - name: Download Vaccination-1 Artifacts
         uses: actions/download-artifact@v2
         with:
-          path: wiki
+          name: vaccination-1
+          path: wiki/vaccination
+      - name: Download Vaccination-2 Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: vaccination-2
+          path: wiki/vaccination
+      - name: Download Vaccination-3 Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: vaccination-3
+          path: wiki/vaccination
+      - name: Download Cases Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: cases
+          path: wiki/cases
       - name: Display structure of downloaded files
         run: ls -R
       - name: Upload json to wiki
