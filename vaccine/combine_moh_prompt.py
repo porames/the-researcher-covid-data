@@ -9,7 +9,7 @@ def json_load(file_path: str) -> dict:
 
 
 if __name__ == '__main__':
-    vaccination_data_dir = "../wiki/dataset/vaccination/"
+    vaccination_data_dir = "../wiki/vaccination/"
 
     first_dose = json_load(os.path.join(vaccination_data_dir, "1st-dose-provincial-vaccination.json"))
     second_dose = json_load(os.path.join(vaccination_data_dir, "2nd-dose-provincial-vaccination.json"))
@@ -38,6 +38,7 @@ if __name__ == '__main__':
         ],
     }
 
-    os.makedirs(vaccination_data_dir, exist_ok=True) # Make sure that we ABSOLUTELY have target dir
-    with open(os.path.join(vaccination_data_dir, "provincial-vaccination.json"), "w+", encoding="utf-8") as fout:
+    out_dir = "../dataset"
+    os.makedirs(out_dir, exist_ok=True) # Make sure that we ABSOLUTELY have target dir
+    with open(os.path.join(out_dir, "provincial-vaccination.json"), "w+", encoding="utf-8") as fout:
         json.dump(combined_data, fout, ensure_ascii=False, indent=2)
