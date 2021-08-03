@@ -18,7 +18,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Create wiki folder
-        run: mkdir -p wiki/dataset/vaccination
+        run: mkdir -p wiki/dataset
       - name: Use 1.1.1.1 DNS
         run: echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf
       - name: Setup Chromedriver
