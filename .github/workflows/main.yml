@@ -32,7 +32,7 @@ jobs:
             *wiki/dataset/*.json
 
   get-cases-and-testing-data:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Check Repo
         uses: actions/checkout@v2.3.4
@@ -61,8 +61,12 @@ jobs:
     needs: [get-moh-prompt, get-cases-and-testing-data]
     runs-on: ubuntu-latest
     steps:
-      - name: Download Provincial Vaccination Data
+      - name: Download Artifacts
         uses: actions/download-artifact@v2
+        with:
+          path: wiki
+      - name: Display structure of downloaded files
+        run: ls -R
       - name: Upload json to wiki
         uses: kai-tub/external-repo-sync-action@v1
         with:
