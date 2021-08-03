@@ -15,9 +15,9 @@ province_data_14days_out_path = "../wiki/dataset/province-cases-data-14days.json
 province_data_21days_out_path = "../wiki/dataset/province-cases-data-21days.json"
 dataset_path = "./dataset.csv"
 
-PROVINCE_MAP_PATH = "../geo_data/th-map-provinces-points.geojson"
-DISTRICT_MAP_PATH = "../geo_data/th-map-amphoes-points.geojson"
-CENSUS_DATA_PATH = "../population_data/th-census-data.json"
+PROVINCE_MAP_PATH = "../geo-data/th-map-provinces-points.geojson"
+DISTRICT_MAP_PATH = "../geo-data/th-map-amphoes-points.geojson"
+CENSUS_DATA_PATH = "../population-data/th-census-data.json"
 
 
 PROVINCE_IDS = {feature["properties"]["PROV_NAMT"]:feature["properties"]["PROV_CODE"] for feature in

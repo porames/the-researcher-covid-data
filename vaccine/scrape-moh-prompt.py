@@ -15,7 +15,7 @@ chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--window-size=1000,3000")
 
-with open("../population_data/th-census-data.json", encoding="utf-8") as file:
+with open("../population-data/th-census-data.json", encoding="utf-8") as file:
     census = json.load(file)
 
 

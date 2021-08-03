@@ -3,7 +3,7 @@ import datetime
 import json
 import time
 
-PROVINCE_MAP_PATH = "../geo_data/th-map-provinces-points.geojson"
+PROVINCE_MAP_PATH = "../geo-data/th-map-provinces-points.geojson"
 
 PROVINCE_EN_TO_TH = {feature["properties"]["PROV_NAME"].replace(" ", ""):feature["properties"]["PROV_NAMT"] for feature in
                json.load(open(PROVINCE_MAP_PATH, encoding="utf-8"))["features"]}
@@ -36,7 +36,7 @@ def get_province_deaths(deaths_df : pd.DataFrame, days : int = 14, province_dict
 if __name__ == "__main__":
     DEATHS_URL = "https://github.com/djay/covidthailand/wiki/cases_by_province.csv"
     DEATH_DATA_14DAYS_OUT_PATH = "../wiki/dataset/province-deaths-data-14days.json"
-    CENSUS_DATA_PATH = "../population_data/th-census-data.json"
+    CENSUS_DATA_PATH = "../population-data/th-census-data.json"
 
     province_population = {i["province"]: i["population"] for i in
                            json.load(open(CENSUS_DATA_PATH, encoding="utf-8"))}

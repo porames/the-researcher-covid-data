@@ -23,7 +23,7 @@ jobs:
         uses: nanasess/setup-chromedriver@master
       - name: Scrape data from หมอพร้อม dashboard using selenium
         working-directory: vaccine
-        run: python scrape_moh_prompt.py
+        run: python scrape-moh-prompt.py
       - name: Upload json to wiki
         uses: kai-tub/external-repo-sync-action@v1
         with:
