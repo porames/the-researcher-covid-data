@@ -114,7 +114,7 @@ def get_province(prov_th: str, wd) -> dict:
     groups = get_age_group(wd)
     mf = get_mf(wd)
     data = mf
-    data["total-dose"] = doses
+    data["total_doses"] = doses
     data["province"] = prov_th
     data.update(groups)
     time.sleep(1)
@@ -195,7 +195,7 @@ def scrape_and_save_moh_prompt(dose_num:int):
         "Johnson & Johnson",
         "Sinopharm",
         "Sinovac",
-        "total-dose",
+        "total_doses",
         ">80",
         "61-80",
         "41-60",
@@ -206,7 +206,7 @@ def scrape_and_save_moh_prompt(dose_num:int):
         "Johnson & Johnson",
         "Sinopharm",
         "Sinovac",
-        "total-dose",
+        "total_doses",
         ">80",
         "61-80",
         "41-60",
@@ -221,7 +221,7 @@ def scrape_and_save_moh_prompt(dose_num:int):
         "Johnson & Johnson",
         "Sinopharm",
         "Sinovac",
-        "total-dose",
+        "total_doses",
         ">80",
         "61-80",
         "41-60",

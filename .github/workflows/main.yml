@@ -168,7 +168,9 @@ jobs:
         run: echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf
       - name: Combined Moh Prompt Data
         working-directory: vaccine
-        run: python combine_moh_prompt.py
+        run: |
+          python combine_moh_prompt.py
+          python build_timeseries.py
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:

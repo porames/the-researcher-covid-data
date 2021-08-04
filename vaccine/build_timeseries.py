@@ -48,6 +48,14 @@ def get_delivery_data():
     delivery_data["total_doses"] = delivery_data["first_dose"] + delivery_data["second_dose"]
     delivery_data=delivery_data[["date","first_dose","second_dose","total_doses"]]
 
+def calculate_rate(df):
+    # Fill empty dates with previous values
+    df['total_doses']=df['total_doses'].replace(to_replace=0, method='ffill')
+    df['first_dose']=df['first_dose'].replace(to_replace=0, method='ffill')
+    df['second_dose']=df['second_dose'].replace(to_replace=0, method='ffill')
+    df["daily_vaccinations"] = df["total_doses"].diff()
+    return df
+
 if __name__ == "__main__":
     MAIN_URL = (
         "https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data"
@@ -62,14 +70,8 @@ if __name__ == "__main__":
     vaccination_timeseries["date"] = pd.to_datetime(vaccination_timeseries["date"])
     
     # Add data from moh prompt
-    vaccination_timeseries = vaccination_timeseries.rename(
-        columns={
-            "AstraZeneca-supply": "AstraZeneca_supply",
-            "Sinovac-supply": "Sinovac_supply",
-        }
-    )
     vaccination_timeseries = vaccination_timeseries[
-        ["date", "total_doses", "first_dose", "second_dose"]
+        ["date", "total_doses", "first_dose", "second_dose", "data_anomaly"]
     ]
     
     today_data = vaccination_timeseries[
@@ -106,8 +108,10 @@ if __name__ == "__main__":
             == pd.to_datetime(moh_prompt_data["update_date"]).floor("D")
         ]["third_dose"] = national_sum["third_dose"]
 
-    vaccination_timeseries["daily_vaccinations"] = vaccination_timeseries["total_doses"].diff()
-    vaccination_timeseries=vaccination_timeseries.fillna(0)
+    vaccination_timeseries= calculate_rate(vaccination_timeseries)
+    #vaccination_timeseries=vaccination_timeseries.fillna()
     vaccination_timeseries['date'] = vaccination_timeseries['date'].dt.strftime('%Y-%m-%d')
-    vaccination_timeseries.to_json("../dataset/national-vaccination-timeseries.json",orient="records",indent=2)
+    vaccination_timeseries.to_json("../dataset/national-vaccination-timeseries.json",orient="records",indent=2, force_ascii=False)
     
+
+# %%

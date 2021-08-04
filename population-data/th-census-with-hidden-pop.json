@@ -4,7 +4,7 @@
     "population": 5588222,
     "PROV_CODE": "10",
     "PROV_NAME": "BANGKOK",
-    "clean-name": "BANGKOK",
+    "clean_name": "BANGKOK",
     "estimated_living_population": 7859222
   },
   {
@@ -12,7 +12,7 @@
     "population": 1351479,
     "PROV_CODE": "11",
     "PROV_NAME": "SAMUT PRAKAN",
-    "clean-name": "SAMUTPRAKAN",
+    "clean_name": "SAMUTPRAKAN",
     "estimated_living_population": 1954479
   },
   {
@@ -20,7 +20,7 @@
     "population": 1276745,
     "PROV_CODE": "12",
     "PROV_NAME": "NONTHABURI",
-    "clean-name": "NONTHABURI",
+    "clean_name": "NONTHABURI",
     "estimated_living_population": 1627745
   },
   {
@@ -28,7 +28,7 @@
     "population": 1176412,
     "PROV_CODE": "13",
     "PROV_NAME": "PATHUM THANI",
-    "clean-name": "PATHUMTHANI",
+    "clean_name": "PATHUMTHANI",
     "estimated_living_population": 1545412
   },
   {
@@ -36,49 +36,49 @@
     "population": 819088,
     "PROV_CODE": "14",
     "PROV_NAME": "PHRA NAKHON SI AYUTTHAYA",
-    "clean-name": "PHRANAKHONSIAYUTTHAYA"
+    "clean_name": "PHRANAKHONSIAYUTTHAYA"
   },
   {
     "province": "อ่างทอง",
     "population": 276584,
     "PROV_CODE": "15",
     "PROV_NAME": "ANG THONG",
-    "clean-name": "ANGTHONG"
+    "clean_name": "ANGTHONG"
   },
   {
     "province": "ลพบุรี",
     "population": 742928,
     "PROV_CODE": "16",
     "PROV_NAME": "LOP BURI",
-    "clean-name": "LOPBURI"
+    "clean_name": "LOPBURI"
   },
   {
     "province": "สิงห์บุรี",
     "population": 205898,
     "PROV_CODE": "17",
     "PROV_NAME": "SING BURI",
-    "clean-name": "SINGBURI"
+    "clean_name": "SINGBURI"
   },
   {
     "province": "ชัยนาท",
     "population": 322477,
     "PROV_CODE": "18",
     "PROV_NAME": "CHAI NAT",
-    "clean-name": "CHAINAT"
+    "clean_name": "CHAINAT"
   },
   {
     "province": "สระบุรี",
     "population": 643828,
     "PROV_CODE": "19",
     "PROV_NAME": "SARABURI",
-    "clean-name": "SARABURI"
+    "clean_name": "SARABURI"
   },
   {
     "province": "ชลบุรี",
     "population": 1566885,
     "PROV_CODE": "20",
     "PROV_NAME": "CHON BURI",
-    "clean-name": "CHONBURI",
+    "clean_name": "CHONBURI",
     "estimated_living_population": 2077885
   },
   {
@@ -86,7 +86,7 @@
     "population": 741524,
     "PROV_CODE": "21",
     "PROV_NAME": "RAYONG",
-    "clean-name": "RAYONG",
+    "clean_name": "RAYONG",
     "estimated_living_population": 975524
   },
   {
@@ -94,70 +94,70 @@
     "population": 535559,
     "PROV_CODE": "22",
     "PROV_NAME": "CHANTHABURI",
-    "clean-name": "CHANTHABURI"
+    "clean_name": "CHANTHABURI"
   },
   {
     "province": "ตราด",
     "population": 228536,
     "PROV_CODE": "23",
     "PROV_NAME": "TRAT",
-    "clean-name": "TRAT"
+    "clean_name": "TRAT"
   },
   {
     "province": "ฉะเชิงเทรา",
     "population": 720718,
     "PROV_CODE": "24",
     "PROV_NAME": "CHACHOENGSAO",
-    "clean-name": "CHACHOENGSAO"
+    "clean_name": "CHACHOENGSAO"
   },
   {
     "province": "ปราจีนบุรี",
     "population": 493670,
     "PROV_CODE": "25",
     "PROV_NAME": "PRACHIN BURI",
-    "clean-name": "PRACHINBURI"
+    "clean_name": "PRACHINBURI"
   },
   {
     "province": "นครนายก",
     "population": 260081,
     "PROV_CODE": "26",
     "PROV_NAME": "NAKHON NAYOK",
-    "clean-name": "NAKHONNAYOK"
+    "clean_name": "NAKHONNAYOK"
   },
   {
     "province": "สระแก้ว",
     "population": 560925,
     "PROV_CODE": "27",
     "PROV_NAME": "SA KAEO",
-    "clean-name": "SAKAEO"
+    "clean_name": "SAKAEO"
   },
   {
     "province": "ราชบุรี",
     "population": 869313,
     "PROV_CODE": "70",
     "PROV_NAME": "RATCHABURI",
-    "clean-name": "RATCHABURI"
+    "clean_name": "RATCHABURI"
   },
   {
     "province": "กาญจนบุรี",
     "population": 891976,
     "PROV_CODE": "71",
     "PROV_NAME": "KANCHANABURI",
-    "clean-name": "KANCHANABURI"
+    "clean_name": "KANCHANABURI"
   },
   {
     "province": "สุพรรณบุรี",
     "population": 838628,
     "PROV_CODE": "72",
     "PROV_NAME": "SUPHAN BURI",
-    "clean-name": "SUPHANBURI"
+    "clean_name": "SUPHANBURI"
   },
   {
     "province": "นครปฐม",
     "population": 920729,
     "PROV_CODE": "73",
     "PROV_NAME": "NAKHON PATHOM",
-    "clean-name": "NAKHONPATHOM",
+    "clean_name": "NAKHONPATHOM",
     "estimated_living_population": 1137729
   },
   {
@@ -165,7 +165,7 @@
     "population": 586199,
     "PROV_CODE": "74",
     "PROV_NAME": "SAMUT SAKHON",
-    "clean-name": "SAMUTSAKHON",
+    "clean_name": "SAMUTSAKHON",
     "estimated_living_population": 991199
   },
   {
@@ -173,308 +173,308 @@
     "population": 192052,
     "PROV_CODE": "75",
     "PROV_NAME": "SAMUT SONGKHRAM",
-    "clean-name": "SAMUTSONGKHRAM"
+    "clean_name": "SAMUTSONGKHRAM"
   },
   {
     "province": "เพชรบุรี",
     "population": 482193,
     "PROV_CODE": "76",
     "PROV_NAME": "PHETCHABURI",
-    "clean-name": "PHETCHABURI"
+    "clean_name": "PHETCHABURI"
   },
   {
     "province": "ประจวบคีรีขันธ์",
     "population": 550678,
     "PROV_CODE": "77",
     "PROV_NAME": "PRACHUAP KHIRI KHAN",
-    "clean-name": "PRACHUAPKHIRIKHAN"
+    "clean_name": "PRACHUAPKHIRIKHAN"
   },
   {
     "province": "เชียงใหม่",
     "population": 1784370,
     "PROV_CODE": "50",
     "PROV_NAME": "CHIANG MAI",
-    "clean-name": "CHIANGMAI"
+    "clean_name": "CHIANGMAI"
   },
   {
     "province": "ลำพูน",
     "population": 402011,
     "PROV_CODE": "51",
     "PROV_NAME": "LAMPHUN",
-    "clean-name": "LAMPHUN"
+    "clean_name": "LAMPHUN"
   },
   {
     "province": "ลำปาง",
     "population": 728964,
     "PROV_CODE": "52",
     "PROV_NAME": "LAMPANG",
-    "clean-name": "LAMPANG"
+    "clean_name": "LAMPANG"
   },
   {
     "province": "อุตรดิตถ์",
     "population": 448745,
     "PROV_CODE": "53",
     "PROV_NAME": "UTTARADIT",
-    "clean-name": "UTTARADIT"
+    "clean_name": "UTTARADIT"
   },
   {
     "province": "แพร่",
     "population": 437350,
     "PROV_CODE": "54",
     "PROV_NAME": "PHRAE",
-    "clean-name": "PHRAE"
+    "clean_name": "PHRAE"
   },
   {
     "province": "น่าน",
     "population": 476727,
     "PROV_CODE": "55",
     "PROV_NAME": "NAN",
-    "clean-name": "NAN"
+    "clean_name": "NAN"
   },
   {
     "province": "พะเยา",
     "population": 467356,
     "PROV_CODE": "56",
     "PROV_NAME": "PHAYAO",
-    "clean-name": "PHAYAO"
+    "clean_name": "PHAYAO"
   },
   {
     "province": "เชียงราย",
     "population": 1295026,
     "PROV_CODE": "57",
     "PROV_NAME": "CHIANG RAI",
-    "clean-name": "CHIANGRAI"
+    "clean_name": "CHIANGRAI"
   },
   {
     "province": "แม่ฮ่องสอน",
     "population": 284549,
     "PROV_CODE": "58",
     "PROV_NAME": "MAE HONG SON",
-    "clean-name": "MAEHONGSON"
+    "clean_name": "MAEHONGSON"
   },
   {
     "province": "นครสวรรค์",
     "population": 1040308,
     "PROV_CODE": "60",
     "PROV_NAME": "NAKHON SAWAN",
-    "clean-name": "NAKHONSAWAN"
+    "clean_name": "NAKHONSAWAN"
   },
   {
     "province": "อุทัยธานี",
     "population": 325868,
     "PROV_CODE": "61",
     "PROV_NAME": "UTHAI THANI",
-    "clean-name": "UTHAITHANI"
+    "clean_name": "UTHAITHANI"
   },
   {
     "province": "กำแพงเพชร",
     "population": 714118,
     "PROV_CODE": "62",
     "PROV_NAME": "KAMPHAENG PHET",
-    "clean-name": "KAMPHAENGPHET"
+    "clean_name": "KAMPHAENGPHET"
   },
   {
     "province": "ตาก",
     "population": 670265,
     "PROV_CODE": "63",
     "PROV_NAME": "TAK",
-    "clean-name": "TAK"
+    "clean_name": "TAK"
   },
   {
     "province": "สุโขทัย",
     "population": 587883,
     "PROV_CODE": "64",
     "PROV_NAME": "SUKHOTHAI",
-    "clean-name": "SUKHOTHAI"
+    "clean_name": "SUKHOTHAI"
   },
   {
     "province": "พิษณุโลก",
     "population": 849481,
     "PROV_CODE": "65",
     "PROV_NAME": "PHITSANULOK",
-    "clean-name": "PHITSANULOK"
+    "clean_name": "PHITSANULOK"
   },
   {
     "province": "พิจิตร",
     "population": 532310,
     "PROV_CODE": "66",
     "PROV_NAME": "PHICHIT",
-    "clean-name": "PHICHIT"
+    "clean_name": "PHICHIT"
   },
   {
     "province": "เพชรบูรณ์",
     "population": 981940,
     "PROV_CODE": "67",
     "PROV_NAME": "PHETCHABUN",
-    "clean-name": "PHETCHABUN"
+    "clean_name": "PHETCHABUN"
   },
   {
     "province": "นครราชสีมา",
     "population": 2633207,
     "PROV_CODE": "30",
     "PROV_NAME": "NAKHON RATCHASIMA",
-    "clean-name": "NAKHONRATCHASIMA"
+    "clean_name": "NAKHONRATCHASIMA"
   },
   {
     "province": "บุรีรัมย์",
     "population": 1581184,
     "PROV_CODE": "31",
     "PROV_NAME": "BURI RAM",
-    "clean-name": "BURIRAM"
+    "clean_name": "BURIRAM"
   },
   {
     "province": "สุรินทร์",
     "population": 1378221,
     "PROV_CODE": "32",
     "PROV_NAME": "SURIN",
-    "clean-name": "SURIN"
+    "clean_name": "SURIN"
   },
   {
     "province": "ศรีสะเกษ",
     "population": 1458580,
     "PROV_CODE": "33",
     "PROV_NAME": "SI SA KET",
-    "clean-name": "SISAKET"
+    "clean_name": "SISAKET"
   },
   {
     "province": "อุบลราชธานี",
     "population": 1866697,
     "PROV_CODE": "34",
     "PROV_NAME": "UBON RATCHATHANI",
-    "clean-name": "UBONRATCHATHANI"
+    "clean_name": "UBONRATCHATHANI"
   },
   {
     "province": "ยโสธร",
     "population": 534500,
     "PROV_CODE": "35",
     "PROV_NAME": "YASOTHON",
-    "clean-name": "YASOTHON"
+    "clean_name": "YASOTHON"
   },
   {
     "province": "ชัยภูมิ",
     "population": 1124924,
     "PROV_CODE": "36",
     "PROV_NAME": "CHAIYAPHUM",
-    "clean-name": "CHAIYAPHUM"
+    "clean_name": "CHAIYAPHUM"
   },
   {
     "province": "อำนาจเจริญ",
     "population": 376195,
     "PROV_CODE": "37",
     "PROV_NAME": "AMNAT CHAROEN",
-    "clean-name": "AMNATCHAROEN"
+    "clean_name": "AMNATCHAROEN"
   },
   {
     "province": "บึงกาฬ",
     "population": 422042,
     "PROV_CODE": "38",
     "PROV_NAME": "BUENG KAN",
-    "clean-name": "BUENGKAN"
+    "clean_name": "BUENGKAN"
   },
   {
     "province": "หนองบัวลำภู",
     "population": 509470,
     "PROV_CODE": "39",
     "PROV_NAME": "NONG BUA LAMPHU",
-    "clean-name": "NONGBUALAMPHU"
+    "clean_name": "NONGBUALAMPHU"
   },
   {
     "province": "ขอนแก่น",
     "population": 1794531,
     "PROV_CODE": "40",
     "PROV_NAME": "KHON KAEN",
-    "clean-name": "KHONKAEN"
+    "clean_name": "KHONKAEN"
   },
   {
     "province": "อุดรธานี",
     "population": 1567983,
     "PROV_CODE": "41",
     "PROV_NAME": "UDON THANI",
-    "clean-name": "UDONTHANI"
+    "clean_name": "UDONTHANI"
   },
   {
     "province": "เลย",
     "population": 638736,
     "PROV_CODE": "42",
     "PROV_NAME": "LOEI",
-    "clean-name": "LOEI"
+    "clean_name": "LOEI"
   },
   {
     "province": "หนองคาย",
     "population": 517435,
     "PROV_CODE": "43",
     "PROV_NAME": "NONG KHAI",
-    "clean-name": "NONGKHAI"
+    "clean_name": "NONGKHAI"
   },
   {
     "province": "มหาสารคาม",
     "population": 953660,
     "PROV_CODE": "44",
     "PROV_NAME": "MAHA SARAKHAM",
-    "clean-name": "MAHASARAKHAM"
+    "clean_name": "MAHASARAKHAM"
   },
   {
     "province": "ร้อยเอ็ด",
     "population": 1298640,
     "PROV_CODE": "45",
     "PROV_NAME": "ROI ET",
-    "clean-name": "ROIET"
+    "clean_name": "ROIET"
   },
   {
     "province": "กาฬสินธุ์",
     "population": 977175,
     "PROV_CODE": "46",
     "PROV_NAME": "KALASIN",
-    "clean-name": "KALASIN"
+    "clean_name": "KALASIN"
   },
   {
     "province": "สกลนคร",
     "population": 1146936,
     "PROV_CODE": "47",
     "PROV_NAME": "SAKON NAKHON",
-    "clean-name": "SAKONNAKHON"
+    "clean_name": "SAKONNAKHON"
   },
   {
     "province": "นครพนม",
     "population": 717201,
     "PROV_CODE": "48",
     "PROV_NAME": "NAKHON PHANOM",
-    "clean-name": "NAKHONPHANOM"
+    "clean_name": "NAKHONPHANOM"
   },
   {
     "province": "มุกดาหาร",
     "population": 350911,
     "PROV_CODE": "49",
     "PROV_NAME": "MUKDAHAN",
-    "clean-name": "MUKDAHAN"
+    "clean_name": "MUKDAHAN"
   },
   {
     "province": "นครศรีธรรมราช",
     "population": 1550721,
     "PROV_CODE": "80",
     "PROV_NAME": "NAKHON SI THAMMARAT",
-    "clean-name": "NAKHONSITHAMMARAT"
+    "clean_name": "NAKHONSITHAMMARAT"
   },
   {
     "province": "กระบี่",
     "population": 477770,
     "PROV_CODE": "81",
     "PROV_NAME": "KRABI",
-    "clean-name": "KRABI"
+    "clean_name": "KRABI"
   },
   {
     "province": "พังงา",
     "population": 268229,
     "PROV_CODE": "82",
     "PROV_NAME": "PHANGNGA",
-    "clean-name": "PHANGNGA"
+    "clean_name": "PHANGNGA"
   },
   {
     "province": "ภูเก็ต",
     "population": 414471,
     "PROV_CODE": "83",
     "PROV_NAME": "PHUKET",
-    "clean-name": "PHUKET",
+    "clean_name": "PHUKET",
     "estimated_living_population": 562471
   },
   {
@@ -482,69 +482,69 @@
     "population": 1067726,
     "PROV_CODE": "84",
     "PROV_NAME": "SURAT THANI",
-    "clean-name": "SURATTHANI"
+    "clean_name": "SURATTHANI"
   },
   {
     "province": "ระนอง",
     "population": 194372,
     "PROV_CODE": "85",
     "PROV_NAME": "RANONG",
-    "clean-name": "RANONG"
+    "clean_name": "RANONG"
   },
   {
     "province": "ชุมพร",
     "population": 509208,
     "PROV_CODE": "86",
     "PROV_NAME": "CHUMPHON",
-    "clean-name": "CHUMPHON"
+    "clean_name": "CHUMPHON"
   },
   {
     "province": "สงขลา",
     "population": 1428609,
     "PROV_CODE": "90",
     "PROV_NAME": "SONGKHLA",
-    "clean-name": "SONGKHLA"
+    "clean_name": "SONGKHLA"
   },
   {
     "province": "สตูล",
     "population": 324098,
     "PROV_CODE": "91",
     "PROV_NAME": "SATUN",
-    "clean-name": "SATUN"
+    "clean_name": "SATUN"
   },
   {
     "province": "ตรัง",
     "population": 640574,
     "PROV_CODE": "92",
     "PROV_NAME": "TRANG",
-    "clean-name": "TRANG"
+    "clean_name": "TRANG"
   },
   {
     "province": "พัทลุง",
     "population": 523077,
     "PROV_CODE": "93",
     "PROV_NAME": "PHATTHALUNG",
-    "clean-name": "PHATTHALUNG"
+    "clean_name": "PHATTHALUNG"
   },
   {
     "province": "ปัตตานี",
     "population": 726015,
     "PROV_CODE": "94",
     "PROV_NAME": "PATTANI",
-    "clean-name": "PATTANI"
+    "clean_name": "PATTANI"
   },
   {
     "province": "ยะลา",
     "population": 538602,
     "PROV_CODE": "95",
     "PROV_NAME": "YALA",
-    "clean-name": "YALA"
+    "clean_name": "YALA"
   },
   {
     "province": "นราธิวาส",
     "population": 804429,
     "PROV_CODE": "96",
     "PROV_NAME": "NARATHIWAT",
-    "clean-name": "NARATHIWAT"
+    "clean_name": "NARATHIWAT"
   }
 ]
