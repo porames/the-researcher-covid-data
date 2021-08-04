@@ -24,10 +24,10 @@ def calculate_national_sum(data):
     }
 
     for province in data["data"]:
-        total_doses += province["all_dose"]["total-dose"]
-        first_dose += province["1st_dose"]["total-dose"]
-        second_dose += province["2nd_dose"]["total-dose"]
-        third_dose += province["3rd_dose"]["total-dose"]
+        total_doses += province["all_dose"]["total_doses"]
+        first_dose += province["1st_dose"]["total_doses"]
+        second_dose += province["2nd_dose"]["total_doses"]
+        third_dose += province["3rd_dose"]["total_doses"]
 
         for mf in manufacturer.keys():
             manufacturer[mf] += province["all_dose"][mf]
