@@ -63,6 +63,7 @@ def calculate_rate(df):
     df["total_doses"] = df["total_doses"].replace(to_replace=0, method="ffill")
     df["first_dose"] = df["first_dose"].replace(to_replace=0, method="ffill")
     df["second_dose"] = df["second_dose"].replace(to_replace=0, method="ffill")
+    df["third_dose"] = df["third_dose"].replace(to_replace=0, method="ffill")
     df["daily_vaccinations"] = df["total_doses"].diff()
     return df
 
@@ -104,7 +105,7 @@ if __name__ == "__main__":
 
     # Add data from moh prompt
     vaccination_timeseries = vaccination_timeseries[
-        ["date", "total_doses", "first_dose", "second_dose", "data_anomaly"]
+        ["date", "total_doses", "first_dose", "second_dose", "data_anomaly", "third_dose"]
     ]
 
     today_data = vaccination_timeseries[
