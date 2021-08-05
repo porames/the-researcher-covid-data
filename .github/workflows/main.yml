@@ -206,7 +206,8 @@ jobs:
         working-directory: vaccine
         run: |
           python combine_moh_prompt.py
-          python build_timeseries.py
+          python build_national_timeseries.py
+          python build_manufacturer_timeseries.py
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
