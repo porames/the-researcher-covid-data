@@ -20,6 +20,13 @@ chrome_options.add_argument("--window-size=1000,3000")
 with open("../population-data/th-census-data.json", encoding="utf-8") as file:
     census = json.load(file)
 
+def get_over_60(wd):
+    wait = WebDriverWait(wd, 10)
+    wait.until(EC.element_to_be_clickable((By.XPATH,"//*[text()[contains(.,'60 ปีขึ้นไป')]]"))).click()
+    time.sleep(1)
+    over_60_1st_dose = search_doses_num(wd)
+    wait.until(EC.element_to_be_clickable((By.XPATH,"//*[text()[contains(.,'60 ปีขึ้นไป')]]"))).click()
+    return over_60_1st_dose
 
 def get_age_group(wd):
     wd.switch_to.frame(wd.find_element_by_css_selector(".visual-sandbox"))
@@ -43,8 +50,8 @@ def search_doses_num(wd) -> int:
     total_dose = 0
     for svg in wd.find_elements_by_tag_name("svg"):
         label = svg.get_attribute("aria-label")
-        if "totalDose" in str(label):
-            total_dose = int(label.replace("totalDose", "").replace(",", "").replace(" ", "").replace(".", ""))
+        if "ฉีดสะสม" in str(label):
+            total_dose = int(label.replace("ฉีดสะสม", "").replace(",", "").replace(" ", "").replace(".", ""))
             break
     return total_dose
 
@@ -97,25 +104,31 @@ def open_province_dropdown(wd) -> None:
             break
 
 
-def get_province(prov_th: str, wd) -> dict:
+def get_province(prov_th: str, wd, dose_num) -> dict:
     open_province_dropdown(wd)
-    time.sleep(0.5)
+    time.sleep(1)
     for elm in wd.find_elements_by_class_name("searchInput"):
         if elm.get_attribute("style") != "":
             elm.clear()
             elm.send_keys(prov_th)
             break
     wait = WebDriverWait(wd, 10)
-    wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
-    # wd.find_elements_by_class_name("slicerText")[-1].click()
     time.sleep(1)
+    wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
+    time.sleep(2)
     doses = search_doses_num(wd)    
-    groups = get_age_group(wd)
-    mf = get_mf(wd)
-    data = mf
+    data = {}
     data["total_doses"] = doses
-    data["province"] = prov_th
-    data.update(groups)
+    data["province"] = prov_th    
+    if (dose_num == 1):
+      over_60 = get_over_60(wd)
+      data.update({"over_60_1st_dose":over_60})
+    if (dose_num == 0):
+        mf = get_mf(wd) 
+        data.update(mf)    
+    if (dose_num > 1):
+        wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
+        open_province_dropdown(wd)
     time.sleep(1)
     return data
 
@@ -162,6 +175,7 @@ def get_update_date(wd) -> str:
 
 def scrape_and_save_moh_prompt(dose_num:int):
     dose_to_khem = {
+        0: "Total doses and Manufacturer data",
         1: "เข็มหนึ่ง",
         2: "เข็มสอง",
         3: "เข็มสาม"
@@ -179,78 +193,65 @@ def scrape_and_save_moh_prompt(dose_num:int):
     time.sleep(10)
     wait = WebDriverWait(wd, 10)
     print("Selecting Button")
-    wait.until(
-        EC.visibility_of_element_located((By.XPATH, f"//div[contains(@title,'{dose_to_khem[dose_num]}')]"))).click()
-    print(f"{dose_to_khem[dose_num]} Found")
+    if (dose_num!=0):
+        wait.until(
+            EC.element_to_be_clickable((By.XPATH, f"//div[contains(@title,'{dose_to_khem[dose_num]}')]"))).click()
+        print(f"{dose_to_khem[dose_num]} Found")
+    else:
+       print("retreive manufacturer data") 
     time.sleep(2)
-    dataset = pd.DataFrame()
+
+    dataset = pd.DataFrame()    
     start = time.time()
     i = 0
     for province_name in census:
-        province_data = get_province(province_name["province"], wd)
-        dataset = dataset.append(province_data, ignore_index=True)
-        print(province_data)
+        province_data = get_province(province_name["province"], wd, dose_num)
+        dataset = dataset.append(province_data, ignore_index=True)        
         print(str(i + 1) + "/77 Provinces")
         print("Time elapsed: " + str(round(time.time() - start, 2)) + "s")
         i += 1
-        break
 
     dataset = dataset.fillna(0)
-    dataset[[
-        "AstraZeneca",
-        "Johnson & Johnson",
-        "Sinopharm",
-        "Sinovac",
-        "total_doses",
-        ">80",
-        "61-80",
-        "41-60",
-        "21-40",
-        "18-20"
-    ]] = dataset[[
-        "AstraZeneca",
-        "Johnson & Johnson",
-        "Sinopharm",
-        "Sinovac",
-        "total_doses",
-        ">80",
-        "61-80",
-        "41-60",
-        "21-40",
-        "18-20"
-    ]].astype(int)
-
-    # Sort dataframe row for json
-    dataset = dataset[[
-        "province",
-        "AstraZeneca",
-        "Johnson & Johnson",
-        "Sinopharm",
-        "Sinovac",
-        "total_doses",
-        ">80",
-        "61-80",
-        "41-60",
-        "21-40",
-        "18-20"
-    ]]
+    # Key names according to dose number
+    car_to_or = {
+        1: "1st",
+        2: "2nd",
+        3: "3rd",
+    }
+    if dose_num == 0:
+      dataset[[
+          "AstraZeneca",
+          "Johnson & Johnson",
+          "Sinopharm",
+          "Sinovac",
+          "Pfizer",
+          "total_doses"
+      ]] = dataset[[
+          "AstraZeneca",
+          "Johnson & Johnson",
+          "Sinopharm",
+          "Sinovac",
+          "Pfizer",          
+          "total_doses"
+      ]].astype(int)
+    else:
+       dataset["total_"+car_to_or[dose_num]+"_dose"] = dataset["total_doses"].astype(int)
+       dataset = dataset.drop('total_doses', axis=1)
 
     data_dict = {
         "update_date": get_update_date(wd),
         "data": dataset.to_dict(orient="records"),
     }
 
-    # JSON file name according to dose number
-    car_to_or = {
-        1: "1st",
-        2: "2nd",
-        3: "3rd",
-    }
+    
     json_dir = "../dataset/"
     os.makedirs(json_dir, exist_ok=True)  # Make sure that we ABSOLUTELY have the target dir
-    with open(f"{json_dir}{car_to_or[dose_num]}-dose-provincial-vaccination.json", "w+") as json_file:
-        json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
-
+    if dose_num != 0:
+        with open(f"{json_dir}{car_to_or[dose_num]}-dose-provincial-vaccination.json", "w+") as json_file:
+            json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
+    else:
+        with open(f"{json_dir}provincial-vaccination-by-manufacturer.json", "w+") as json_file:
+            json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
     wd.quit()
     return data_dict
 
