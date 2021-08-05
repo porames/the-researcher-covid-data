@@ -1,3 +1,5 @@
+import sys
+
 import pandas as pd
 import json
 
@@ -9,65 +11,49 @@ def json_load(file_path: str) -> dict:
         return json.load(json_file)
 
 
-def calculate_manufacturer_sum(data: dict) -> dict:
-    AstraZeneca = 0
-    Sinovac = 0
-    Sinopharm = 0
-    JnJ = 0
-    Pfizer = 0
-    for province in data["data"]:
-        AstraZeneca += province["AstraZeneca"]
-        Sinovac += province["Sinovac"]
-        Sinopharm += province["Sinopharm"]
-        JnJ += province["Johnson & Johnson"]
-        Pfizer += province["Pfizer"]
-    return {
-        "AstraZeneca": AstraZeneca,
-        "Sinovac": Sinovac,
-        "Sinopharm": Sinopharm,
-        "Johnson & Johnson": JnJ,
-        "Pfizer": Pfizer,
-    }
+def calculate_manufacturer_sum(data: dict) -> pd.DataFrame:
+    df = pd.DataFrame(data["data"])
+    today_manufacturer_sum = pd.DataFrame(index=[pd.to_datetime(data["update_date"]).floor("D")], data={
+        "AstraZeneca": df["AstraZeneca"].to_numpy().sum(),
+        "Sinovac": df["Sinovac"].to_numpy().sum(),
+        "Sinopharm": df["Sinopharm"].to_numpy().sum(),
+        "Johnson & Johnson": df["Johnson & Johnson"].to_numpy().sum(),
+        "Pfizer": df["Pfizer"].to_numpy().sum(),
+    })  # Numpy sum is faster (even faster than pandas sum)
+    today_manufacturer_sum.index.name = "date"
+    return today_manufacturer_sum
 
 
 def build_manufacturer_timeseries(manufacturer_data: dict) -> pd.DataFrame:
-    update_date = manufacturer_data["update_date"]
-    manufacturer_data = calculate_manufacturer_sum(manufacturer_data)
-    manufacturer_data["date"] = pd.to_datetime(update_date).floor("D")
+    manufacturer_data_sum = calculate_manufacturer_sum(manufacturer_data)
+
+    # Historical Manufacturer timeseries
     START_DATE = "2021-07-02"
-    mf_ts = pd.read_json(MAIN_URL + "/vaccination/vaccine-manufacturer-timeseries.json")
-    manufacturer_data = pd.DataFrame([manufacturer_data])
-    manufacturer_data["date"] = pd.to_datetime(manufacturer_data["date"])
-    mf_ts["date"] = pd.to_datetime(mf_ts["date"])
+    timeseries = pd.read_json(MAIN_URL + "/vaccination/vaccine-manufacturer-timeseries.json")
+    timeseries["date"] = pd.to_datetime(timeseries["date"])
+    timeseries.set_index("date", inplace=True)
+    timeseries = timeseries.combine_first(manufacturer_data_sum)
+    timeseries = timeseries.fillna(0).asfreq(freq="D", method="ffill").reset_index()
+    old_df = timeseries[timeseries["date"] < START_DATE].copy()
+    new_df = timeseries[timeseries["date"] >= START_DATE].copy()
 
-    mf_ts.set_index("date", inplace=True)
-    manufacturer_data.set_index("date", inplace=True)
-    mf_ts = mf_ts.combine_first(manufacturer_data)
-    mf_ts = mf_ts.fillna(0)
-    mf_ts = mf_ts.asfreq(freq="D")
-    mf_ts.reset_index(inplace=True)
-    mf_ts.fillna(method="ffill", inplace=True)
-    old_df = mf_ts[mf_ts["date"] < START_DATE].copy()
-    new_df = mf_ts[mf_ts["date"] >= START_DATE].copy()
+    # Calculate vaccination rate
+    new_df[["AstraZeneca_rate", "Sinovac_rate", "Sinopharm_rate", "JnJ_rate", "Pfizer_rate"]] = \
+        new_df[["AstraZeneca", "Sinovac", "Sinopharm", "Johnson & Johnson", "Pfizer"]].diff()
 
-    new_df["AstraZeneca_rate"] = new_df["AstraZeneca"].diff()
-    new_df["Sinopharm_rate"] = new_df["Sinopharm"].diff()
-    new_df["Sinovac_rate"] = new_df["Sinovac"].diff()
-    new_df["JnJ_rate"] = new_df["Johnson & Johnson"].diff()
-    new_df["Pfizer_rate"] = new_df["Pfizer"].diff()
-    mf_ts = old_df.append(new_df, ignore_index=True)
-    mf_ts = mf_ts.fillna(0)
-    return mf_ts
+    # Add new data to timeseries
+    timeseries = old_df.append(new_df, ignore_index=True).fillna(0)
+    return timeseries
 
 
 if __name__ == '__main__':
-    mf_data = json_load("../wiki/vaccination/provincial-vaccination-by-manufacturer.json")
+    manufacturer_data = json_load("../wiki/vaccination/provincial-vaccination-by-manufacturer.json")
+    print(manufacturer_data["update_date"])
 
-    manufacturer_timeseries = build_manufacturer_timeseries(mf_data)
-    manufacturer_timeseries["date"] = manufacturer_timeseries["date"].dt.strftime(
-        "%Y-%m-%d"
-    )
+    manufacturer_timeseries = build_manufacturer_timeseries(manufacturer_data)
+    manufacturer_timeseries["date"] = manufacturer_timeseries["date"].dt.strftime("%Y-%m-%d")
 
+    # Sort columns name
     manufacturer_timeseries = manufacturer_timeseries[
         [
             "date",
@@ -84,6 +70,7 @@ if __name__ == '__main__':
         ]
     ]
 
+    # Save data as json and csv
     manufacturer_timeseries.to_json(
         "../dataset/vaccine-manufacturer-timeseries.json",
         orient="records",
