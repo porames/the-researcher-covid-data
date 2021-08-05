@@ -1,7 +1,8 @@
 # The Researcher COVID data
 ![bot-taks-scheduler](https://github.com/porames/the-researcher-covid-data/workflows/bot-taks-scheduler/badge.svg)  
   
-Automated data scraper for Thailand COVID-19 data  
+Automated data scraper for Thailand COVID-19 data.  
+[The Researcher COVID Tracker](https://covid-19.researcherth.co)
 
 ## ข้อมูลวัคซีน
 - [การฉีดวัคซีนรายจังหวัด แยกตามโดสที่ฉีด](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/vaccination/provincial-vaccination.json)
