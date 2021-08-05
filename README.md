@@ -4,6 +4,7 @@
 Automated data scraper for Thailand COVID-19 data  
 
 ## ข้อมูลวัคซีน
+- [การฉีดวัคซีนรายจังหวัด แยกตามโดสที่ฉีด](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/vaccination/provincial-vaccination.json)
 - [การฉีดวัคซีนรายจังหวัด แยกตามชนิดวัคซีน](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/vaccination/provincial-vaccination-by-manufacturer.json)
 - [การฉีดวัคซีนเข็ม 1 รายจังหวัด](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/vaccination/1st-dose-provincial-vaccination.json)
 - [การฉีดวัคซีนเข็ม 2 รายจังหวัด](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/vaccination/2nd-dose-provincial-vaccination.json)
