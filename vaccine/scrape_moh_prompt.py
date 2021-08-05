@@ -150,7 +150,7 @@ def get_update_date(wd) -> str:
         "ธันวาคม": "12",
     }
     update_date_th = wd.find_element_by_css_selector("h3").get_attribute("innerHTML").split(" ")
-    year = int(update_date_th[3]) - 543
+    year = int(update_date_th[3])
     month = month_mapping[update_date_th[2]]
     day = update_date_th[1].zfill(2)
     hour, minute = update_date_th[5].split(":")
@@ -176,7 +176,6 @@ def scrape_and_save_moh_prompt(dose_num:int):
     time.sleep(10)
     wait = WebDriverWait(wd, 10)
     print("Selecting Button")
-    
     wait.until(
         EC.visibility_of_element_located((By.XPATH, f"//div[contains(@title,'{dose_to_khem[dose_num]}')]"))).click()
     print(f"{dose_to_khem[dose_num]} Found")
