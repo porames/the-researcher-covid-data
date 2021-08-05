@@ -206,7 +206,6 @@ def scrape_and_save_moh_prompt(dose_num:int):
         print(str(i + 1) + "/77 Provinces")
         print("Time elapsed: " + str(round(time.time() - start, 2)) + "s")
         i += 1
-        break
     dataset = dataset.fillna(0)
     # Key names according to dose number
     car_to_or = {
@@ -220,12 +219,14 @@ def scrape_and_save_moh_prompt(dose_num:int):
           "Johnson & Johnson",
           "Sinopharm",
           "Sinovac",
+          "Pfizer",
           "total_doses"
       ]] = dataset[[
           "AstraZeneca",
           "Johnson & Johnson",
           "Sinopharm",
           "Sinovac",
+          "Pfizer",          
           "total_doses"
       ]].astype(int)
     else:
