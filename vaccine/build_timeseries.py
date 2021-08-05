@@ -42,12 +42,10 @@ def build_manufacturer_timeseries(mf_data):
 
 
 def calculate_national_sum(data):
-    total_doses = 0
     first_dose = 0
     second_dose = 0
     third_dose = 0
     for province in data["data"]:
-        total_doses += province["total_doses"]
         first_dose += province["total_1st_dose"]
         second_dose += province["total_2nd_dose"]
         third_dose += province["total_3rd_dose"]
@@ -55,7 +53,7 @@ def calculate_national_sum(data):
         "first_dose": first_dose,
         "second_dose": second_dose,
         "third_dose": third_dose,
-        "total_doses": total_doses,
+        "total_doses": first_dose+second_dose+third_dose,
     }
 
 
@@ -114,13 +112,17 @@ def calculate_rate(df):
 #%%
 if __name__ == "__main__":
     moh_prompt_data = json_load("../dataset/provincial-vaccination.json")
+    x=pd.DataFrame(moh_prompt_data["data"])
+    display(x.sort_values(by="total_2nd_dose"))
     print(moh_prompt_data["update_date"])
     national_sum = calculate_national_sum(moh_prompt_data)
     vaccination_timeseries = pd.read_json(
         MAIN_URL + "/vaccination/national-vaccination-timeseries.json"
     )
     vaccination_timeseries["date"] = pd.to_datetime(vaccination_timeseries["date"])
+    print(national_sum)
     # Add data from moh prompt
+#%%
     vaccination_timeseries = vaccination_timeseries[
         [
             "date",

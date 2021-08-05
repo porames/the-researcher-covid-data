@@ -107,15 +107,16 @@ def open_province_dropdown(wd) -> None:
 
 def get_province(prov_th: str, wd, dose_num) -> dict:
     open_province_dropdown(wd)
-    time.sleep(0.5)
+    time.sleep(1)
     for elm in wd.find_elements_by_class_name("searchInput"):
         if elm.get_attribute("style") != "":
             elm.clear()
             elm.send_keys(prov_th)
             break
     wait = WebDriverWait(wd, 10)
-    wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
     time.sleep(1)
+    wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
+    time.sleep(2)
     doses = search_doses_num(wd)    
     data = {}
     data["total_doses"] = doses
