@@ -9,7 +9,6 @@ import time
 import json
 import pandas as pd
 from bs4 import BeautifulSoup
-from multiprocessing import Pool
 
 
 chrome_options = webdriver.ChromeOptions()
@@ -164,6 +163,10 @@ def get_update_date(wd) -> str:
     }
     update_date_th = wd.find_element_by_css_selector("h3").get_attribute("innerHTML").split(" ")
     year = int(update_date_th[3])
+    # Dirty hack for checking for BE or AD, Will break in about 480 years.
+    if year > 2500:
+        print("Year is BE, converting to AD")
+        year -= 543
     month = month_mapping[update_date_th[2]]
     day = update_date_th[1].zfill(2)
     hour, minute = update_date_th[5].split(":")
@@ -180,11 +183,11 @@ def scrape_and_save_moh_prompt(dose_num:int):
     print(dose_to_khem[dose_num])
     print("Spawning Chromium")
     wd = webdriver.Chrome("chromedriver", options=chrome_options)
-    wd = webdriver.Chrome("chromedriver", options=chrome_options)
     wd.get("https://dashboard-vaccine.moph.go.th/dashboard.html")
     print("Rendering JS for 10S")
     time.sleep(10)
     today_powerbi = wd.find_element_by_tag_name("iframe").get_attribute("src")
+    print(today_powerbi)
     wd.get(today_powerbi)
     print("Found Power Bi URL. Rendering JS for 10S")
     time.sleep(10)
@@ -197,7 +200,7 @@ def scrape_and_save_moh_prompt(dose_num:int):
     else:
        print("retreive manufacturer data") 
     time.sleep(2)
-    
+
     dataset = pd.DataFrame()    
     start = time.time()
     i = 0
@@ -207,6 +210,7 @@ def scrape_and_save_moh_prompt(dose_num:int):
         print(str(i + 1) + "/77 Provinces")
         print("Time elapsed: " + str(round(time.time() - start, 2)) + "s")
         i += 1
+
     dataset = dataset.fillna(0)
     # Key names according to dose number
     car_to_or = {
