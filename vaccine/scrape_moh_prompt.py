@@ -166,11 +166,15 @@ def scrape_and_save_moh_prompt(dose_num:int):
     print(dose_to_khem[dose_num])
     print("Spawning Chromium")
     wd = webdriver.Chrome("chromedriver", options=chrome_options)
-    wd.get(
-        "https://app.powerbi.com/view?r=eyJrIjoiOGFhYzhhMTUtMjBiNS00MWZiLTg4MmUtZTczZGEyMzIzMWYyIiwidCI6ImY3MjkwODU5LTIyNzAtNDc4ZS1iOTc3LTdmZTAzNTE0ZGQ4YiIsImMiOjEwfQ%3D%3D")
-    print("Rendering JS for 10 s")
-    wait = WebDriverWait(wd, 10)
+    wd = webdriver.Chrome("chromedriver", options=chrome_options)
+    wd.get("https://dashboard-vaccine.moph.go.th/dashboard.html")
+    print("Rendering JS for 10S")
     time.sleep(10)
+    today_powerbi = wd.find_element_by_tag_name("iframe").get_attribute("src")
+    wd.get(today_powerbi)
+    print("Found Power Bi URL. Rendering JS for 10S")
+    time.sleep(10)
+    wait = WebDriverWait(wd, 10)
     print("Selecting Button")
     
     wait.until(
