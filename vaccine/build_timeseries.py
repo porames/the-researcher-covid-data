@@ -14,7 +14,7 @@ def build_manufacturer_timeseries(mf_data):
     mf_data = calculate_mf_sum(mf_data)
     mf_data["date"] = pd.to_datetime(update_date).floor("D")
     START_DATE = "2021-07-02"
-    mf_ts = pd.read_json(MAIN_URL + "/vaccination/vaccine-manufacturer-timeseries.json")
+    mf_ts = pd.read_json("../dataset/vaccine-manufacturer-timeseries.json")
     mf_data = pd.DataFrame([mf_data])
     mf_data["date"] = pd.to_datetime(mf_data["date"])
     mf_ts["date"] = pd.to_datetime(mf_ts["date"])
@@ -112,11 +112,10 @@ if __name__ == "__main__":
     print(moh_prompt_data["update_date"])
     national_sum = calculate_national_sum(moh_prompt_data)
     vaccination_timeseries = pd.read_json(
-        MAIN_URL + "/vaccination/national-vaccination-timeseries.json"
+        "../dataset/national-vaccination-timeseries.json"
     )
     vaccination_timeseries["date"] = pd.to_datetime(vaccination_timeseries["date"])
-    national_sum["date"] = pd.to_datetime(moh_prompt_data["update_date"]).floor("D")
-    
+    national_sum["date"] = pd.to_datetime(moh_prompt_data["update_date"]).floor("D")    
     today_data = pd.DataFrame([national_sum])
     today_data = today_data.set_index("date")
     vaccination_timeseries = vaccination_timeseries.set_index("date")

@@ -107,11 +107,11 @@ def open_province_dropdown(wd) -> None:
 def get_province(prov_th: str, wd, dose_num) -> dict:
     open_province_dropdown(wd)
     time.sleep(1)
-    for elm in wd.find_elements_by_class_name("searchInput"):
-        if elm.get_attribute("style") != "":
-            elm.clear()
-            elm.send_keys(prov_th)
-            break
+    for elm in wd.find_elements_by_class_name("searchHeader"):
+        wd.execute_script("arguments[0].classList.remove('collapsed')", elm)    
+    elm = wd.find_elements_by_class_name("searchInput")
+    elm[-2].clear()
+    elm[-2].send_keys(prov_th)
     wait = WebDriverWait(wd, 10)
     time.sleep(1)
     wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
@@ -122,7 +122,7 @@ def get_province(prov_th: str, wd, dose_num) -> dict:
     data["province"] = prov_th    
     if (dose_num == 1):
       over_60 = get_over_60(wd)
-      data.update({"over_60_1st_dose":over_60})
+      data.update({"over_60_1st_dose": over_60})
     if (dose_num == 0):
         mf = get_mf(wd) 
         data.update(mf)    
@@ -207,6 +207,7 @@ def scrape_and_save_moh_prompt(dose_num:int):
     for province_name in census:
         province_data = get_province(province_name["province"], wd, dose_num)
         dataset = dataset.append(province_data, ignore_index=True)        
+        print(province_data)
         print(str(i + 1) + "/77 Provinces")
         print("Time elapsed: " + str(round(time.time() - start, 2)) + "s")
         i += 1
@@ -254,7 +255,6 @@ def scrape_and_save_moh_prompt(dose_num:int):
             json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
     wd.quit()
     return data_dict
-
 
 if __name__ == "__main__":
     scrape_and_save_moh_prompt(int(sys.argv[1]))
