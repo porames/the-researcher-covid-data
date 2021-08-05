@@ -46,6 +46,7 @@ def get_age_group(wd):
     wd.switch_to.default_content()
     return age_group_doses
 
+
 def search_doses_num(wd) -> int:
     total_dose = 0
     for svg in wd.find_elements_by_tag_name("svg"):
@@ -119,12 +120,15 @@ def get_province(prov_th: str, wd, dose_num) -> dict:
     data = {}
     data["total_doses"] = doses
     data["province"] = prov_th    
-    if(dose_num == 1):
+    if (dose_num == 1):
       over_60 = get_over_60(wd)
       data.update({"over_60_1st_dose":over_60})
-    if(dose_num == 0):
+    if (dose_num == 0):
         mf = get_mf(wd) 
         data.update(mf)    
+    if (dose_num > 1):
+        wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
+        open_province_dropdown(wd)
     time.sleep(1)
     return data
 
@@ -192,18 +196,24 @@ def scrape_and_save_moh_prompt(dose_num:int):
     else:
        print("retreive manufacturer data") 
     time.sleep(2)
-    dataset = pd.DataFrame()
     
+    dataset = pd.DataFrame()    
     start = time.time()
     i = 0
     for province_name in census:
         province_data = get_province(province_name["province"], wd, dose_num)
-        dataset = dataset.append(province_data, ignore_index=True)
+        dataset = dataset.append(province_data, ignore_index=True)        
         print(str(i + 1) + "/77 Provinces")
         print("Time elapsed: " + str(round(time.time() - start, 2)) + "s")
         i += 1
-
+        break
     dataset = dataset.fillna(0)
+    # Key names according to dose number
+    car_to_or = {
+        1: "1st",
+        2: "2nd",
+        3: "3rd",
+    }
     if dose_num == 0:
       dataset[[
           "AstraZeneca",
@@ -219,24 +229,23 @@ def scrape_and_save_moh_prompt(dose_num:int):
           "total_doses"
       ]].astype(int)
     else:
-       dataset["total_doses"] = dataset["total_doses"].astype(int)
+       dataset["total_"+car_to_or[dose_num]+"_dose"] = dataset["total_doses"].astype(int)
+       dataset = dataset.drop('total_doses', axis=1)
 
     data_dict = {
         "update_date": get_update_date(wd),
         "data": dataset.to_dict(orient="records"),
     }
 
-    # JSON file name according to dose number
-    car_to_or = {
-        1: "1st",
-        2: "2nd",
-        3: "3rd",
-    }
+    
     json_dir = "../dataset/"
     os.makedirs(json_dir, exist_ok=True)  # Make sure that we ABSOLUTELY have the target dir
-    with open(f"{json_dir}{car_to_or[dose_num]}-dose-provincial-vaccination.json", "w+") as json_file:
-        json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
-
+    if dose_num != 0:
+        with open(f"{json_dir}{car_to_or[dose_num]}-dose-provincial-vaccination.json", "w+") as json_file:
+            json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
+    else:
+        with open(f"{json_dir}provincial-vaccination-by-manufacturer.json", "w+") as json_file:
+            json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
     wd.quit()
     return data_dict
 
