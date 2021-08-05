@@ -1,9 +1,7 @@
 #%%
-from numpy import NaN, disp
 import pandas as pd
 import os
 import json
-import numpy as np
 
 MAIN_URL = "https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data"
 #%%
