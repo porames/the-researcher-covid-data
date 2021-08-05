@@ -1,4 +1,4 @@
-name: bot-taks-scheduler
+name: bot-tasks-scheduler
 on:
   schedule:
     - cron: '0 1 * * *' #01 Hour UTC = 8 Hour GMT+7
