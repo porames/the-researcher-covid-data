@@ -9,18 +9,6 @@ def json_load(file_path: str) -> dict:
         return json.load(json_file)
 
 
-def calculate_national_sum_today(data: dict) -> pd.DataFrame:
-    df = pd.DataFrame(data["data"])
-    today_national_sum = pd.DataFrame(index=[pd.to_datetime(data["update_date"]).floor("D")], data={
-        "first_dose": df["total_1st_dose"].to_numpy().sum(),
-        "second_dose": df["total_2nd_dose"].to_numpy().sum(),
-        "third_dose": df["total_3rd_dose"].to_numpy().sum(),
-        "total_doses": df[["total_1st_dose", "total_2nd_dose", "total_3rd_dose"]].to_numpy().sum(),
-    })  # Numpy sum is faster (even faster than pandas sum)
-    today_national_sum.index.name = "date"
-    return today_national_sum
-
-
 def calculate_manufacturer_sum(data: dict) -> dict:
     AstraZeneca = 0
     Sinovac = 0
@@ -72,41 +60,7 @@ def build_manufacturer_timeseries(manufacturer_data: dict) -> pd.DataFrame:
     return mf_ts
 
 
-if __name__ == "__main__":
-    # Parse today scraped data
-    moh_prompt_data = json_load("../dataset/provincial-vaccination.json")
-    print(moh_prompt_data["update_date"])
-    today_data = calculate_national_sum_today(moh_prompt_data)
-
-    # Get Historical Data
-    vaccination_timeseries = pd.read_json(MAIN_URL + "/vaccination/national-vaccination-timeseries.json")
-    vaccination_timeseries["date"] = pd.to_datetime(vaccination_timeseries["date"])
-    vaccination_timeseries = vaccination_timeseries.set_index("date")
-
-    # Add today data to timeseries
-    vaccination_timeseries = vaccination_timeseries.combine_first(today_data).asfreq("D").fillna(0)
-    dose_col = ["total_doses", "first_dose", "second_dose", "third_dose"]
-    # Fill missing data with previous values
-    vaccination_timeseries[dose_col] = vaccination_timeseries[dose_col].replace(to_replace=0, method="ffill")
-    vaccination_timeseries[dose_col] = vaccination_timeseries[dose_col].astype(int)
-
-    # Calculate daily vaccinations
-    vaccination_timeseries["daily_vaccinations"] = vaccination_timeseries["total_doses"].diff().fillna(0).astype(int)
-    vaccination_timeseries = vaccination_timeseries.reset_index()
-    vaccination_timeseries["date"] = vaccination_timeseries["date"].dt.strftime("%Y-%m-%d")
-
-    # Save data as json and csv
-    vaccination_timeseries.to_json(
-        "../dataset/national-vaccination-timeseries.json",
-        orient="records",
-        indent=2,
-        force_ascii=False,
-    )
-    vaccination_timeseries.to_csv("../dataset/national-vaccination-timeseries.csv", index=False)
-    print("Processed National Timeseries")
-    # End of national data processing
-
-    # Begin manufacturer data processing
+if __name__ == '__main__':
     mf_data = json_load("../wiki/vaccination/provincial-vaccination-by-manufacturer.json")
 
     manufacturer_timeseries = build_manufacturer_timeseries(mf_data)
