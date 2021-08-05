@@ -98,77 +98,33 @@ def get_delivery_data():
 
 def calculate_rate(df):
     # Fill empty dates with previous values
+    df = df.asfreq(freq="D")
+    
+    df = df.fillna(0)
     df["total_doses"] = df["total_doses"].replace(to_replace=0, method="ffill")
+    
     df["first_dose"] = df["first_dose"].replace(to_replace=0, method="ffill")
     df["second_dose"] = df["second_dose"].replace(to_replace=0, method="ffill")
     df["third_dose"] = df["third_dose"].replace(to_replace=0, method="ffill")
     df["daily_vaccinations"] = df["total_doses"].diff()
     return df
 
-
-# %%
-
-
-#%%
 if __name__ == "__main__":
     moh_prompt_data = json_load("../dataset/provincial-vaccination.json")
-    x=pd.DataFrame(moh_prompt_data["data"])
-    display(x.sort_values(by="total_2nd_dose"))
     print(moh_prompt_data["update_date"])
     national_sum = calculate_national_sum(moh_prompt_data)
     vaccination_timeseries = pd.read_json(
         MAIN_URL + "/vaccination/national-vaccination-timeseries.json"
     )
     vaccination_timeseries["date"] = pd.to_datetime(vaccination_timeseries["date"])
-    print(national_sum)
-    # Add data from moh prompt
-#%%
-    vaccination_timeseries = vaccination_timeseries[
-        [
-            "date",
-            "total_doses",
-            "first_dose",
-            "second_dose",
-            "data_anomaly",
-            "third_dose",
-        ]
-    ]
-
-    today_data = vaccination_timeseries[
-        vaccination_timeseries["date"]
-        == pd.to_datetime(moh_prompt_data["update_date"]).floor("D")
-    ]
-
-    if len(today_data) == 0:
-        vaccination_timeseries = vaccination_timeseries.append(
-            {
-                "date": pd.to_datetime(moh_prompt_data["update_date"]).floor("D"),
-                "total_doses": national_sum["total_doses"],
-                "first_dose": national_sum["first_dose"],
-                "second_dose": national_sum["second_dose"],
-                "third_dose": national_sum["third_dose"],
-            },
-            ignore_index=True,
-        )
-    else:
-        vaccination_timeseries.loc[
-            vaccination_timeseries["date"]
-            == pd.to_datetime(moh_prompt_data["update_date"]).floor("D")
-        ]["total_doses"] = national_sum["total_doses"]
-        vaccination_timeseries.loc[
-            vaccination_timeseries["date"]
-            == pd.to_datetime(moh_prompt_data["update_date"]).floor("D")
-        ]["first_dose"] = national_sum["first_dose"]
-        vaccination_timeseries.loc[
-            vaccination_timeseries["date"]
-            == pd.to_datetime(moh_prompt_data["update_date"]).floor("D")
-        ]["second_dose"] = national_sum["second_dose"]
-        vaccination_timeseries.loc[
-            vaccination_timeseries["date"]
-            == pd.to_datetime(moh_prompt_data["update_date"]).floor("D")
-        ]["third_dose"] = national_sum["third_dose"]
-
+    national_sum["date"] = pd.to_datetime(moh_prompt_data["update_date"]).floor("D")
+    
+    today_data = pd.DataFrame([national_sum])
+    today_data = today_data.set_index("date")
+    vaccination_timeseries = vaccination_timeseries.set_index("date")
+    vaccination_timeseries = vaccination_timeseries.combine_first(today_data)    
     vaccination_timeseries = calculate_rate(vaccination_timeseries)
+    vaccination_timeseries = vaccination_timeseries.reset_index()
     vaccination_timeseries["date"] = vaccination_timeseries["date"].dt.strftime(
         "%Y-%m-%d"
     )
@@ -178,22 +134,7 @@ if __name__ == "__main__":
         indent=2,
         force_ascii=False,
     )
-
-    mf_data = json_load("../dataset/provincial-vaccination-by-manufacturer.json")
-    mf_data["date"] = pd.to_datetime(moh_prompt_data["update_date"]).floor("D")
-    mf_data
-    manufacturer_timeseries = build_manufacturer_timeseries(mf_data)
-    manufacturer_timeseries["date"] = manufacturer_timeseries["date"].dt.strftime(
-        "%Y-%m-%d"
-    )
-    manufacturer_timeseries.to_json(
-        "../dataset/vaccine-manufacturer-timeseries.json",
-        orient="records",
-        indent=2,
-        force_ascii=False,
-    )
-    print("success")
-# %%
+    
     mf_data = json_load("../dataset/provincial-vaccination-by-manufacturer.json")
 
     manufacturer_timeseries = build_manufacturer_timeseries(mf_data)
