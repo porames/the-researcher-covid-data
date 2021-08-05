@@ -11,13 +11,13 @@ def json_load(file_path: str) -> dict:
 
 def calculate_national_sum_today(data: dict) -> pd.DataFrame:
     df = pd.DataFrame(data["data"])
-    today_national_sum = pd.DataFrame(index=[pd.to_datetime(data["update_date"]).floor("D")], data={
+    today_national_sum = pd.DataFrame(index=[0], data={
+        "date": pd.to_datetime(data["update_date"]).floor("D"),
         "first_dose": df["total_1st_dose"].to_numpy().sum(),
         "second_dose": df["total_2nd_dose"].to_numpy().sum(),
         "third_dose": df["total_3rd_dose"].to_numpy().sum(),
         "total_doses": df[["total_1st_dose", "total_2nd_dose", "total_3rd_dose"]].to_numpy().sum(),
     })  # Numpy sum is faster (even faster than pandas sum)
-    today_national_sum.index.name = "date"
     return today_national_sum
 
 
@@ -30,11 +30,11 @@ if __name__ == "__main__":
     # Get Historical Data
     vaccination_timeseries = pd.read_json(MAIN_URL + "/vaccination/national-vaccination-timeseries.json")
     vaccination_timeseries["date"] = pd.to_datetime(vaccination_timeseries["date"])
-    vaccination_timeseries = vaccination_timeseries.set_index("date")
 
     # Add today data to timeseries
-    vaccination_timeseries = vaccination_timeseries.combine_first(today_data).asfreq("D").fillna(0)
     dose_col = ["total_doses", "first_dose", "second_dose", "third_dose"]
+    vaccination_timeseries = vaccination_timeseries.merge(today_data, how="outer").drop_duplicates(subset=["date"], keep="last")
+    vaccination_timeseries.set_index("date", inplace=True)
     # Fill missing data with previous values
     vaccination_timeseries[dose_col] = vaccination_timeseries[dose_col].replace(to_replace=0, method="ffill")
     vaccination_timeseries[dose_col] = vaccination_timeseries[dose_col].astype(int)
@@ -53,4 +53,3 @@ if __name__ == "__main__":
     )
     vaccination_timeseries.to_csv("../dataset/national-vaccination-timeseries.csv", index=False)
     print("Processed National Timeseries")
-    # End of national data processing

@@ -13,14 +13,15 @@ def json_load(file_path: str) -> dict:
 
 def calculate_manufacturer_sum(data: dict) -> pd.DataFrame:
     df = pd.DataFrame(data["data"])
-    today_manufacturer_sum = pd.DataFrame(index=[pd.to_datetime(data["update_date"]).floor("D")], data={
+    today_manufacturer_sum = pd.DataFrame(index=[0], data={
+        "date": pd.to_datetime(data["update_date"]).floor("D"),
         "AstraZeneca": df["AstraZeneca"].to_numpy().sum(),
         "Sinovac": df["Sinovac"].to_numpy().sum(),
         "Sinopharm": df["Sinopharm"].to_numpy().sum(),
         "Johnson & Johnson": df["Johnson & Johnson"].to_numpy().sum(),
         "Pfizer": df["Pfizer"].to_numpy().sum(),
     })  # Numpy sum is faster (even faster than pandas sum)
-    today_manufacturer_sum.index.name = "date"
+    #today_manufacturer_sum.index.name = "date"
     return today_manufacturer_sum
 
 
@@ -31,8 +32,9 @@ def build_manufacturer_timeseries(manufacturer_data: dict) -> pd.DataFrame:
     START_DATE = "2021-07-02"
     timeseries = pd.read_json(MAIN_URL + "/vaccination/vaccine-manufacturer-timeseries.json")
     timeseries["date"] = pd.to_datetime(timeseries["date"])
+    timeseries = timeseries.merge(manufacturer_data_sum, how="outer").drop_duplicates(subset=["date"], keep="last")
     timeseries.set_index("date", inplace=True)
-    timeseries = timeseries.combine_first(manufacturer_data_sum)
+
     timeseries = timeseries.fillna(0).asfreq(freq="D", method="ffill").reset_index()
     old_df = timeseries[timeseries["date"] < START_DATE].copy()
     new_df = timeseries[timeseries["date"] >= START_DATE].copy()
@@ -43,6 +45,9 @@ def build_manufacturer_timeseries(manufacturer_data: dict) -> pd.DataFrame:
 
     # Add new data to timeseries
     timeseries = old_df.append(new_df, ignore_index=True).fillna(0)
+    # Convert rate to int
+    timeseries[["AstraZeneca_rate", "Sinovac_rate", "Sinopharm_rate", "JnJ_rate", "Pfizer_rate"]] = \
+        timeseries[["AstraZeneca_rate", "Sinovac_rate", "Sinopharm_rate", "JnJ_rate", "Pfizer_rate"]].astype(int)
     return timeseries
 
 
