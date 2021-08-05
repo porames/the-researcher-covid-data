@@ -21,6 +21,13 @@ chrome_options.add_argument("--window-size=1000,3000")
 with open("../population-data/th-census-data.json", encoding="utf-8") as file:
     census = json.load(file)
 
+def get_over_60(wd):
+    wait = WebDriverWait(wd, 10)
+    wait.until(EC.element_to_be_clickable((By.XPATH,"//*[text()[contains(.,'60 ปีขึ้นไป')]]"))).click()
+    time.sleep(1)
+    over_60_1st_dose = search_doses_num(wd)
+    wait.until(EC.element_to_be_clickable((By.XPATH,"//*[text()[contains(.,'60 ปีขึ้นไป')]]"))).click()
+    return over_60_1st_dose
 
 def get_age_group(wd):
     wd.switch_to.frame(wd.find_element_by_css_selector(".visual-sandbox"))
@@ -39,13 +46,12 @@ def get_age_group(wd):
     wd.switch_to.default_content()
     return age_group_doses
 
-
 def search_doses_num(wd) -> int:
     total_dose = 0
     for svg in wd.find_elements_by_tag_name("svg"):
         label = svg.get_attribute("aria-label")
-        if "totalDose" in str(label):
-            total_dose = int(label.replace("totalDose", "").replace(",", "").replace(" ", "").replace(".", ""))
+        if "ฉีดสะสม" in str(label):
+            total_dose = int(label.replace("ฉีดสะสม", "").replace(",", "").replace(" ", "").replace(".", ""))
             break
     return total_dose
 
@@ -98,7 +104,7 @@ def open_province_dropdown(wd) -> None:
             break
 
 
-def get_province(prov_th: str, wd) -> dict:
+def get_province(prov_th: str, wd, dose_num) -> dict:
     open_province_dropdown(wd)
     time.sleep(0.5)
     for elm in wd.find_elements_by_class_name("searchInput"):
@@ -108,15 +114,17 @@ def get_province(prov_th: str, wd) -> dict:
             break
     wait = WebDriverWait(wd, 10)
     wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
-    # wd.find_elements_by_class_name("slicerText")[-1].click()
     time.sleep(1)
     doses = search_doses_num(wd)    
-    groups = get_age_group(wd)
-    mf = get_mf(wd)
-    data = mf
+    data = {}
     data["total_doses"] = doses
-    data["province"] = prov_th
-    data.update(groups)
+    data["province"] = prov_th    
+    if(dose_num == 1):
+      over_60 = get_over_60(wd)
+      data.update({"over_60_1st_dose":over_60})
+    if(dose_num == 0):
+        mf = get_mf(wd) 
+        data.update(mf)    
     time.sleep(1)
     return data
 
@@ -159,6 +167,7 @@ def get_update_date(wd) -> str:
 
 def scrape_and_save_moh_prompt(dose_num:int):
     dose_to_khem = {
+        0: "Total doses and Manufacturer data",
         1: "เข็มหนึ่ง",
         2: "เข็มสอง",
         3: "เข็มสาม"
@@ -176,61 +185,41 @@ def scrape_and_save_moh_prompt(dose_num:int):
     time.sleep(10)
     wait = WebDriverWait(wd, 10)
     print("Selecting Button")
-    wait.until(
-        EC.visibility_of_element_located((By.XPATH, f"//div[contains(@title,'{dose_to_khem[dose_num]}')]"))).click()
-    print(f"{dose_to_khem[dose_num]} Found")
+    if (dose_num!=0):
+        wait.until(
+            EC.element_to_be_clickable((By.XPATH, f"//div[contains(@title,'{dose_to_khem[dose_num]}')]"))).click()
+        print(f"{dose_to_khem[dose_num]} Found")
+    else:
+       print("retreive manufacturer data") 
     time.sleep(2)
     dataset = pd.DataFrame()
     
     start = time.time()
     i = 0
     for province_name in census:
-        province_data = get_province(province_name["province"], wd)
+        province_data = get_province(province_name["province"], wd, dose_num)
         dataset = dataset.append(province_data, ignore_index=True)
-        print(province_data)
         print(str(i + 1) + "/77 Provinces")
         print("Time elapsed: " + str(round(time.time() - start, 2)) + "s")
         i += 1
 
     dataset = dataset.fillna(0)
-    dataset[[
-        "AstraZeneca",
-        "Johnson & Johnson",
-        "Sinopharm",
-        "Sinovac",
-        "total_doses",
-        ">80",
-        "61-80",
-        "41-60",
-        "21-40",
-        "18-20"
-    ]] = dataset[[
-        "AstraZeneca",
-        "Johnson & Johnson",
-        "Sinopharm",
-        "Sinovac",
-        "total_doses",
-        ">80",
-        "61-80",
-        "41-60",
-        "21-40",
-        "18-20"
-    ]].astype(int)
-
-    # Sort dataframe row for json
-    dataset = dataset[[
-        "province",
-        "AstraZeneca",
-        "Johnson & Johnson",
-        "Sinopharm",
-        "Sinovac",
-        "total_doses",
-        ">80",
-        "61-80",
-        "41-60",
-        "21-40",
-        "18-20"
-    ]]
+    if dose_num == 0:
+      dataset[[
+          "AstraZeneca",
+          "Johnson & Johnson",
+          "Sinopharm",
+          "Sinovac",
+          "total_doses"
+      ]] = dataset[[
+          "AstraZeneca",
+          "Johnson & Johnson",
+          "Sinopharm",
+          "Sinovac",
+          "total_doses"
+      ]].astype(int)
+    else:
+       dataset["total_doses"] = dataset["total_doses"].astype(int)
 
     data_dict = {
         "update_date": get_update_date(wd),
