@@ -135,7 +135,7 @@ if __name__ == "__main__":
         force_ascii=False,
     )
     
-    mf_data = json_load("../dataset/provincial-vaccination-by-manufacturer.json")
+    mf_data = json_load("../wiki/vaccination/provincial-vaccination-by-manufacturer.json")
 
     manufacturer_timeseries = build_manufacturer_timeseries(mf_data)
     manufacturer_timeseries["date"] = manufacturer_timeseries["date"].dt.strftime(
