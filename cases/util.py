@@ -14,11 +14,17 @@ def json_dump(json_data,fname):
 
 
 def get_population(json_data):
-    return {province["name"]: province["population"] for province in json_data['data']}
+    population = {}
+    for province in json_data:
+        if "estimated_living_population" in province.keys():
+            population[province['province']] = province['estimated_living_population']
+        else:
+            population[province['province']] = province['population']
+    return population
 
 
 def get_vaccines(json_data):
-    return {province["name"]: province for province in json_data['data']}
+    return {province["province"]: province for province in json_data['data']}
 
 
 def get_provinces_name(json_data):
