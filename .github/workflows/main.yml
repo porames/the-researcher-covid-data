@@ -215,7 +215,7 @@ jobs:
           path: dataset/*.json
 
   commit-files-to-wiki:
-    needs: [combine-moh-prompt]
+    needs: [combine-moh-prompt, get-cases-and-testing-data]
     runs-on: ubuntu-latest
     steps:
       - name: Check Repo
