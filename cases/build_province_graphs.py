@@ -3,11 +3,11 @@ import matplotlib.pyplot as plt
 import datetime
 import os
 
-data = json_load("../dataset/province-cases-data-21days.json")
+data = json_load("../wiki/cases/province-cases-data-21days.json")
 end = datetime.datetime.fromisoformat(max(data[0]["cases"].keys()))
 provinces_name = get_provinces_name(json_load('../geo-data/th-map-provinces-points.geojson'))
 population_data = json_load('../population-data/th-census-with-hidden-pop.json')
-vaccines_data = json_load('../dataset/provincial-vaccination.json')
+vaccines_data = json_load('../wiki/vaccination/provincial-vaccination.json')
 populations = get_population(population_data)
 vaccines = get_vaccines(vaccines_data)
 
