@@ -217,6 +217,8 @@ jobs:
     needs: [combine-moh-prompt, get-cases-and-testing-data]
     runs-on: 'ubuntu-latest'
     steps:
+      - name: Check Repo
+        uses: actions/checkout@v2.3.4
       - name: Download vaccination data
         uses: actions/download-artifact@v2
         with:
