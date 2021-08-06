@@ -212,7 +212,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: vaccination-combined
-          path: dataset/*.json
+          path: dataset/*
 
   commit-files-to-wiki:
     needs: [combine-moh-prompt, get-cases-and-testing-data]
