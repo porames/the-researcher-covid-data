@@ -21,10 +21,20 @@ with open("../population-data/th-census-data.json", encoding="utf-8") as file:
     census = json.load(file)
 
 def get_over_60(wd):
+    
     wait = WebDriverWait(wd, 10)
     wait.until(EC.element_to_be_clickable((By.XPATH,"//*[text()[contains(.,'60 ปีขึ้นไป')]]"))).click()
     time.sleep(1)
+    total_doses = search_doses_num(wd)
     over_60_1st_dose = search_doses_num(wd)
+    try_count = 0
+    while over_60_1st_dose/total_doses > 0.8:
+        if try_count>3:
+            raise ValueError("Try exceeded. Task killed.")
+        over_60_1st_dose = search_doses_num(wd)
+        print("Over 60 doses too high. Trying it again...")        
+        time.sleep(1)
+        try_count+=1
     wait.until(EC.element_to_be_clickable((By.XPATH,"//*[text()[contains(.,'60 ปีขึ้นไป')]]"))).click()
     return over_60_1st_dose
 
