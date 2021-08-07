@@ -128,7 +128,6 @@ def get_province(prov_th: str, wd, dose_num) -> dict:
         data.update(mf)    
     if (dose_num > 1):
         wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
-        time.sleep(0.5)
         open_province_dropdown(wd)
     time.sleep(1)
     return data
