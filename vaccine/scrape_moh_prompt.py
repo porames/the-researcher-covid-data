@@ -210,7 +210,7 @@ def scrape_and_save_moh_prompt(dose_num:int):
         print(province_data)
         province_total_doses = province_data["total_doses"]
         try_count=0
-        while (province_total_doses / initial_total_doses > 0.6):
+        while (province_total_doses / initial_total_doses > 0.8):
             if try_count>3:
                 raise ValueError("Try exceeded. Task killed.")
             print("Doses number too high. Trying it again.")    
@@ -266,6 +266,6 @@ def scrape_and_save_moh_prompt(dose_num:int):
             json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
     wd.quit()
     return data_dict
-    
+
 if __name__ == "__main__":
     scrape_and_save_moh_prompt(int(sys.argv[1]))
