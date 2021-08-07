@@ -208,11 +208,6 @@ jobs:
         with:
           name: vaccination-combined
           path: wiki/vaccination
-      - name: Download Cases Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: cases
-          path: wiki/cases
       - name: Display structure of downloaded files
         run: ls -R
       - name: Upload json to wiki
