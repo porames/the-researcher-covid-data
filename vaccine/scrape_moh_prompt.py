@@ -184,8 +184,8 @@ def scrape_and_save_moh_prompt(dose_num:int):
     print("Spawning Chromium")
     wd = webdriver.Chrome("chromedriver", options=chrome_options)
     wd.get("https://dashboard-vaccine.moph.go.th/dashboard.html")
-    print("Rendering JS for 10S")
-    time.sleep(10)
+    print("Rendering JS for 5S")
+    time.sleep(5)
     today_powerbi = wd.find_element_by_tag_name("iframe").get_attribute("src")
     print(today_powerbi)
     wd.get(today_powerbi)
@@ -200,14 +200,25 @@ def scrape_and_save_moh_prompt(dose_num:int):
     else:
        print("retreive manufacturer data") 
     time.sleep(2)
-
+    initial_total_doses=search_doses_num(wd)
+    print(initial_total_doses)
     dataset = pd.DataFrame()    
     start = time.time()
     i = 0
     for province_name in census:
-        province_data = get_province(province_name["province"], wd, dose_num)
-        dataset = dataset.append(province_data, ignore_index=True)        
+        province_data = get_province(province_name["province"], wd, dose_num)        
         print(province_data)
+        province_total_doses = province_data["total_doses"]
+        try_count=0
+        while (province_total_doses / initial_total_doses > 0.6):
+            if try_count>3:
+                raise ValueError("Try exceeded. Task killed.")
+            print("Doses number too high. Trying it again.")    
+            province_data = get_province(province_name["province"], wd, dose_num)
+            province_total_doses = province_data["total_doses"]
+            print(province_data)
+            try_count+=1
+        dataset = dataset.append(province_data, ignore_index=True)        
         print(str(i + 1) + "/77 Provinces")
         print("Time elapsed: " + str(round(time.time() - start, 2)) + "s")
         i += 1
@@ -255,6 +266,6 @@ def scrape_and_save_moh_prompt(dose_num:int):
             json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
     wd.quit()
     return data_dict
-
+    
 if __name__ == "__main__":
     scrape_and_save_moh_prompt(int(sys.argv[1]))
