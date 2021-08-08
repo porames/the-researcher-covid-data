@@ -64,5 +64,5 @@ if __name__ == "__main__":
     report_name = tr.text.strip()
     print(report_url)
     delivery_data = parse_report_by_url(report_url)
-    os.makedirs('../dataset', exist_ok=True) 
-    delivery_data.to_json("../dataset/vaccine-delivery.json",orient="records",indent=2)
+    os.makedirs('../dataset/vaccination', exist_ok=True) 
+    delivery_data.to_json("../dataset/vaccination/vaccine-delivery.json",orient="records",indent=2, force_ascii=False)
