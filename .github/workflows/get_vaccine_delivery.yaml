@@ -8,7 +8,7 @@ jobs:
       - name: Check Repo
         uses: actions/checkout@v2.3.4
       - name: Install ubuntu dependencies
-        run: sudo apt install ghostscript tcl-tk
+        run: sudo apt install ghostscript python3-tk
       - name: Cache Python Environment
         uses: actions/cache@v2
         with:
