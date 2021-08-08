@@ -1,29 +1,29 @@
 name: get-vaccine-delivery
 on:
-  workflow_disptacth:
-  jobs:
-    get-delivery:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Check Repo
-          uses: actions/checkout@v2.3.4
-        - name: Install ubuntu dependencies
-          run: sudo apt install ghostscript tcl-tk
-        - name: Cache Python Environment
-          uses: actions/cache@v2
-          with:
-            path: ${{ env.pythonLocation }}
-            key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
-        - name: Install Python dependencies
-          run: |
-            python -m pip install --upgrade pip
-            pip install -r requirements.txt
-        - name: Get delivery data from DDC daily report pdf
-          working-directory: vaccine
-          run: python get_delivery.py
-        - name: Upload json to wiki
-          uses: kai-tub/external-repo-sync-action@v1
-          with:
-            source-directory: './dataset'
-          env:
-            GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+  workflow_dispatch:
+jobs:
+  get-delivery:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Repo
+        uses: actions/checkout@v2.3.4
+      - name: Install ubuntu dependencies
+        run: sudo apt install ghostscript tcl-tk
+      - name: Cache Python Environment
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Get delivery data from DDC daily report pdf
+        working-directory: vaccine
+        run: python get_delivery.py
+      - name: Upload json to wiki
+        uses: kai-tub/external-repo-sync-action@v1
+        with:
+          source-directory: './dataset'
+        env:
+          GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
