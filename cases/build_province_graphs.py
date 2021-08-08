@@ -26,9 +26,9 @@ for province in data:
     if max(moving_aves[-14:]) < 10:
         plt.ylim(0, 10)
     else:
-        plt.ylim(0, max(moving_aves[-14:]) + 0.05 * max(moving_aves[-14:]))
+        plt.ylim(0, max(moving_aves[-14:]) + 0.07 * max(moving_aves[-14:]))
     plt.fill_between(names[-14:], 0, moving_aves[-14:], alpha=0.3, color="#dc3545", zorder=2)
-    plt.plot(names[-14:], moving_aves[-14:], color="#dc3545", linewidth=25)
+    plt.plot(names[-14:], moving_aves[-14:], color="#dc3545", linewidth=35)
     plt.box(False)
     plt.xticks([])
     plt.yticks([])
