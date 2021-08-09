@@ -13,9 +13,7 @@ Automated data scraper for Thailand COVID-19 data.
 ## ข้อมูลวัคซีน
 - การฉีดวัคซีนรายจังหวัด แยกตามโดสที่ฉีด [JSON](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/vaccination/provincial-vaccination.json)
 - การฉีดวัคซีนรายจังหวัด แยกตามชนิดวัคซีน [JSON](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/vaccination/provincial-vaccination-by-manufacturer.json)
-- การฉีดวัคซีนเข็ม 1 รายจังหวัด [JSON](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/vaccination/1st-dose-provincial-vaccination.json)
-- การฉีดวัคซีนเข็ม 2 รายจังหวัด [JSON](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/vaccination/2nd-dose-provincial-vaccination.json)
-- การฉีดวัคซีนเข็ม 3 รายจังหวัด [JSON](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/vaccination/3rd-dose-provincial-vaccination.json)
+- การจัดสรรวัคซีน (จำนวนวัคซีนของรัฐบาลที่จัดส่งลงพื้นที่) [JSON](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/vaccination/vaccine-delivery.json)
 - อัตราการฉีดวัคซีนของแต่ละผู้ผลิต [JSON](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/vaccination/vaccine-manufacturer-timeseries.json), [CSV](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/vaccination/vaccine-manufacturer-timeseries.csv)  
 - อัตราการฉีดวัคซีนทั้งประเทศ [JSON](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/vaccination/national-vaccination-timeseries.json), [CSV](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/vaccination/national-vaccination-timeseries.csv)
 
