@@ -29,6 +29,7 @@ def parse_month(date_th):
 
 def parse_report_by_url(url):
   response = requests.get(url)
+  os.makedirs('tmp', exist_ok=True) 
   file = open("tmp/daily_report.pdf", "wb")
   file.write(response.content)
   file.close()
