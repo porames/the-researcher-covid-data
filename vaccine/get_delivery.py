@@ -66,7 +66,7 @@ if __name__ == "__main__":
     print(update_date)
     delivery_data = parse_report_by_url(report_url)
     delivery_data = delivery_data.iloc[:,0:6]
-    provinces = pd.read_csv("/content/drive/MyDrive/Colab Notebooks/moph_provinces.csv", header=None)
+    provinces = pd.read_csv("../geo-data/moph_provinces.csv", header=None)
     delivery_data["province"] = list(provinces[1])
     delivery_data.columns = ["health_area", "population","delivered_sinovac","delivered_astrazeneca","delivered_pfizer","delivered_total","province"]
     delivery_data['delivered_pfizer'] = delivery_data['delivered_pfizer'].str.replace('-',"0")
