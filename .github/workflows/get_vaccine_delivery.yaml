@@ -1,5 +1,7 @@
 name: get-vaccine-delivery
 on:
+  schedule:
+    - cron: '0 9 * * *' #00 Hour UTC = 16 Hour GMT+7
   workflow_dispatch:
 jobs:
   get-delivery:
