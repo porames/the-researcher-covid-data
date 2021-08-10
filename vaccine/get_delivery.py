@@ -2,7 +2,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 import re
-import camelot
+import tabula
 import os
 import json
 
@@ -22,34 +22,59 @@ def parse_month(date_th):
         "ธันวาคม": "12",
     }
     update_date_th = date_th.split(" ")
-    month = month_mapping[update_date_th[3]]
+    print(update_date_th)
+    if (len(update_date_th[3])>3):
+      month = month_mapping[update_date_th[3]]
+    else:
+      month = month_mapping[update_date_th[4]]
     year = int(update_date_th[-1])-543
     day = update_date_th[2].zfill(2)
     return (f"{year}-{month}-{day}")
 
 def parse_report_by_url(url):
-  response = requests.get(url)
-  os.makedirs('tmp', exist_ok=True) 
-  file = open("tmp/daily_report.pdf", "wb")
-  file.write(response.content)
-  file.close()
-  tables = camelot.read_pdf('tmp/daily_report.pdf', pages='2,3',split_text=True)
-  raw_table = pd.DataFrame()
-  for i in range(2):
-    df=tables[i].df
-    df=df[df[1].str.isdigit()]
-    df.drop([2], axis=1, inplace=True)
-    raw_table = raw_table.append(df,ignore_index=True)
-  table_dict=raw_table.transpose().to_dict()
-  rows=[]
-  for row_num in table_dict:
-    cleaned_row=[]
-    for (key,value) in table_dict[row_num].items():
-      for col in value.replace(" ", "").split('\n'):
-        if(col): cleaned_row.append(col)
-    rows.append(cleaned_row)
-  cleaned_table = pd.DataFrame(rows)
-  return cleaned_table
+    response = requests.get(url)
+    os.makedirs('tmp', exist_ok=True)
+    file = open("tmp/daily_report.pdf", "wb")
+    file.write(response.content)
+    file.close()
+    tables = tabula.read_pdf('tmp/daily_report.pdf', pages='2,3',pandas_options={'header': None})
+    raw_table = pd.DataFrame()
+    for i in range(2):
+        df=tables[i]
+        df=df.fillna("N/A")
+        df=df[df[0].str.isnumeric()]
+        raw_table = raw_table.append(df,ignore_index=True)
+    raw_table.fillna("N/A",inplace=True)
+    rows=[]
+    for row in raw_table.to_dict(orient="records"):
+        cleaned_row=[]
+        for (key,value) in row.items():
+            for col in str(value).split(' '):
+                if (len(col)>0 & (str(col) != "N/A")): cleaned_row.append(col)
+        rows.append(cleaned_row)
+    cleaned_table = pd.DataFrame(rows)
+    cleaned_table = cleaned_table.iloc[:,0:7]
+    cleaned_table = cleaned_table.drop(1, axis=1)
+    return cleaned_table
+
+def format_table(df):
+    #Add province names
+    provinces = pd.read_csv("/content/drive/MyDrive/Colab Notebooks/moph_provinces.csv", header=None)
+    df["province"] = list(provinces[1])
+    df.columns = ["health_area", "population","delivered_sinovac","delivered_astrazeneca","delivered_pfizer","delivered_total","province"]
+    display(df)
+
+    df['delivered_pfizer'] = delivery_data['delivered_pfizer'].str.replace('-',"0")
+    num_cols = ['population','delivered_sinovac','delivered_astrazeneca','delivered_pfizer','delivered_total']
+    for col in num_cols:
+      df[col] = df[col].str.replace(',','')
+      df[col] = df[col].astype(int)
+      
+    os.makedirs('../dataset/vaccination', exist_ok=True) 
+    prov_data = {}
+    prov_data["data"] = df.to_dict(orient="records")
+    prov_data["update_date"] = update_date
+    return prov_data
 
 if __name__ == "__main__":
     latest_date = pd.to_datetime("today")
@@ -62,21 +87,9 @@ if __name__ == "__main__":
     report_url = tr.find("a").get("href")
     print('--'+tr.text.strip()+'--')
     report_name = tr.text.strip()
+    print(report_name)
     update_date = parse_month(report_name)
-    print(update_date)
     delivery_data = parse_report_by_url(report_url)
-    delivery_data = delivery_data.iloc[:,0:6]
-    provinces = pd.read_csv("../geo-data/moph_provinces.csv", header=None)
-    delivery_data["province"] = list(provinces[1])
-    delivery_data.columns = ["health_area", "population","delivered_sinovac","delivered_astrazeneca","delivered_pfizer","delivered_total","province"]
-    delivery_data['delivered_pfizer'] = delivery_data['delivered_pfizer'].str.replace('-',"0")
-    num_cols = ['population','delivered_sinovac','delivered_astrazeneca','delivered_pfizer','delivered_total']
-    for col in num_cols:
-      delivery_data[col] = delivery_data[col].str.replace(',','')
-      delivery_data[col] = delivery_data[col].astype(int)
-    os.makedirs('../dataset/vaccination', exist_ok=True) 
-    prov_data = {}
-    prov_data["data"] = delivery_data.to_dict(orient="records")
-    prov_data["update_date"] = update_date
+    prov_data = format_table(delivery_data)
     with open('../dataset/vaccination/vaccine-delivery.json', 'w+', encoding="utf-8") as f:
         json.dump(prov_data, f, indent=2, ensure_ascii=False)
