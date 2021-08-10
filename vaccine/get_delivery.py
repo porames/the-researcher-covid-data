@@ -59,11 +59,9 @@ def parse_report_by_url(url):
 
 def format_table(df):
     #Add province names
-    provinces = pd.read_csv("/content/drive/MyDrive/Colab Notebooks/moph_provinces.csv", header=None)
+    provinces = pd.read_csv("../geo-data/moph_provinces.csv", header=None)
     df["province"] = list(provinces[1])
     df.columns = ["health_area", "population","delivered_sinovac","delivered_astrazeneca","delivered_pfizer","delivered_total","province"]
-    display(df)
-
     df['delivered_pfizer'] = delivery_data['delivered_pfizer'].str.replace('-',"0")
     num_cols = ['population','delivered_sinovac','delivered_astrazeneca','delivered_pfizer','delivered_total']
     for col in num_cols:
