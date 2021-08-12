@@ -276,5 +276,49 @@ def scrape_and_save_moh_prompt(dose_num:int):
     wd.quit()
     return data_dict
 
+def scrape_age_group():
+    print("Scraping vaccination by age group")
+    dose_to_khem = {
+        1: "เข็มหนึ่ง",
+        2: "เข็มสอง",
+        3: "เข็มสาม"
+    }
+    car_to_or = {
+        1: "1st",
+        2: "2nd",
+        3: "3rd",
+    }
+    print("Spawning Chromium")
+    wd = webdriver.Chrome("chromedriver", options=chrome_options)
+    wd.get("https://dashboard-vaccine.moph.go.th/dashboard.html")
+    print("Rendering JS for 5S")
+    time.sleep(5)
+    today_powerbi = wd.find_element_by_tag_name("iframe").get_attribute("src")
+    print(today_powerbi)
+    wd.get(today_powerbi)
+    print("Found Power Bi URL. Rendering JS for 10S")
+    time.sleep(10)
+    wait = WebDriverWait(wd, 10)
+    print("Selecting Button")
+    dataset = {}
+    dataset["update_date"] = get_update_date(wd)
+    for dose_num in range(1,4):
+        wait.until(
+            EC.element_to_be_clickable((By.XPATH, f"//div[contains(@title,'{dose_to_khem[dose_num]}')]"))
+        ).click()
+        print(f"{dose_to_khem[dose_num]} Found")
+        time.sleep(5)
+        doses_by_age = get_age_group(wd)
+        dataset[f"total_{car_to_or[dose_num]}_dose"] = doses_by_age
+    wd.quit()
+    json_dir = "../dataset"
+    os.makedirs(json_dir, exist_ok=True)
+    with open(f"{json_dir}/vaccination-by-age-group", "w+") as json_file:
+        json.dump(dataset, json_file, ensure_ascii=False, indent=2)
+    return dataset
+
 if __name__ == "__main__":
-    scrape_and_save_moh_prompt(int(sys.argv[1]))
+    if(int(sys.argv[1]) < 4):
+        scrape_and_save_moh_prompt()
+    else:
+        scrape_age_group()
