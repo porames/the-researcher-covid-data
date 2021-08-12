@@ -313,7 +313,7 @@ def scrape_age_group():
     wd.quit()
     json_dir = "../dataset"
     os.makedirs(json_dir, exist_ok=True)
-    with open(f"{json_dir}/vaccination-by-age-group", "w+") as json_file:
+    with open(f"{json_dir}/vaccination-by-age-group.json", "w+") as json_file:
         json.dump(dataset, json_file, ensure_ascii=False, indent=2)
     return dataset
 
