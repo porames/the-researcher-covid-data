@@ -39,7 +39,7 @@ def parse_report_by_url(url):
     file.close()
     tables = tabula.read_pdf('tmp/daily_report.pdf', pages='2,3,4',pandas_options={'header': None})
     raw_table = pd.DataFrame()
-    for i in range(2):
+    for i in range(3):
         df=tables[i]
         df=df.fillna("N/A")
         df=df[df[0].str.isnumeric()]
