@@ -43,14 +43,14 @@ def get_age_group(wd):
     age_groups = [">80", "61-80", "41-60", "21-40", "18-20"]
     age_group_doses = {}
     i = 0
-    for label in age_chart.find("g", {"class": "labels"}).findAll("text"):
-        if label.get_text():
+    for title in age_chart.findAll("title",{"class": "label-title"}):
+        dose = title.get_text()
+        if (dose):
             if age_groups[i % 5] in age_group_doses.keys():
-                age_group_doses[age_groups[i % 5]] += (to_number(label.get_text()))
+                age_group_doses[age_groups[i % 5]] += int(dose)
             else:
-                age_group_doses[age_groups[i % 5]] = (to_number(label.get_text()))
-
-            i += 1
+                age_group_doses[age_groups[i % 5]] = int(dose)
+            i+=1
     wd.switch_to.default_content()
     return age_group_doses
 
