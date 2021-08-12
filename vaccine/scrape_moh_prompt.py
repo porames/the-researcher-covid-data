@@ -319,6 +319,6 @@ def scrape_age_group():
 
 if __name__ == "__main__":
     if(int(sys.argv[1]) < 4):
-        scrape_and_save_moh_prompt()
+        scrape_and_save_moh_prompt(int(sys.argv[1]))
     else:
         scrape_age_group()
