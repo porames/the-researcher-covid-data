@@ -28,3 +28,5 @@ population_by_age[">80"] = sum(population_list[80:102])
 
 with open(f"../population-data/national-population-age-group.json", "w+") as json_file:
     json.dump(population_by_age, json_file, ensure_ascii=False, indent=2)
+
+# %%

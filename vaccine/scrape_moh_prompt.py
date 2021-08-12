@@ -265,13 +265,15 @@ def scrape_and_save_moh_prompt(dose_num:int):
     }
 
     
-    json_dir = "../dataset/"
-    os.makedirs(json_dir, exist_ok=True)  # Make sure that we ABSOLUTELY have the target dir
+    export_dir = "../dataset"
+    os.makedirs(export_dir, exist_ok=True)  # Make sure that we ABSOLUTELY have the target dir
     if dose_num != 0:
-        with open(f"{json_dir}{car_to_or[dose_num]}-dose-provincial-vaccination.json", "w+") as json_file:
+        with open(f"{export_dir}/{car_to_or[dose_num]}-dose-provincial-vaccination.json", "w+") as json_file:
             json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
     else:
-        with open(f"{json_dir}provincial-vaccination-by-manufacturer.json", "w+") as json_file:
+        dataset["date"] = get_update_date(wd)
+        dataset.to_csv(f"{export_dir}/provincial-vaccination-by-manufacturer.csv", index=False)
+        with open(f"{export_dir}/provincial-vaccination-by-manufacturer.json", "w+") as json_file:
             json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
     wd.quit()
     return data_dict

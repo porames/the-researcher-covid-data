@@ -1,5 +1,6 @@
 #%%
 import json
+from numpy import disp
 import pandas as pd
 import os
 
@@ -28,8 +29,6 @@ if __name__ == '__main__':
     df_first_dose = pd.DataFrame(first_dose["data"]).set_index("province").T
     df_second_dose = pd.DataFrame(second_dose["data"]).set_index("province").T
     df_third_dose = pd.DataFrame(third_dose["data"]).set_index("province").T
-    #manufacturer = ["AstraZeneca", "Johnson & Johnson", "Sinopharm", "Sinovac", "total_doses"]
-    #df_all_dose = df_first_dose.loc[manufacturer, :] + df_second_dose.loc[manufacturer, :] + df_third_dose.loc[manufacturer, :]
     
     combined_data = {
         "update_date": first_dose["update_date"],
@@ -44,7 +43,11 @@ if __name__ == '__main__':
             for province in sorted(df_first_dose.columns)
         ],
     }
-    
+
+    df_combined = pd.DataFrame(combined_data["data"])
+    df_combined["date"] = combined_data["update_date"]
+    display(df_combined)
+#%%
     out_dir = "../dataset/"
     os.makedirs(out_dir, exist_ok=True) # Make sure that we ABSOLUTELY have target dir
     with open(os.path.join(out_dir, "provincial-vaccination.json"), "w+", encoding="utf-8") as fout:

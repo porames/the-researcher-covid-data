@@ -34,7 +34,7 @@ jobs:
         with:
           name: vaccination
           path: |
-            dataset/*.json
+            dataset/*
   get-moh-prompt-1:
     runs-on: ubuntu-latest
     steps:
@@ -64,7 +64,7 @@ jobs:
         with:
           name: vaccination
           path: |
-            dataset/*.json
+            dataset/*
   get-moh-prompt-2:
     runs-on: ubuntu-latest
     steps:
@@ -94,7 +94,7 @@ jobs:
         with:
           name: vaccination
           path: |
-            dataset/*.json
+            dataset/*
 
   get-moh-prompt-3:
     runs-on: ubuntu-latest
@@ -125,7 +125,7 @@ jobs:
         with:
           name: vaccination
           path: |
-            dataset/*.json
+            dataset/*
   get-moh-prompt-4:
     runs-on: ubuntu-latest
     steps:
@@ -155,7 +155,7 @@ jobs:
         with:
           name: vaccination
           path: |
-            dataset/*.json
+            dataset/*
 
   get-cases-and-testing-data:
     runs-on: ubuntu-latest
