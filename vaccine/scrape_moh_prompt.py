@@ -272,7 +272,7 @@ def scrape_and_save_moh_prompt(dose_num:int):
             json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
     else:
         dataset["date"] = get_update_date(wd)
-        dataset.to_csv(f"{export_dir}/provincial-vaccination-by-manufacturer.csv", index=False)
+        dataset.to_csv(f"{export_dir}/provincial-vaccination-by-manufacturer.csv")
         with open(f"{export_dir}/provincial-vaccination-by-manufacturer.json", "w+") as json_file:
             json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
     wd.quit()
