@@ -46,10 +46,10 @@ if __name__ == '__main__':
 
     df_combined = pd.DataFrame(combined_data["data"])
     df_combined["date"] = combined_data["update_date"]
-    display(df_combined)
 #%%
     out_dir = "../dataset/"
     os.makedirs(out_dir, exist_ok=True) # Make sure that we ABSOLUTELY have target dir
+    df_combined.to_csv(f"{out_dir}provincial-vaccination.csv")
     with open(os.path.join(out_dir, "provincial-vaccination.json"), "w+", encoding="utf-8") as fout:
         json.dump(combined_data, fout, ensure_ascii=False, indent=2)
 
