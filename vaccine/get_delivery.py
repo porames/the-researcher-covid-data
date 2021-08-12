@@ -37,7 +37,7 @@ def parse_report_by_url(url):
     file = open("tmp/daily_report.pdf", "wb")
     file.write(response.content)
     file.close()
-    tables = tabula.read_pdf('tmp/daily_report.pdf', pages='2,3',pandas_options={'header': None})
+    tables = tabula.read_pdf('tmp/daily_report.pdf', pages='2,3,4',pandas_options={'header': None})
     raw_table = pd.DataFrame()
     for i in range(2):
         df=tables[i]
