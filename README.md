@@ -8,7 +8,7 @@ Automated data scraper for Thailand COVID-19 data.
 ## ข้อมูลสถานการณ์การระบาด
 
 - ข้อมูลสถิติการระบาด เสียชีวิต รักษาในโรงพยาบาล ทั่วประเทศรายวัน [JSON](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/cases/national-timeseries.json)
-- ข้อมูลการระบาดระดับอำเภอ [JSON](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/cases/district-cases-data-14days.json)
+- ข้อมูลจำนวนผู้ป่วยในแต่ละอำเภอในรอบ 14 วัน [JSON](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/cases/district-cases-data-14days.json)
 - ข้อมูลการระบาดระดับจังหวัดในรอบ 14 วัน [JSON](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/cases/province-cases-data-14days.json)
 - การตรวจเชื้อทางห้องปฏิบัติการ RT-PCR [JSON](https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/cases/testing-data.json)
 
