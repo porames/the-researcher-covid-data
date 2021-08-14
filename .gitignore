@@ -40,15 +40,12 @@ yarn-error.log*
 __pycache__/
 *.py[cod]
 *$py.class
-./bot_jobs/__pycache__
 
 # IDE
 .vscode
 .idea
 .ipynb_checkpoints
-/.ipynb_checkpoints
-/bot_jobs/.ipynb_checkpoints
-bot_jobs/vaccination/tmp/tika-server.jar
 
+# Generated Data
 wiki
 dataset
