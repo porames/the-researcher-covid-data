@@ -7,8 +7,8 @@ import json
 import datetime
 import re
 
-XLS_URL = "https://data.go.th/dataset/8a956917-436d-4afd-a2d4-59e4dd8e906e/resource/67d43695-8626-45ad-9094-dabc374925ab/download/confirmed-cases.xlsx"
-XLS_URL_20210812 = "https://data.go.th/dataset/8a956917-436d-4afd-a2d4-59e4dd8e906e/resource/87abdf57-7edd-4864-9766-7bb0e87272f9/download/confirmed-cases-since-120864.xlsx"
+#XLS_URL = "https://data.go.th/dataset/8a956917-436d-4afd-a2d4-59e4dd8e906e/resource/67d43695-8626-45ad-9094-dabc374925ab/download/confirmed-cases.xlsx"
+XLS_URL_P2 = "https://data.go.th/dataset/8a956917-436d-4afd-a2d4-59e4dd8e906e/resource/87abdf57-7edd-4864-9766-7bb0e87272f9/download/confirmed-cases-part-2.xlsx"
 
 DEATHS_URL = "https://github.com/djay/covidthailand/wiki/cases_by_province.csv"
 
@@ -29,16 +29,17 @@ PROVINCE_NAMES = set(PROVINCE_IDS.keys())
 # Load confirmed_cases.xlsx (This part is for the data before 2021-08-12
 print("Downloading Provincial Dataset")
 start = time.time()
-df = pd.read_excel(XLS_URL)
+df = pd.read_csv("confirmed-cases-part-1.zip", compression="zip")
+
 print("Downloaded Provincial Dataset took:", time.time() - start, "seconds")
 print("Downloading Provincial Dataset")
 df = df.drop(["No.", "Notified date", "nationality", "province_of_isolation",
               "sex", "age", "risk", "Unit"], axis=1)
 print(df.info())
-
+df["announce_date"] = pd.to_datetime(df["announce_date"], format = "%d/%m/%Y")
 # After 2021-08-12
 start = time.time()
-df_20210812 = pd.read_excel(XLS_URL_20210812)
+df_20210812 = pd.read_excel(XLS_URL_P2)
 print("Downloaded Provincial Dataset >= 2021-08-12 took:", time.time() - start, "seconds")
 # Drop unused (By the site) column
 df_20210812 = df_20210812.drop(["No.", "Notified date", "nationality", "province_of_isolation",
@@ -51,7 +52,6 @@ df = df.append(df_20210812, ignore_index=True)
 # Remove data with unknown province
 df = df.fillna(0)
 df = df[df["province_of_onset"] != 0]
-
 # Correct province name typo
 df_invalid = df[(~df["province_of_onset"].isin(PROVINCE_NAMES))]
 # Regex for some special cases
