@@ -60,7 +60,7 @@ jobs:
           pip install -r requirements.txt
       - name: Build province infection graphs
         working-directory: cases
-        run: python build_province_graphs.py
+        run: python build_province_graphs.py cases-only
       - name: Display structure of downloaded files
         run: ls -R
       - name: Upload json to wiki
