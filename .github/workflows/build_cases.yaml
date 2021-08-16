@@ -1,4 +1,4 @@
-name: bot-tasks-scheduler
+name: build-cases
 on:
   workflow_dispatch:
 jobs:
