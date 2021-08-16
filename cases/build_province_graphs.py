@@ -1,4 +1,5 @@
 from util import json_load, json_dump, get_provinces_name, get_population, get_vaccines, moving_average
+import requests
 import matplotlib.pyplot as plt
 import datetime
 import os
@@ -11,7 +12,8 @@ provinces_name = get_provinces_name(json_load("../geo-data/th-map-provinces-poin
 population_data = json_load("../population-data/th-census-with-hidden-pop.json")
 if (len(sys.argv)>1):
     if (sys.argv[1] == "cases-only"):
-        vaccines_data = json_load("https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/vaccination/provincial-vaccination.json")    
+        vaccines_data = requests.get("https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/vaccination/provincial-vaccination.json")
+        vaccines_data = vaccines_data.json()
 else:
     vaccines_data = json_load("../wiki/vaccination/provincial-vaccination.json")
 populations = get_population(population_data)
