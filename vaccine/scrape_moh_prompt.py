@@ -119,8 +119,8 @@ def get_province(prov_th: str, wd, dose_num) -> dict:
     for elm in wd.find_elements_by_class_name("searchHeader"):
         wd.execute_script("arguments[0].classList.remove('collapsed')", elm)    
     elm = wd.find_elements_by_class_name("searchInput")
-    elm[-2].clear()
-    elm[-2].send_keys(prov_th)
+    elm[-3].clear()
+    elm[-3].send_keys(prov_th)
     wait = WebDriverWait(wd, 10)
     time.sleep(1)
     wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
