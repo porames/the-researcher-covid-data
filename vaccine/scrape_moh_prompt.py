@@ -317,7 +317,7 @@ def scrape_age_group():
                 break
         time.sleep(1)
         wait.until(
-            EC.element_to_be_clickable((By.XPATH, f"//span[title(@aria-label,'{dose_to_khem[dose_num]}')]"))
+            EC.element_to_be_clickable((By.XPATH, f"//span[contains(@title,'{dose_to_khem[dose_num]}')]"))
         ).click()
         print(f"{dose_to_khem[dose_num]} Found")
         time.sleep(5)
