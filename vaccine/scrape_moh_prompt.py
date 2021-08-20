@@ -202,12 +202,21 @@ def scrape_and_save_moh_prompt(dose_num:int):
     time.sleep(10)
     wait = WebDriverWait(wd, 10)
     print("Selecting Button")
-    if (dose_num!=0):
+    if ((dose_num>0) & (dose_num<4)):
+        for menu in wd.find_elements_by_class_name("slicer-dropdown-menu"):
+            label = menu.get_attribute("aria-label")
+            if "Detail" in label:
+                menu.click()
+                break
+        time.sleep(1)
         wait.until(
-            EC.element_to_be_clickable((By.XPATH, f"//div[contains(@title,'{dose_to_khem[dose_num]}')]"))).click()
+            EC.element_to_be_clickable((By.XPATH, f"//div[contains(@aria-label,'{dose_to_khem[dose_num]}')]"))
+        ).click()
         print(f"{dose_to_khem[dose_num]} Found")
+    elif dose_num == 0:
+        print("retreive manufacturer data") 
     else:
-       print("retreive manufacturer data") 
+        print("function doesn't exist")
     time.sleep(2)
     initial_total_doses=search_doses_num(wd)
     print(initial_total_doses)
@@ -219,7 +228,7 @@ def scrape_and_save_moh_prompt(dose_num:int):
         print(province_data)
         province_total_doses = province_data["total_doses"]
         try_count=0
-        while (province_total_doses / initial_total_doses > 0.8):
+        while (province_total_doses / initial_total_doses > 0.6):
             if try_count>3:
                 raise ValueError("Try exceeded. Task killed.")
             print("Doses number too high. Trying it again.")    
@@ -263,23 +272,19 @@ def scrape_and_save_moh_prompt(dose_num:int):
         "update_date": get_update_date(wd),
         "data": dataset.to_dict(orient="records"),
     }
-
     
-    export_dir = "../dataset"
-    os.makedirs(export_dir, exist_ok=True)  # Make sure that we ABSOLUTELY have the target dir
+    json_dir = "../dataset"
+    os.makedirs(json_dir, exist_ok=True)
     if dose_num != 0:
-        with open(f"{export_dir}/{car_to_or[dose_num]}-dose-provincial-vaccination.json", "w+") as json_file:
+        with open(f"{json_dir}/{car_to_or[dose_num]}-dose-provincial-vaccination.json", "w+") as json_file:
             json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
     else:
-        dataset["date"] = get_update_date(wd)
-        dataset.to_csv(f"{export_dir}/provincial-vaccination-by-manufacturer.csv")
-        with open(f"{export_dir}/provincial-vaccination-by-manufacturer.json", "w+") as json_file:
+        with open(f"{json_dir}/provincial-vaccination-by-manufacturer.json", "w+") as json_file:
             json.dump(data_dict, json_file, ensure_ascii=False, indent=2)
     wd.quit()
     return data_dict
 
 def scrape_age_group():
-    print("Scraping vaccination by age group")
     dose_to_khem = {
         1: "เข็มหนึ่ง",
         2: "เข็มสอง",
@@ -305,8 +310,14 @@ def scrape_age_group():
     dataset = {}
     dataset["update_date"] = get_update_date(wd)
     for dose_num in range(1,4):
+        for menu in wd.find_elements_by_class_name("slicer-dropdown-menu"):
+            label = menu.get_attribute("aria-label")
+            if "Detail" in label:
+                menu.click()
+                break
+        time.sleep(1)
         wait.until(
-            EC.element_to_be_clickable((By.XPATH, f"//div[contains(@title,'{dose_to_khem[dose_num]}')]"))
+            EC.element_to_be_clickable((By.XPATH, f"//div[contains(@aria-label,'{dose_to_khem[dose_num]}')]"))
         ).click()
         print(f"{dose_to_khem[dose_num]} Found")
         time.sleep(5)
@@ -315,7 +326,7 @@ def scrape_age_group():
     wd.quit()
     json_dir = "../dataset"
     os.makedirs(json_dir, exist_ok=True)
-    with open(f"{json_dir}/vaccination-by-age-group.json", "w+") as json_file:
+    with open(f"{json_dir}/vaccination-by-age-group", "w+") as json_file:
         json.dump(dataset, json_file, ensure_ascii=False, indent=2)
     return dataset
 
