@@ -1,3 +1,4 @@
+#%%
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
@@ -6,6 +7,7 @@ import tabula
 import os
 import json
 
+#%%
 def parse_month(date_th):
     month_mapping = {
         "มกราคม": "01",
@@ -45,6 +47,7 @@ def parse_report_by_url(url):
         df=df[df[0].str.isnumeric()]
         raw_table = raw_table.append(df,ignore_index=True)
     raw_table.fillna("N/A",inplace=True)
+    raw_table = raw_table.drop(1, axis=1)
     rows=[]
     for row in raw_table.to_dict(orient="records"):
         cleaned_row=[]
@@ -53,8 +56,7 @@ def parse_report_by_url(url):
                 if ((len(col)>0) & (str(col).strip() != "N/A")): cleaned_row.append(col)
         rows.append(cleaned_row)
     cleaned_table = pd.DataFrame(rows)
-    cleaned_table = cleaned_table.iloc[:,0:7]
-    cleaned_table = cleaned_table.drop(1, axis=1)
+    cleaned_table = cleaned_table.iloc[:,0:6]
     return cleaned_table
 
 def format_table(df):
