@@ -15,11 +15,8 @@ def json_dump(json_data,fname):
 
 def get_population(json_data):
     population = {}
-    for province in json_data:
-        if "estimated_living_population" in province.keys():
-            population[province['province']] = province['estimated_living_population']
-        else:
-            population[province['province']] = province['population']
+    for province in json_data:        
+        population[province['province']] = province['population']
     return population
 
 

@@ -9,7 +9,7 @@ import sys
 data = json_load("../wiki/cases/province-cases-data-21days.json")
 end = datetime.datetime.fromisoformat(max(data[0]["cases"].keys()))
 provinces_name = get_provinces_name(json_load("../geo-data/th-map-provinces-points.geojson"))
-population_data = json_load("../population-data/th-census-with-hidden-pop.json")
+population_data = json_load("../population-data/province-population-data.json")
 if (len(sys.argv)>1):
     if (sys.argv[1] == "cases-only"):
         vaccines_data = requests.get("https://raw.githubusercontent.com/wiki/porames/the-researcher-covid-data/vaccination/provincial-vaccination.json")
