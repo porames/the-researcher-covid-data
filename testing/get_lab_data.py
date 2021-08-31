@@ -3,7 +3,6 @@ import datetime
 import os
 
 SAVE_PATH = "../dataset/"
-
 # Get data.go.th COVID-19 test dataset
 url = "https://data.go.th/dataset/9f6d900f-f648-451f-8df4-89c676fce1c4/resource/0092046c-db85-4608-b519-ce8af099315e/download/testing_data.csv"
 df = pd.read_csv(url)

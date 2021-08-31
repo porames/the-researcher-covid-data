@@ -52,8 +52,11 @@ def parse_report_by_url(url):
     for row in raw_table.to_dict(orient="records"):
         cleaned_row=[]
         for (key,value) in row.items():
-            for col in str(value).split(' '):
-                if ((len(col)>0) & (str(col).strip() != "N/A")): cleaned_row.append(col)
+            if key > 2 :
+                for col in str(value).split(' '):
+                    if ((len(col)>0) & (str(col).strip() != "N/A")): cleaned_row.append(col)
+            else:
+                cleaned_row.append(value.replace(' ',''))
         rows.append(cleaned_row)
     cleaned_table = pd.DataFrame(rows)
     cleaned_table = cleaned_table.iloc[:,0:6]
