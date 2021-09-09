@@ -109,7 +109,7 @@ def open_province_dropdown(wd) -> None:
     for menu in wd.find_elements_by_class_name("slicer-dropdown-menu"):
         label = menu.get_attribute("aria-label")
         if "จังหวัด" in label:
-            menu.click()
+            wd.execute_script('arguments[0].click()', menu)
             break
 
 
