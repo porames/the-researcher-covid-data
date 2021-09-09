@@ -23,7 +23,8 @@ with open("../population-data/th-census-data.json", encoding="utf-8") as file:
 def get_over_60(wd):
     wait = WebDriverWait(wd, 10)
     total_doses = search_doses_num(wd)
-    wait.until(EC.element_to_be_clickable((By.XPATH,"//*[text()[contains(.,'60 ปีขึ้นไป')]]"))).click()
+    over_60_str = wd.find_element_by_xpath("//*[text()[contains(.,'60 ปีขึ้นไป')]]")
+    wd.execute_script('arguments[0].click()', over_60_str)
     time.sleep(1)    
     over_60_1st_dose = search_doses_num(wd)
     try_count = 0
@@ -34,7 +35,7 @@ def get_over_60(wd):
         print("Over 60 doses too high. Trying it again...")        
         time.sleep(1)
         try_count+=1
-    wait.until(EC.element_to_be_clickable((By.XPATH,"//*[text()[contains(.,'60 ปีขึ้นไป')]]"))).click()
+    wd.execute_script('arguments[0].click()', over_60_str)
     return over_60_1st_dose
 
 def get_age_group(wd):
