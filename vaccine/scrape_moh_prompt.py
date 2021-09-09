@@ -10,7 +10,6 @@ import json
 import pandas as pd
 from bs4 import BeautifulSoup
 
-
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--no-sandbox")
@@ -24,7 +23,6 @@ def get_over_60(wd):
     wait = WebDriverWait(wd, 10)
     total_doses = search_doses_num(wd)
     wait.until(EC.element_to_be_clickable((By.XPATH,"//*[text()[contains(.,'60 ปีขึ้นไป')]]"))).click()
-    wd.execute_script('arguments[0].click()', dose_btn)
     time.sleep(1)    
     over_60_1st_dose = search_doses_num(wd)
     try_count = 0
