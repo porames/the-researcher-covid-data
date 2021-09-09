@@ -202,8 +202,9 @@ def scrape_and_save_moh_prompt(dose_num:int):
     time.sleep(10)
     wait = WebDriverWait(wd, 10)
     print("Selecting Button")
-    if ((dose_num>0) & (dose_num<4)):
-        wd.find_elements_by_class_name("slicer-dropdown-menu")[-1].click()
+    if ((dose_num>0) & (dose_num<4)):        
+        dose_btn = wd.find_elements_by_class_name("slicer-dropdown-menu")[-1].click()
+        wd.execute_script('arguments[0].click()', dose_btn)
         time.sleep(1)
         wait.until(
             EC.element_to_be_clickable((By.XPATH, f"//span[contains(@title,'{dose_to_khem[dose_num]}')]"))
@@ -306,7 +307,8 @@ def scrape_age_group():
     dataset = {}
     dataset["update_date"] = get_update_date(wd)
     for dose_num in range(1,4):
-        wd.find_elements_by_class_name("slicer-dropdown-menu")[-1].click()
+        dose_btn = wd.find_elements_by_class_name("slicer-dropdown-menu")[-1].click()
+        wd.execute_script('arguments[0].click()', dose_btn)
         time.sleep(1)
         wait.until(
             EC.element_to_be_clickable((By.XPATH, f"//span[contains(@title,'{dose_to_khem[dose_num]}')]"))
