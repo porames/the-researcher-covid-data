@@ -203,7 +203,7 @@ def scrape_and_save_moh_prompt(dose_num:int):
     wait = WebDriverWait(wd, 10)
     print("Selecting Button")
     if ((dose_num>0) & (dose_num<4)):        
-        dose_btn = wd.find_elements_by_class_name("slicer-dropdown-menu")[-1].click()
+        dose_btn = wd.find_elements_by_class_name("slicer-dropdown-menu")[-1]
         wd.execute_script('arguments[0].click()', dose_btn)
         time.sleep(1)
         wait.until(
@@ -307,7 +307,7 @@ def scrape_age_group():
     dataset = {}
     dataset["update_date"] = get_update_date(wd)
     for dose_num in range(1,4):
-        dose_btn = wd.find_elements_by_class_name("slicer-dropdown-menu")[-1].click()
+        dose_btn = wd.find_elements_by_class_name("slicer-dropdown-menu")[-1]
         wd.execute_script('arguments[0].click()', dose_btn)
         time.sleep(1)
         wait.until(
