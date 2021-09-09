@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 jobs:
   get-moh-prompt-0:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Check Repo
         uses: actions/checkout@v2.3.4
