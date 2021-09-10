@@ -116,11 +116,15 @@ def open_province_dropdown(wd) -> None:
 
 
 def get_province(prov_th: str, wd, dose_num) -> dict:
-    open_province_dropdown(wd)
+    if dose_num > 0:
+        open_province_dropdown(wd)
     time.sleep(1)
     for elm in wd.find_elements_by_class_name("searchHeader"):
         wd.execute_script("arguments[0].classList.remove('collapsed')", elm)    
     wd.find_elements_by_class_name("searchInput")[-3].clear()    
+    for elm in wd.find_elements_by_class_name("searchHeader"):
+        wd.execute_script("arguments[0].classList.remove('collapsed')", elm)    
+    
     wd.find_elements_by_class_name("searchInput")[-3].send_keys(prov_th)
     wait = WebDriverWait(wd, 10)
     time.sleep(1)
