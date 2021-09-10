@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver import ActionChains
+from selenium.webdriver.common.keys import Keys
 import sys
 import os
 import time
@@ -120,8 +121,9 @@ def get_province(prov_th: str, wd, dose_num) -> dict:
     time.sleep(1)    
     wd.execute_script("document.getElementsByClassName('searchHeader')[2].classList.remove('collapsed')")    
     wd.execute_script("document.getElementsByClassName('searchHeader')[2].style.overflow = 'visible';")    
-    wd.find_elements_by_class_name("searchInput")[2].clear()      
-    wd.find_elements_by_class_name("searchInput")[2].send_keys(prov_th)
+    wd.execute_script(f"document.getElementsByClassName('searchInput')[2].value = '{prov_th}';")    
+    # wd.find_elements_by_class_name("searchInput")[2].clear()      
+    wd.find_elements_by_class_name("searchInput")[2].send_keys(Keys.ENTER)
     wait = WebDriverWait(wd, 10)
     time.sleep(1)
     wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
