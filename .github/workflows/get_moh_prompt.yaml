@@ -27,7 +27,7 @@ jobs:
       - name: Setup Chromedriver
         uses: nanasess/setup-chromedriver@master
         with:
-          chromedriver-version: '92.0.4515'
+          chromedriver-version: '92.0.4515.107'
       - name: Scrape data from หมอพร้อม dashboard using selenium (total doses and by manufacturer)
         working-directory: vaccine
         run: python scrape_moh_prompt.py 0
@@ -59,7 +59,7 @@ jobs:
       - name: Setup Chromedriver
         uses: nanasess/setup-chromedriver@master
         with:
-          chromedriver-version: '92.0.4515'
+          chromedriver-version: '92.0.4515.107'
       - name: Scrape data from หมอพร้อม dashboard using selenium
         working-directory: vaccine
         run: python scrape_moh_prompt.py 1
