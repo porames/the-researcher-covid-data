@@ -304,6 +304,8 @@ def scrape_age_group():
     wd.get(today_powerbi)
     print("Found Power Bi URL. Rendering JS for 10S")
     time.sleep(10)
+    os.makedirs("../debug",exist_ok=True)
+    wd.get_screenshot_as_file("../debug/1.png")
     wait = WebDriverWait(wd, 10)
     print("Selecting Button")
     dataset = {}
