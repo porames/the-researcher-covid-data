@@ -108,16 +108,16 @@ def get_mf(wd):
     return mf_dict
 
 def open_province_dropdown(wd) -> None:
-    for menu in wd.find_elements_by_class_name("slicer-dropdown-menu"):
-        label = menu.get_attribute("aria-label")
-        if "จังหวัด" in label:
-            wd.execute_script('arguments[0].click()', menu)
-            break
+    wd.execute_script("document.getElementsByClassName('slicer-dropdown-popup')[2].style.display='block'")
+    # for menu in wd.find_elements_by_class_name("slicer-dropdown-menu"):
+    #     label = menu.get_attribute("aria-label")
+    #     if "จังหวัด" in label:
+    #         wd.execute_script('arguments[0].click()', menu)
+    #         break
 
 
-def get_province(prov_th: str, wd, dose_num) -> dict:
-    if dose_num > 0:
-        open_province_dropdown(wd)
+def get_province(prov_th: str, wd, dose_num) -> dict:    
+    open_province_dropdown(wd)
     time.sleep(1)
     for elm in wd.find_elements_by_class_name("searchHeader"):
         wd.execute_script("arguments[0].classList.remove('collapsed')", elm)    
