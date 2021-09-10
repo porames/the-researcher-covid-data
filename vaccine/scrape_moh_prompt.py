@@ -324,12 +324,13 @@ def scrape_age_group():
         time.sleep(5)
         doses_by_age = get_age_group(wd)
         dataset[f"total_{car_to_or[dose_num]}_dose"] = doses_by_age
-    wd.quit()
+    
     print(dataset)
     json_dir = "../dataset"
     os.makedirs(json_dir, exist_ok=True)    
     with open(f"{json_dir}/vaccination-by-age-group", "w+") as json_file:
         json.dump(dataset, json_file, ensure_ascii=False, indent=2)
+    wd.quit()
     return dataset
 
 if __name__ == "__main__":
