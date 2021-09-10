@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver import ActionChains
+from selenium.webdriver.common.keys import Keys
 import sys
 import os
 import time
@@ -10,11 +11,11 @@ import json
 import pandas as pd
 from bs4 import BeautifulSoup
 
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument("--disable-dev-shm-usage")
-chrome_options.add_argument("--window-size=1000,3000")
+firefox_options = webdriver.FirefoxOptions()
+firefox_options.add_argument("--headless")
+firefox_options.add_argument("--no-sandbox")
+firefox_options.add_argument("--disable-dev-shm-usage")
+
 
 with open("../population-data/th-census-data.json", encoding="utf-8") as file:
     census = json.load(file)
@@ -22,7 +23,9 @@ with open("../population-data/th-census-data.json", encoding="utf-8") as file:
 def get_over_60(wd):
     wait = WebDriverWait(wd, 10)
     total_doses = search_doses_num(wd)
-    wait.until(EC.element_to_be_clickable((By.XPATH,"//*[text()[contains(.,'60 ปีขึ้นไป')]]"))).click()
+    over_60_btn = wd.find_element_by_xpath("//*[text()[contains(.,'60 ปีขึ้นไป')]]/..")
+    print(over_60_btn.get_attribute("innerHTML"))
+    over_60_btn.click()
     time.sleep(1)    
     over_60_1st_dose = search_doses_num(wd)
     try_count = 0
@@ -33,7 +36,7 @@ def get_over_60(wd):
         print("Over 60 doses too high. Trying it again...")        
         time.sleep(1)
         try_count+=1
-    wait.until(EC.element_to_be_clickable((By.XPATH,"//*[text()[contains(.,'60 ปีขึ้นไป')]]"))).click()
+    over_60_btn.click()
     return over_60_1st_dose
 
 def get_age_group(wd):
@@ -101,10 +104,11 @@ def get_mf(wd):
         if dose: doses.append(dose)
     for i in range(len(names)):
         mf_dict[names[i]] = doses[i]        
-    wd.find_element_by_xpath("//*[text()[contains(.,'Back to report')]]").click()
+    go_back = wd.find_element_by_xpath("//*[text()[contains(.,'Back to report')]]")
+    wd.execute_script('arguments[0].click()', go_back)
     return mf_dict
 
-def open_province_dropdown(wd) -> None:
+def open_province_dropdown(wd) -> None:    
     for menu in wd.find_elements_by_class_name("slicer-dropdown-menu"):
         label = menu.get_attribute("aria-label")
         if "จังหวัด" in label:
@@ -112,14 +116,14 @@ def open_province_dropdown(wd) -> None:
             break
 
 
-def get_province(prov_th: str, wd, dose_num) -> dict:
+def get_province(prov_th: str, wd, dose_num) -> dict:    
     open_province_dropdown(wd)
-    time.sleep(1)
-    for elm in wd.find_elements_by_class_name("searchHeader"):
-        wd.execute_script("arguments[0].classList.remove('collapsed')", elm)    
-    elm = wd.find_elements_by_class_name("searchInput")
-    elm[-3].clear()
-    elm[-3].send_keys(prov_th)
+    time.sleep(1)    
+    wd.execute_script("document.getElementsByClassName('searchHeader')[2].classList.remove('collapsed')")    
+    wd.execute_script("document.getElementsByClassName('searchHeader')[2].style.overflow = 'visible';")    
+    wd.execute_script(f"document.getElementsByClassName('searchInput')[2].value = '{prov_th}';")    
+    # wd.find_elements_by_class_name("searchInput")[2].clear()      
+    wd.find_elements_by_class_name("searchInput")[2].send_keys(Keys.ENTER)
     wait = WebDriverWait(wd, 10)
     time.sleep(1)
     wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
@@ -129,8 +133,8 @@ def get_province(prov_th: str, wd, dose_num) -> dict:
     data["total_doses"] = doses
     data["province"] = prov_th    
     if (dose_num == 1):
-      over_60 = get_over_60(wd)
-      data.update({"over_60_1st_dose": over_60})
+        over_60 = get_over_60(wd)
+        data.update({"over_60_1st_dose": over_60})
     if (dose_num == 0):
         mf = get_mf(wd) 
         data.update(mf)    
@@ -189,8 +193,9 @@ def scrape_and_save_moh_prompt(dose_num:int):
         3: "เข็มสาม"
     }
     print(dose_to_khem[dose_num])
-    print("Spawning Chromium")
-    wd = webdriver.Chrome("chromedriver", options=chrome_options)
+    print("Spawning Firefox")
+    wd = webdriver.Firefox(options=firefox_options)
+    wd.set_window_size(1000, 3000)
     wd.get("https://dashboard-vaccine.moph.go.th/dashboard.html")
     print("Rendering JS for 5S")
     time.sleep(5)
@@ -201,6 +206,8 @@ def scrape_and_save_moh_prompt(dose_num:int):
     time.sleep(10)
     wait = WebDriverWait(wd, 10)
     print("Selecting Button")
+    os.makedirs("../debug",exist_ok=True)
+    wd.get_screenshot_as_file("../debug/1.png")
     if ((dose_num>0) & (dose_num<4)):        
         dose_btn = wd.find_elements_by_class_name("slicer-dropdown-menu")[-1]
         wd.execute_script('arguments[0].click()', dose_btn)
@@ -291,8 +298,9 @@ def scrape_age_group():
         2: "2nd",
         3: "3rd",
     }
-    print("Spawning Chromium")
-    wd = webdriver.Chrome("chromedriver", options=chrome_options)
+    print("Spawning Firefox")
+    wd = webdriver.Firefox(options=firefox_options)
+    wd.set_window_size(1000, 3000)
     wd.get("https://dashboard-vaccine.moph.go.th/dashboard.html")
     print("Rendering JS for 5S")
     time.sleep(5)
@@ -316,11 +324,11 @@ def scrape_age_group():
         time.sleep(5)
         doses_by_age = get_age_group(wd)
         dataset[f"total_{car_to_or[dose_num]}_dose"] = doses_by_age
-    wd.quit()
     json_dir = "../dataset"
-    os.makedirs(json_dir, exist_ok=True)
+    os.makedirs(json_dir, exist_ok=True)    
     with open(f"{json_dir}/vaccination-by-age-group", "w+") as json_file:
         json.dump(dataset, json_file, ensure_ascii=False, indent=2)
+    wd.quit()
     return dataset
 
 if __name__ == "__main__":
