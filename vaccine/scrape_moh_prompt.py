@@ -14,7 +14,7 @@ chrome_options = webdriver.FirefoxOptions()
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
-chrome_options.add_argument("--window-size=1000,3000")
+
 
 with open("../population-data/th-census-data.json", encoding="utf-8") as file:
     census = json.load(file)
@@ -192,6 +192,7 @@ def scrape_and_save_moh_prompt(dose_num:int):
     print(dose_to_khem[dose_num])
     print("Spawning Chromium")
     wd = webdriver.Firefox(options=chrome_options)
+    wd.set_window_size(1000, 3000)
     wd.get("https://dashboard-vaccine.moph.go.th/dashboard.html")
     print("Rendering JS for 5S")
     time.sleep(5)
@@ -296,6 +297,7 @@ def scrape_age_group():
     }
     print("Spawning Chromium")
     wd = webdriver.Firefox(options=chrome_options)
+    wd.set_window_size(1000, 3000)
     wd.get("https://dashboard-vaccine.moph.go.th/dashboard.html")
     print("Rendering JS for 5S")
     time.sleep(5)
