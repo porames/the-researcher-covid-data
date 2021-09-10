@@ -10,7 +10,7 @@ import json
 import pandas as pd
 from bs4 import BeautifulSoup
 
-chrome_options = webdriver.ChromeOptions()
+chrome_options = webdriver.FirefoxOptions()
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
@@ -191,7 +191,7 @@ def scrape_and_save_moh_prompt(dose_num:int):
     }
     print(dose_to_khem[dose_num])
     print("Spawning Chromium")
-    wd = webdriver.Chrome("chromedriver", options=chrome_options)
+    wd = webdriver.Firefox(options=chrome_options)
     wd.get("https://dashboard-vaccine.moph.go.th/dashboard.html")
     print("Rendering JS for 5S")
     time.sleep(5)
@@ -295,7 +295,7 @@ def scrape_age_group():
         3: "3rd",
     }
     print("Spawning Chromium")
-    wd = webdriver.Chrome("chromedriver", options=chrome_options)
+    wd = webdriver.Firefox(options=chrome_options)
     wd.get("https://dashboard-vaccine.moph.go.th/dashboard.html")
     print("Rendering JS for 5S")
     time.sleep(5)
