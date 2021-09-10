@@ -120,7 +120,7 @@ def get_province(prov_th: str, wd, dose_num) -> dict:
     time.sleep(1)
     for elm in wd.find_elements_by_class_name("searchHeader"):
         wd.execute_script("arguments[0].classList.remove('collapsed')", elm)    
-    time.sleep(0.5)
+        wd.execute_script("arguments[0].classList.style.overflow = 'visible", elm)    
     wd.find_elements_by_class_name("searchInput")[-3].clear()      
     wd.find_elements_by_class_name("searchInput")[-3].send_keys(prov_th)
     wait = WebDriverWait(wd, 10)
