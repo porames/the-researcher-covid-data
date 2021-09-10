@@ -103,7 +103,8 @@ def get_mf(wd):
         if dose: doses.append(dose)
     for i in range(len(names)):
         mf_dict[names[i]] = doses[i]        
-    wd.find_element_by_xpath("//*[text()[contains(.,'Back to report')]]").click()
+    go_back = wd.find_element_by_xpath("//*[text()[contains(.,'Back to report')]]")
+    wd.execute_script('arguments[0].click()', go_back)
     return mf_dict
 
 def open_province_dropdown(wd) -> None:
@@ -135,7 +136,6 @@ def get_province(prov_th: str, wd, dose_num) -> dict:
     if (dose_num == 0):
         mf = get_mf(wd) 
         data.update(mf)    
-        open_province_dropdown(wd)
     if (dose_num > 1):
         wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
         open_province_dropdown(wd)
