@@ -309,8 +309,6 @@ def scrape_age_group():
     wd.get(today_powerbi)
     print("Found Power Bi URL. Rendering JS for 10S")
     time.sleep(10)
-    os.makedirs("../debug",exist_ok=True)
-    wd.get_screenshot_as_file("../debug/1.png")
     wait = WebDriverWait(wd, 10)
     print("Selecting Button")
     dataset = {}
@@ -327,8 +325,9 @@ def scrape_age_group():
         doses_by_age = get_age_group(wd)
         dataset[f"total_{car_to_or[dose_num]}_dose"] = doses_by_age
     wd.quit()
+    print(dataset)
     json_dir = "../dataset"
-    os.makedirs(json_dir, exist_ok=True)
+    os.makedirs(json_dir, exist_ok=True)    
     with open(f"{json_dir}/vaccination-by-age-group", "w+") as json_file:
         json.dump(dataset, json_file, ensure_ascii=False, indent=2)
     return dataset

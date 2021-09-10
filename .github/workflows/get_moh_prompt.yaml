@@ -159,7 +159,7 @@ jobs:
         with:
           name: vaccination
           path: |
-            dataset/*.json
+            dataset/*
 
   combine-moh-prompt:
     needs:
