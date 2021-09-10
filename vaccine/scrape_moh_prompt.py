@@ -118,12 +118,9 @@ def open_province_dropdown(wd) -> None:
 def get_province(prov_th: str, wd, dose_num) -> dict:    
     open_province_dropdown(wd)
     time.sleep(1)
-    prov_popup = wd.find_elements_by_class_name("slicer-dropdown-popup")[2]
-    print(prov_popup.get_attribute("style"))
-    if "display: none" in prov_popup.get_attribute("style"):
-        open_province_dropdown(wd)
     for elm in wd.find_elements_by_class_name("searchHeader"):
         wd.execute_script("arguments[0].classList.remove('collapsed')", elm)    
+    time.sleep(0.5)
     wd.find_elements_by_class_name("searchInput")[-3].clear()      
     wd.find_elements_by_class_name("searchInput")[-3].send_keys(prov_th)
     wait = WebDriverWait(wd, 10)
@@ -135,8 +132,8 @@ def get_province(prov_th: str, wd, dose_num) -> dict:
     data["total_doses"] = doses
     data["province"] = prov_th    
     if (dose_num == 1):
-      over_60 = get_over_60(wd)
-      data.update({"over_60_1st_dose": over_60})
+        over_60 = get_over_60(wd)
+        data.update({"over_60_1st_dose": over_60})
     if (dose_num == 0):
         mf = get_mf(wd) 
         data.update(mf)    
