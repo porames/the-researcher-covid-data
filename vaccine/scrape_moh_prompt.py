@@ -22,7 +22,9 @@ with open("../population-data/th-census-data.json", encoding="utf-8") as file:
 def get_over_60(wd):
     wait = WebDriverWait(wd, 10)
     total_doses = search_doses_num(wd)
-    wd.find_element_by_xpath("//*[text()[contains(.,'60 ปีขึ้นไป')]]/..").click()
+    over_60_btn = wd.find_element_by_xpath("//*[text()[contains(.,'60 ปีขึ้นไป')]]/..")
+    print(over_60_btn.get_attribute("innerHTML"))
+    over_60_btn.click()
     time.sleep(1)    
     over_60_1st_dose = search_doses_num(wd)
     try_count = 0
@@ -33,7 +35,7 @@ def get_over_60(wd):
         print("Over 60 doses too high. Trying it again...")        
         time.sleep(1)
         try_count+=1
-    wd.find_element_by_xpath("//*[text()[contains(.,'60 ปีขึ้นไป')]]/..").click()
+    over_60_btn.click()
     return over_60_1st_dose
 
 def get_age_group(wd):
@@ -86,7 +88,6 @@ def get_mf(wd):
     az=wd.find_element_by_xpath("//*[text()[contains(.,'AstraZeneca')]]")
     actionChains.context_click(az).perform()
     time.sleep(0.5)
-    wd.get_screenshot_as_file("../debug/2.png")
     wd.find_element_by_xpath("//*[text()[contains(.,'Show as a table')]]").click()
     time.sleep(1)
     wait = WebDriverWait(wd, 10)
@@ -119,8 +120,6 @@ def get_province(prov_th: str, wd, dose_num) -> dict:
     for elm in wd.find_elements_by_class_name("searchHeader"):
         wd.execute_script("arguments[0].classList.remove('collapsed')", elm)    
     wd.find_elements_by_class_name("searchInput")[-3].clear()    
-    for elm in wd.find_elements_by_class_name("searchHeader"):
-        wd.execute_script("arguments[0].classList.remove('collapsed')", elm)    
     wd.find_elements_by_class_name("searchInput")[-3].send_keys(prov_th)
     wait = WebDriverWait(wd, 10)
     time.sleep(1)
@@ -136,6 +135,7 @@ def get_province(prov_th: str, wd, dose_num) -> dict:
     if (dose_num == 0):
         mf = get_mf(wd) 
         data.update(mf)    
+        open_province_dropdown(wd)
     if (dose_num > 1):
         wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
         open_province_dropdown(wd)
