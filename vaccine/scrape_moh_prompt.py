@@ -117,15 +117,11 @@ def open_province_dropdown(wd) -> None:
 
 def get_province(prov_th: str, wd, dose_num) -> dict:    
     open_province_dropdown(wd)
-    time.sleep(1)
-    for elm in wd.find_elements_by_class_name("searchHeader"):
-        wd.execute_script("arguments[0].classList.remove('collapsed')", elm)    
-        wd.execute_script("arguments[0].style.overflow = 'visible';", elm)    
-    wd.find_elements_by_class_name("searchInput")[-3].clear()      
-    for elm in wd.find_elements_by_class_name("searchHeader"):
-        wd.execute_script("arguments[0].classList.remove('collapsed')", elm)    
-        wd.execute_script("arguments[0].style.overflow = 'visible';", elm)    
-    wd.find_elements_by_class_name("searchInput")[-3].send_keys(prov_th)
+    time.sleep(1)    
+    wd.execute_script("document.getElementsByClassName('searchHeader')[2].classList.remove('collapsed')")    
+    wd.execute_script("document.getElementsByClassName('searchHeader')[2].style.overflow = 'visible';")    
+    wd.find_elements_by_class_name("searchInput")[2].clear()      
+    wd.find_elements_by_class_name("searchInput")[2].send_keys(prov_th)
     wait = WebDriverWait(wd, 10)
     time.sleep(1)
     wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
