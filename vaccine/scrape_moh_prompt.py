@@ -86,6 +86,7 @@ def get_mf(wd):
     az=wd.find_element_by_xpath("//*[text()[contains(.,'AstraZeneca')]]")
     actionChains.context_click(az).perform()
     time.sleep(0.5)
+    wd.get_screenshot_as_file("../debug/2.png")
     wd.find_element_by_xpath("//*[text()[contains(.,'Show as a table')]]").click()
     time.sleep(1)
     wait = WebDriverWait(wd, 10)
@@ -201,6 +202,8 @@ def scrape_and_save_moh_prompt(dose_num:int):
     time.sleep(10)
     wait = WebDriverWait(wd, 10)
     print("Selecting Button")
+    os.makedirs("../debug",exist_ok=True)
+    wd.get_screenshot_as_file("../debug/1.png")
     if ((dose_num>0) & (dose_num<4)):        
         dose_btn = wd.find_elements_by_class_name("slicer-dropdown-menu")[-1]
         wd.execute_script('arguments[0].click()', dose_btn)
