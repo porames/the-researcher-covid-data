@@ -48,6 +48,7 @@ def get_age_group(wd):
     for title in age_chart.findAll("title",{"class": "label-title"}):
         dose = title.get_text()
         if (dose):
+            print(f"{age_groups[i % 5]} {dose}")
             if age_groups[i % 5] in age_group_doses.keys():
                 age_group_doses[age_groups[i % 5]] += int(dose)
             else:
