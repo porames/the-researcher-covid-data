@@ -49,7 +49,7 @@ def get_age_group(wd):
         dose = title.get_text()
         if (dose):
             print(f"{age_groups[i % len(age_groups)]} {dose}")
-            if age_groups[i % 5] in age_group_doses.keys():
+            if age_groups[i % len(age_groups)] in age_group_doses.keys():
                 age_group_doses[age_groups[i % len(age_groups)]] += int(dose)
             else:
                 age_group_doses[age_groups[i % len(age_groups)]] = int(dose)
