@@ -42,17 +42,17 @@ def get_over_60(wd):
 def get_age_group(wd):
     wd.switch_to.frame(wd.find_element_by_css_selector(".visual-sandbox"))
     age_chart = BeautifulSoup(wd.page_source, "html.parser")
-    age_groups = [">80", "61-80", "41-60", "21-40", "18-20"]
+    age_groups = [">80", "61-80", "41-60", "21-40", "18-20", "12-17", "03-11"]
     age_group_doses = {}
     i = 0
     for title in age_chart.findAll("title",{"class": "label-title"}):
         dose = title.get_text()
         if (dose):
-            print(f"{age_groups[i % 5]} {dose}")
+            print(f"{age_groups[i % len(age_groups)]} {dose}")
             if age_groups[i % 5] in age_group_doses.keys():
-                age_group_doses[age_groups[i % 5]] += int(dose)
+                age_group_doses[age_groups[i % len(age_groups)]] += int(dose)
             else:
-                age_group_doses[age_groups[i % 5]] = int(dose)
+                age_group_doses[age_groups[i % len(age_groups)]] = int(dose)
             i+=1
     wd.switch_to.default_content()
     return age_group_doses
