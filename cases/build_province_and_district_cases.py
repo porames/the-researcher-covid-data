@@ -7,12 +7,10 @@ import json
 import datetime
 import re
 
-# XLS_URL = "https://data.go.th/dataset/8a956917-436d-4afd-a2d4-59e4dd8e906e/resource/67d43695-8626-45ad-9094-dabc374925ab/download/confirmed-cases.xlsx"
-XLS_URL_P2 = "https://data.go.th/dataset/8a956917-436d-4afd-a2d4-59e4dd8e906e/resource/87abdf57-7edd-4864-9766-7bb0e87272f9/download/confirmed-cases-part-2.xlsx"
+XLS_URL_LATEST = "https://data.go.th/dataset/8a956917-436d-4afd-a2d4-59e4dd8e906e/resource/1c2f6045-c600-410a-995c-a37a88594ab4/download/confirmed-cases-since-271064.xlsx"
 
 DEATHS_URL = "https://github.com/djay/covidthailand/wiki/cases_by_province.csv"
 
-os.makedirs("../dataset", exist_ok=True)
 district_data_14days_out_path = "../dataset/district-cases-data-14days.json"
 province_data_14days_out_path = "../dataset/province-cases-data-14days.json"
 province_data_21days_out_path = "../dataset/province-cases-data-21days.json"
@@ -27,211 +25,235 @@ PROVINCE_IDS = {
 }
 PROVINCE_NAMES = set(PROVINCE_IDS.keys())
 
-# TODO : Store historical data in a more efficient way
-# Load confirmed_cases.xlsx (This part is for the data before 2021-08-12
-df = pd.read_csv("confirmed-cases-part-1.zip", compression="zip")
-df = df.drop(
-    [
-        "No.",
-        "Notified date",
-        "nationality",
-        "sex",
-        "age",
-        "risk",
-        "Unit",
-    ],
-    axis=1,
-)
-print(df.info())
-df["announce_date"] = pd.to_datetime(df["announce_date"], format="%d/%m/%Y")
+def main():
+    os.makedirs("../dataset", exist_ok=True)
 
-# After 2021-08-12
-print("Downloading Provincial Dataset Part 2")
-start = time.time()
-df_20210812 = pd.read_excel(XLS_URL_P2)
-print(
-    "Downloaded Provincial Dataset >= 2021-08-12 took:", time.time() - start, "seconds"
-)
-# Drop unused (By the site) column
-df_20210812 = df_20210812.drop(
-    [
-        "No.",
-        "Notified date",
-        "nationality",
-        "sex",
-        "age",
-        "risk",
-        "Unit",
-    ],
-    axis=1,
-)
-print(df_20210812.info())
-
-# Merge data from before and after
-df = df.append(df_20210812, ignore_index=True)
-
-# Remove data with unknown province
-df['province_of_onset'].fillna(df['province_of_isolation'], inplace = True)
-df = df.fillna(0)
-df = df[df["province_of_onset"] != 0]
-df = df.drop("province_of_isolation", axis=1)
-# Correct province name typo
-df_invalid = df[(~df["province_of_onset"].isin(PROVINCE_NAMES))]
-# Regex for some special cases
-regex_ay = re.compile(r"^(อยุธยา|อยุธนา)$")
-df_invalid["province_of_onset"].replace(regex_ay, "พระนครศรีอยุธยา", inplace=True)
-regex_bkk = re.compile(r"^(กทม|กทม.)$")
-df_invalid["province_of_onset"].replace(regex_bkk, "กรุงเทพมหานคร", inplace=True)
-# Replace by finding most similar province
-df_invalid_correted = df_invalid["province_of_onset"].apply(
-    lambda pro: find_similar_word(pro, PROVINCE_NAMES)
-)
-df.update(df_invalid_correted)
-
-# Print uncorretable province
-with pd.option_context("display.max_rows", None, "display.max_columns", None):
-    df_uncorreted = df[~df["province_of_onset"].isin(PROVINCE_NAMES)]
-    print(df_uncorreted)
-    print(df_uncorreted.info())
-
-# Filter from start date
-end = df.tail(1)["announce_date"].iloc[0]
-# 21 days for build_province_graph.py
-start = end - datetime.timedelta(days=21)
-start = start.replace(hour=0, minute=0, second=0, microsecond=0)
-df = df[(df["announce_date"] > start) & (df["announce_date"] <= end)]
-
-# Change อำเภอ เมือง -> อำเภอ เมือง + จังหวัด
-mueng_df = df[df.district_of_onset == "เมือง"]
-df.district_of_onset.update(mueng_df.district_of_onset + mueng_df.province_of_onset)
-
-# Load province and district name in to sets
-json_data = json.load(open(DISTRICT_MAP_PATH, encoding="utf-8"))
-district_and_province_names = pd.DataFrame(
-    i["properties"] for i in json_data["features"]
-)[["fid", "P_NAME_T", "A_NAME_T"]]
-district_and_province_names = district_and_province_names.rename(
-    columns={"fid": "id", "P_NAME_T": "province", "A_NAME_T": "district"}
-)
-province_names = district_and_province_names["province"]
-district_names = district_and_province_names["district"]
-
-# Filter by district name (Select only 14 days)
-df_14days = df[
-    (df["announce_date"] > end - datetime.timedelta(days=14))
-    & (df["announce_date"] <= end)
-]
-df_no_date = df_14days.drop("announce_date", axis=1).rename(
-    columns={"province_of_onset": "province", "district_of_onset": "district"}
-)
-
-df_filtered_by_district = df_no_date[df_no_date.district.isin(district_names)]
-# Count values by district
-df_district_case_14days = (
-    df_filtered_by_district.value_counts(sort=True)
-    .to_frame(name="caseCount")
-    .reset_index()
-)
-df_district_case_14days = df_district_case_14days.rename(
-    columns={"province_of_onset": "province", "district_of_onset": "district"}
-)
-
-# Merge only valid district and province pair
-df_district_case_14days_with_id = district_and_province_names.merge(
-    df_district_case_14days, how="left", on=["province", "district"]
-)
-df_district_case_14days_with_id = df_district_case_14days_with_id.rename(
-    columns={"district": "name"}
-)
-df_district_case_14days_with_id = df_district_case_14days_with_id.fillna(0)
-df_district_case_14days_with_id["caseCount"] = df_district_case_14days_with_id[
-    "caseCount"
-].astype(int)
-
-# Write df to json
-df_district_case_14days_with_id.to_json(
-    district_data_14days_out_path, orient="records", indent=2, force_ascii=False
-)
-
-# Start generating provincial data
-# Filter by province name
-df_no_district = df.drop("district_of_onset", axis=1)
-
-df_filtered_by_province = df_no_district[
-    df_no_district.province_of_onset.isin(province_names)
-]
-
-# Print invalid Province name
-df_invalid_province = df_no_district[
-    ~df_no_district.province_of_onset.isin(province_names)
-]
-df_invalid_province = df_invalid_province.fillna(0)
-
-# Count values by provinces by date (count 21 days cases as well)
-province_cases_each_day = pd.crosstab(
-    df_filtered_by_province.announce_date, df_filtered_by_province.province_of_onset
-).to_dict()
-# Count values by provinces (for all 14 days)
-df_filtered_by_province_14days = df_filtered_by_province[
-    df_filtered_by_province["announce_date"] > (end - datetime.timedelta(days=14))
-]
-province_cases_14days = df_filtered_by_province_14days.drop(
-    "announce_date", axis=1
-).value_counts(sort=True)
-# Get census data
-province_population = {
-    i["province"]: i["population"]
-    for i in json.load(open(CENSUS_DATA_PATH, encoding="utf-8"))
-}
-
-# Deaths by province
-print("Downloading Deaths Dataset")
-start = time.time()
-df_deaths = pd.read_csv(DEATHS_URL)
-print("Downloaded Deaths Dataset took:", time.time() - start, "seconds")
-
-province_deaths_each_day = build_province_deaths.get_province_deaths(
-    deaths_df=df_deaths
-).to_dict()
-province_deaths_each_day_21days = build_province_deaths.get_province_deaths(
-    deaths_df=df_deaths, days=21
-).to_dict()
-
-# Create a dict with all data combined
-province_cases_each_day_with_total = []
-province_cases_each_day_21days = []
-for name, cases in province_cases_each_day.items():
-    deaths_by_date = province_deaths_each_day[name]
-    deaths_count = sum(deaths_by_date.values())
-    province_cases_each_day_with_total.append(
-        {
-            "name": name,
-            "cases": {
-                dto.isoformat(): caseCount
-                for dto, caseCount in cases.items()
-                if dto > (end - datetime.timedelta(days=14))
-            },
-            "id": int(PROVINCE_IDS[name]),
-            "caseCount": int(province_cases_14days[name]),
-            "cases-per-100k": (int(province_cases_14days[name]) * 100000)
-            // province_population[name],
-            "deaths": deaths_by_date,
-            "deathsCount": deaths_count,
-            "deaths-per-100k": round(
-                deaths_count * 100000 / province_population[name], 2
-            ),
-        }
+    # Confirmed case from 2020-01-12 to 2021-08-11
+    df = pd.read_csv("confirmed-cases-2020-01-12-2021-08-11.zip", compression="zip")
+    df = df.drop(
+        [
+            "No.",
+            "Notified date",
+            "nationality",
+            "sex",
+            "age",
+            "risk",
+            "Unit",
+        ],
+        axis=1,
     )
-    province_cases_each_day_21days.append(
-        {
-            "name": name,
-            "cases": {dto.isoformat(): caseCount for dto, caseCount in cases.items()},
-            "deaths": province_deaths_each_day_21days[name],
-        }
+    print(df.info())
+    df["announce_date"] = pd.to_datetime(df["announce_date"], format="%d/%m/%Y")
+
+    # Confirmed case from 2021-08-12 to 2021-10-26
+    df_20210812 = pd.read_csv("confirmed-cases-2021-08-12-2021-10-26.zip", compression="zip")
+    df_20210812 = df_20210812.drop(
+        [
+            "No.",
+            "Notified date",
+            "nationality",
+            "sex",
+            "age",
+            "risk",
+            "Unit",
+        ],
+        axis=1,
+    )
+    print(df_20210812.info())
+    df_20210812["announce_date"] = pd.to_datetime(df_20210812["announce_date"], format="%d/%m/%Y")
+    # Merge data with previous dataset
+    df = df.append(df_20210812, ignore_index=True)
+
+    # Confirmed case from 2021-08-27
+    print("Downloading Latest Provincial Dataset")
+    start = time.time()
+    df_latest_dataset = pd.read_excel(XLS_URL_LATEST)
+    print(
+        "Downloaded Latest Provincial Dataset", time.time() - start, "seconds"
+    )
+    # Drop unused (By the site) column
+    df_latest_dataset = df_latest_dataset.drop(
+        [
+            "No.",
+            "Notified date",
+            "nationality",
+            "sex",
+            "age",
+            "risk",
+            "Unit",
+        ],
+        axis=1,
+    )
+    print(df_latest_dataset.info())
+    # Merge latest data with previous(es) dataset
+    df = df.append(df_latest_dataset, ignore_index=True)
+
+    # Remove data with unknown province
+    df['province_of_onset'].fillna(df['province_of_isolation'], inplace=True)
+    df = df.fillna(0)
+    df = df[df["province_of_onset"] != 0]
+    df = df.drop("province_of_isolation", axis=1)
+    # Correct province name typo
+    df_invalid = df[(~df["province_of_onset"].isin(PROVINCE_NAMES))]
+    # Regex for some special cases
+    regex_ay = re.compile(r"^(อยุธยา|อยุธนา)$")
+    df_invalid["province_of_onset"].replace(regex_ay, "พระนครศรีอยุธยา", inplace=True)
+    regex_bkk = re.compile(r"^(กทม|กทม.)$")
+    df_invalid["province_of_onset"].replace(regex_bkk, "กรุงเทพมหานคร", inplace=True)
+    # Replace by finding most similar province
+    df_invalid_correted = df_invalid["province_of_onset"].apply(
+        lambda pro: find_similar_word(pro, PROVINCE_NAMES)
+    )
+    df.update(df_invalid_correted)
+
+    # Print uncorretable province
+    with pd.option_context("display.max_rows", None, "display.max_columns", None):
+        df_uncorreted = df[~df["province_of_onset"].isin(PROVINCE_NAMES)]
+        print(df_uncorreted)
+        print(df_uncorreted.info())
+
+    # Filter from start date
+    end = df.tail(1)["announce_date"].iloc[0]
+    # 21 days for build_province_graph.py
+    start = end - datetime.timedelta(days=21)
+    start = start.replace(hour=0, minute=0, second=0, microsecond=0)
+    df = df[(df["announce_date"] > start) & (df["announce_date"] <= end)]
+
+    # Change อำเภอ เมือง -> อำเภอ เมือง + จังหวัด
+    mueng_df = df[df.district_of_onset == "เมือง"]
+    df.district_of_onset.update(mueng_df.district_of_onset + mueng_df.province_of_onset)
+
+    # Load province and district name in to sets
+    json_data = json.load(open(DISTRICT_MAP_PATH, encoding="utf-8"))
+    district_and_province_names = pd.DataFrame(
+        i["properties"] for i in json_data["features"]
+    )[["fid", "P_NAME_T", "A_NAME_T"]]
+    district_and_province_names = district_and_province_names.rename(
+        columns={"fid": "id", "P_NAME_T": "province", "A_NAME_T": "district"}
+    )
+    province_names = district_and_province_names["province"]
+    district_names = district_and_province_names["district"]
+
+    # Filter by district name (Select only 14 days)
+    df_14days = df[
+        (df["announce_date"] > end - datetime.timedelta(days=14))
+        & (df["announce_date"] <= end)
+        ]
+    df_no_date = df_14days.drop("announce_date", axis=1).rename(
+        columns={"province_of_onset": "province", "district_of_onset": "district"}
     )
 
-# Write province data to json file
-json_dump(province_cases_each_day_with_total, province_data_14days_out_path)
-json_dump(province_cases_each_day_21days, province_data_21days_out_path)
+    df_filtered_by_district = df_no_date[df_no_date.district.isin(district_names)]
+    # Count values by district
+    df_district_case_14days = (
+        df_filtered_by_district.value_counts(sort=True)
+            .to_frame(name="caseCount")
+            .reset_index()
+    )
+    df_district_case_14days = df_district_case_14days.rename(
+        columns={"province_of_onset": "province", "district_of_onset": "district"}
+    )
 
-print("Built province and district cases")
+    # Merge only valid district and province pair
+    df_district_case_14days_with_id = district_and_province_names.merge(
+        df_district_case_14days, how="left", on=["province", "district"]
+    )
+    df_district_case_14days_with_id = df_district_case_14days_with_id.rename(
+        columns={"district": "name"}
+    )
+    df_district_case_14days_with_id = df_district_case_14days_with_id.fillna(0)
+    df_district_case_14days_with_id["caseCount"] = df_district_case_14days_with_id[
+        "caseCount"
+    ].astype(int)
+
+    # Write df to json
+    df_district_case_14days_with_id.to_json(
+        district_data_14days_out_path, orient="records", indent=2, force_ascii=False
+    )
+
+    # Start generating provincial data
+    # Filter by province name
+    df_no_district = df.drop("district_of_onset", axis=1)
+
+    df_filtered_by_province = df_no_district[
+        df_no_district.province_of_onset.isin(province_names)
+    ]
+
+    # Print invalid Province name
+    df_invalid_province = df_no_district[
+        ~df_no_district.province_of_onset.isin(province_names)
+    ]
+    df_invalid_province = df_invalid_province.fillna(0)
+
+    # Count values by provinces by date (count 21 days cases as well)
+    province_cases_each_day = pd.crosstab(
+        df_filtered_by_province.announce_date, df_filtered_by_province.province_of_onset
+    ).to_dict()
+    # Count values by provinces (for all 14 days)
+    df_filtered_by_province_14days = df_filtered_by_province[
+        df_filtered_by_province["announce_date"] > (end - datetime.timedelta(days=14))
+        ]
+    province_cases_14days = df_filtered_by_province_14days.drop(
+        "announce_date", axis=1
+    ).value_counts(sort=True)
+    # Get census data
+    province_population = {
+        i["province"]: i["population"]
+        for i in json.load(open(CENSUS_DATA_PATH, encoding="utf-8"))
+    }
+
+    # Deaths by province
+    print("Downloading Deaths Dataset")
+    start = time.time()
+    df_deaths = pd.read_csv(DEATHS_URL)
+    print("Downloaded Deaths Dataset took:", time.time() - start, "seconds")
+
+    province_deaths_each_day = build_province_deaths.get_province_deaths(
+        deaths_df=df_deaths
+    ).to_dict()
+    province_deaths_each_day_21days = build_province_deaths.get_province_deaths(
+        deaths_df=df_deaths, days=21
+    ).to_dict()
+
+    # Create a dict with all data combined
+    province_cases_each_day_with_total = []
+    province_cases_each_day_21days = []
+    for name, cases in province_cases_each_day.items():
+        deaths_by_date = province_deaths_each_day[name]
+        deaths_count = sum(deaths_by_date.values())
+        province_cases_each_day_with_total.append(
+            {
+                "name": name,
+                "cases": {
+                    dto.isoformat(): caseCount
+                    for dto, caseCount in cases.items()
+                    if dto > (end - datetime.timedelta(days=14))
+                },
+                "id": int(PROVINCE_IDS[name]),
+                "caseCount": int(province_cases_14days[name]),
+                "cases-per-100k": (int(province_cases_14days[name]) * 100000)
+                                  // province_population[name],
+                "deaths": deaths_by_date,
+                "deathsCount": deaths_count,
+                "deaths-per-100k": round(
+                    deaths_count * 100000 / province_population[name], 2
+                ),
+            }
+        )
+        province_cases_each_day_21days.append(
+            {
+                "name": name,
+                "cases": {dto.isoformat(): caseCount for dto, caseCount in cases.items()},
+                "deaths": province_deaths_each_day_21days[name],
+            }
+        )
+
+    # Write province data to json file
+    json_dump(province_cases_each_day_with_total, province_data_14days_out_path)
+    json_dump(province_cases_each_day_21days, province_data_21days_out_path)
+
+    print("Built province and district cases")
+
+
+if __name__ == "__main__":
+    main()
