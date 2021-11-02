@@ -25,11 +25,35 @@ PROVINCE_IDS = {
 }
 PROVINCE_NAMES = set(PROVINCE_IDS.keys())
 
+
+def read_dataset_and_merge(df: pd.DataFrame(), path: str):
+    if path.split(".")[-1] == "zip":
+        tmp_df = pd.read_csv(path, compression="zip")
+    elif path.split(".")[-1] == "xlsx":
+        tmp_df = pd.read_excel(path)
+    else:
+        raise ValueError("Invalid Dataset Path")
+    return df.append(tmp_df)
+
+
 def main():
     os.makedirs("../dataset", exist_ok=True)
+    df = pd.DataFrame()
 
     # Confirmed case from 2020-01-12 to 2021-08-11
-    df = pd.read_csv("confirmed-cases-2020-01-12-2021-08-11.zip", compression="zip")
+    df = read_dataset_and_merge(df, "confirmed-cases-2020-01-12-2021-08-11.zip")
+    # Confirmed case from 2021-08-12 to 2021-10-26
+    df = read_dataset_and_merge(df, "confirmed-cases-2021-08-12-2021-10-26.zip")
+    # Format Date for CSV only
+    df["announce_date"] = pd.to_datetime(df["announce_date"], format="%d/%m/%Y")
+
+    # Latest Dataset
+    print("Downloading Latest Provincial Dataset")
+    start = time.time()
+    df = read_dataset_and_merge(df, XLS_URL_LATEST)
+    print("Downloaded Latest Provincial Dataset took", time.time() - start, "seconds")
+
+    # Drop unused (By the site) column
     df = df.drop(
         [
             "No.",
@@ -43,50 +67,6 @@ def main():
         axis=1,
     )
     print(df.info())
-    df["announce_date"] = pd.to_datetime(df["announce_date"], format="%d/%m/%Y")
-
-    # Confirmed case from 2021-08-12 to 2021-10-26
-    df_20210812 = pd.read_csv("confirmed-cases-2021-08-12-2021-10-26.zip", compression="zip")
-    df_20210812 = df_20210812.drop(
-        [
-            "No.",
-            "Notified date",
-            "nationality",
-            "sex",
-            "age",
-            "risk",
-            "Unit",
-        ],
-        axis=1,
-    )
-    print(df_20210812.info())
-    df_20210812["announce_date"] = pd.to_datetime(df_20210812["announce_date"], format="%d/%m/%Y")
-    # Merge data with previous dataset
-    df = df.append(df_20210812, ignore_index=True)
-
-    # Confirmed case from 2021-08-27
-    print("Downloading Latest Provincial Dataset")
-    start = time.time()
-    df_latest_dataset = pd.read_excel(XLS_URL_LATEST)
-    print(
-        "Downloaded Latest Provincial Dataset", time.time() - start, "seconds"
-    )
-    # Drop unused (By the site) column
-    df_latest_dataset = df_latest_dataset.drop(
-        [
-            "No.",
-            "Notified date",
-            "nationality",
-            "sex",
-            "age",
-            "risk",
-            "Unit",
-        ],
-        axis=1,
-    )
-    print(df_latest_dataset.info())
-    # Merge latest data with previous(es) dataset
-    df = df.append(df_latest_dataset, ignore_index=True)
 
     # Remove data with unknown province
     df['province_of_onset'].fillna(df['province_of_isolation'], inplace=True)
@@ -106,7 +86,7 @@ def main():
     )
     df.update(df_invalid_correted)
 
-    # Print uncorretable province
+    # Print uncorrectable province
     with pd.option_context("display.max_rows", None, "display.max_columns", None):
         df_uncorreted = df[~df["province_of_onset"].isin(PROVINCE_NAMES)]
         print(df_uncorreted)
@@ -178,12 +158,6 @@ def main():
     df_filtered_by_province = df_no_district[
         df_no_district.province_of_onset.isin(province_names)
     ]
-
-    # Print invalid Province name
-    df_invalid_province = df_no_district[
-        ~df_no_district.province_of_onset.isin(province_names)
-    ]
-    df_invalid_province = df_invalid_province.fillna(0)
 
     # Count values by provinces by date (count 21 days cases as well)
     province_cases_each_day = pd.crosstab(
