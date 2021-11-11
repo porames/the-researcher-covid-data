@@ -26,32 +26,24 @@ PROVINCE_IDS = {
 PROVINCE_NAMES = set(PROVINCE_IDS.keys())
 
 
-def read_dataset_and_merge(df: pd.DataFrame(), path: str):
-    if path.split(".")[-1] == "zip":
-        tmp_df = pd.read_csv(path, compression="zip")
-    elif path.split(".")[-1] == "xlsx":
-        tmp_df = pd.read_excel(path)
-    else:
-        raise ValueError("Invalid Dataset Path")
-    return df.append(tmp_df)
-
-
 def main():
     os.makedirs("../dataset", exist_ok=True)
-    df = pd.DataFrame()
 
     # Confirmed case from 2020-01-12 to 2021-08-11
-    df = read_dataset_and_merge(df, "confirmed-cases-2020-01-12-2021-08-11.zip")
-    # Confirmed case from 2021-08-12 to 2021-10-26
-    df = read_dataset_and_merge(df, "confirmed-cases-2021-08-12-2021-10-26.zip")
-    # Format Date for CSV only
+    df = pd.read_csv("confirmed-cases-2020-01-12-2021-08-11.zip", compression="zip")
     df["announce_date"] = pd.to_datetime(df["announce_date"], format="%d/%m/%Y")
+    # Confirmed case from 2021-08-12 to 2021-10-26
+    df2 = pd.read_csv("confirmed-cases-2021-08-12-2021-10-26.zip", compression="zip")
+    df2["announce_date"] = pd.to_datetime(df2["announce_date"], format="%d/%m/%Y")
+    # Format Date for CSV only
 
     # Latest Dataset
     print("Downloading Latest Provincial Dataset")
     start = time.time()
-    df = read_dataset_and_merge(df, XLS_URL_LATEST)
+    df_latest = pd.read_excel(XLS_URL_LATEST, header=None, names=df.columns)
     print("Downloaded Latest Provincial Dataset took", time.time() - start, "seconds")
+
+    df = pd.concat([df, df2, df_latest])
 
     # Drop unused (By the site) column
     df = df.drop(
