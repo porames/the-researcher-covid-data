@@ -12,7 +12,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 
 firefox_options = webdriver.FirefoxOptions()
-firefox_options.add_argument("--headless")
+# firefox_options.add_argument("--headless")
 firefox_options.add_argument("--no-sandbox")
 firefox_options.add_argument("--disable-dev-shm-usage")
 
@@ -127,7 +127,7 @@ def get_province(prov_th: str, wd, dose_num) -> dict:
     wd.find_elements_by_class_name("searchInput")[2].send_keys(Keys.ENTER)
     wait = WebDriverWait(wd, 10)
     time.sleep(1)
-    wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
+    wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@class='glyphicon checkbox']"))).click()
     time.sleep(3)
     doses = search_doses_num(wd)    
     data = {}
