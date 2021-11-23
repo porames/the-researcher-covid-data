@@ -140,7 +140,7 @@ def get_province(prov_th: str, wd, dose_num) -> dict:
         mf = get_mf(wd) 
         data.update(mf)    
     if (dose_num > 1):
-        wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
+        wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[contains(.,'{prov_th}')]"))).click()
         open_province_dropdown(wd)
     time.sleep(1)
     return data
@@ -214,7 +214,7 @@ def scrape_and_save_moh_prompt(dose_num:int):
         wd.execute_script('arguments[0].click()', dose_btn)
         time.sleep(1)
         wait.until(
-            EC.element_to_be_clickable((By.XPATH, f"//span[contains(@title,'{dose_to_khem[dose_num]}')]"))
+            EC.element_to_be_clickable((By.XPATH, f"//span[contains(.,'{dose_to_khem[dose_num]}')]"))
         ).click()
         print(f"{dose_to_khem[dose_num]} Found")
     elif dose_num == 0:
@@ -319,7 +319,7 @@ def scrape_age_group():
         wd.execute_script('arguments[0].click()', dose_btn)
         time.sleep(1)
         wait.until(
-            EC.element_to_be_clickable((By.XPATH, f"//span[contains(@title,'{dose_to_khem[dose_num]}')]"))
+            EC.element_to_be_clickable((By.XPATH, f"//span[contains(.,'{dose_to_khem[dose_num]}')]"))
         ).click()
         print(f"{dose_to_khem[dose_num]} Found")
         time.sleep(5)
