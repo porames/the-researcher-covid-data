@@ -30,7 +30,7 @@ def get_over_60(wd):
     over_60_1st_dose = search_doses_num(wd)
     try_count = 0
     while over_60_1st_dose/total_doses > 0.8:
-        if try_count>3:
+        if try_count>5:
             raise ValueError("Try exceeded. Task killed.")
         over_60_1st_dose = search_doses_num(wd)
         print("Over 60 doses too high. Trying it again...")        
@@ -134,6 +134,7 @@ def get_province(prov_th: str, wd, dose_num) -> dict:
     data["total_doses"] = doses
     data["province"] = prov_th    
     if (dose_num == 1):
+        print(prov_th)
         over_60 = get_over_60(wd)
         data.update({"over_60_1st_dose": over_60})
     if (dose_num == 0):
