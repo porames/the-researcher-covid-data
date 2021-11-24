@@ -120,7 +120,7 @@ def open_province_dropdown(wd) -> None:
 def get_province(prov_th: str, wd, dose_num) -> dict:    
     open_province_dropdown(wd)
     time.sleep(1)    
-    wd.execute_script("document.getElementsByClassName('searchHeader')[2].classList.remove('collapsed')")    
+    wd.execute_script("document.getElementsByClassName('searchHeader')[2].style.display = 'block';")
     wd.execute_script("document.getElementsByClassName('searchHeader')[2].style.overflow = 'visible';")    
     wd.execute_script(f"document.getElementsByClassName('searchInput')[2].value = '{prov_th}';")    
     # wd.find_elements_by_class_name("searchInput")[2].clear()      
