@@ -30,7 +30,7 @@ def get_over_60(wd):
     over_60_1st_dose = search_doses_num(wd)
     try_count = 0
     while over_60_1st_dose/total_doses > 0.8:
-        if try_count>3:
+        if try_count>5:
             raise ValueError("Try exceeded. Task killed.")
         over_60_1st_dose = search_doses_num(wd)
         print("Over 60 doses too high. Trying it again...")        
@@ -120,13 +120,13 @@ def open_province_dropdown(wd) -> None:
 def get_province(prov_th: str, wd, dose_num) -> dict:    
     open_province_dropdown(wd)
     time.sleep(1)    
-    wd.execute_script("document.getElementsByClassName('searchHeader')[2].classList.remove('collapsed')")    
+    wd.execute_script("document.getElementsByClassName('searchHeader')[2].style.display = 'block';")
     wd.execute_script("document.getElementsByClassName('searchHeader')[2].style.overflow = 'visible';")    
     wd.execute_script(f"document.getElementsByClassName('searchInput')[2].value = '{prov_th}';")    
     # wd.find_elements_by_class_name("searchInput")[2].clear()      
     wd.find_elements_by_class_name("searchInput")[2].send_keys(Keys.ENTER)
     wait = WebDriverWait(wd, 10)
-    time.sleep(1)
+    time.sleep(1.5)
     wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@class='glyphicon checkbox']"))).click()
     time.sleep(3)
     doses = search_doses_num(wd)    
@@ -134,13 +134,14 @@ def get_province(prov_th: str, wd, dose_num) -> dict:
     data["total_doses"] = doses
     data["province"] = prov_th    
     if (dose_num == 1):
+        print(prov_th)
         over_60 = get_over_60(wd)
         data.update({"over_60_1st_dose": over_60})
     if (dose_num == 0):
         mf = get_mf(wd) 
         data.update(mf)    
     if (dose_num > 1):
-        wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@title='{prov_th}']"))).click()
+        wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[contains(.,'{prov_th}')]"))).click()
         open_province_dropdown(wd)
     time.sleep(1)
     return data
@@ -214,7 +215,7 @@ def scrape_and_save_moh_prompt(dose_num:int):
         wd.execute_script('arguments[0].click()', dose_btn)
         time.sleep(1)
         wait.until(
-            EC.element_to_be_clickable((By.XPATH, f"//span[contains(@title,'{dose_to_khem[dose_num]}')]"))
+            EC.element_to_be_clickable((By.XPATH, f"//span[contains(.,'{dose_to_khem[dose_num]}')]"))
         ).click()
         print(f"{dose_to_khem[dose_num]} Found")
     elif dose_num == 0:
@@ -319,7 +320,7 @@ def scrape_age_group():
         wd.execute_script('arguments[0].click()', dose_btn)
         time.sleep(1)
         wait.until(
-            EC.element_to_be_clickable((By.XPATH, f"//span[contains(@title,'{dose_to_khem[dose_num]}')]"))
+            EC.element_to_be_clickable((By.XPATH, f"//span[contains(.,'{dose_to_khem[dose_num]}')]"))
         ).click()
         print(f"{dose_to_khem[dose_num]} Found")
         time.sleep(5)
