@@ -126,7 +126,7 @@ def get_province(prov_th: str, wd, dose_num) -> dict:
     # wd.find_elements_by_class_name("searchInput")[2].clear()      
     wd.find_elements_by_class_name("searchInput")[2].send_keys(Keys.ENTER)
     wait = WebDriverWait(wd, 10)
-    time.sleep(1)
+    time.sleep(1.5)
     wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[@class='glyphicon checkbox']"))).click()
     time.sleep(3)
     doses = search_doses_num(wd)    
