@@ -46,6 +46,4 @@ __pycache__/
 .idea
 .ipynb_checkpoints
 
-# Generated Data
-wiki
-dataset
+geckodriver.log

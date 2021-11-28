@@ -17,7 +17,7 @@ firefox_options.add_argument("--no-sandbox")
 firefox_options.add_argument("--disable-dev-shm-usage")
 
 
-with open("../population-data/th-census-data.json", encoding="utf-8") as file:
+with open("./population-data/th-census-data.json", encoding="utf-8") as file:
     census = json.load(file)
 
 def get_over_60(wd):
@@ -208,8 +208,8 @@ def scrape_and_save_moh_prompt(dose_num:int):
     time.sleep(10)
     wait = WebDriverWait(wd, 10)
     print("Selecting Button")
-    os.makedirs("../debug",exist_ok=True)
-    wd.get_screenshot_as_file("../debug/1.png")
+    os.makedirs("./debug",exist_ok=True)
+    wd.get_screenshot_as_file("./debug/1.png")
     if ((dose_num>0) & (dose_num<4)):        
         dose_btn = wd.find_elements_by_class_name("slicer-dropdown-menu")[-1]
         wd.execute_script('arguments[0].click()', dose_btn)
@@ -278,7 +278,7 @@ def scrape_and_save_moh_prompt(dose_num:int):
         "data": dataset.to_dict(orient="records"),
     }
     
-    json_dir = "../dataset"
+    json_dir = "./dataset"
     os.makedirs(json_dir, exist_ok=True)
     if dose_num != 0:
         with open(f"{json_dir}/{car_to_or[dose_num]}-dose-provincial-vaccination.json", "w+") as json_file:
@@ -326,7 +326,7 @@ def scrape_age_group():
         time.sleep(5)
         doses_by_age = get_age_group(wd)
         dataset[f"total_{car_to_or[dose_num]}_dose"] = doses_by_age
-    json_dir = "../dataset"
+    json_dir = "./dataset"
     os.makedirs(json_dir, exist_ok=True)    
     with open(f"{json_dir}/vaccination-by-age-group.json", "w+") as json_file:
         json.dump(dataset, json_file, ensure_ascii=False, indent=2)

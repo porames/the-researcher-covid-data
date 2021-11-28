@@ -52,7 +52,7 @@ def build_manufacturer_timeseries(manufacturer_data: dict) -> pd.DataFrame:
 
 
 if __name__ == '__main__':
-    manufacturer_data = json_load("../wiki/vaccination/provincial-vaccination-by-manufacturer.json")
+    manufacturer_data = json_load("./wiki/vaccination/provincial-vaccination-by-manufacturer.json")
     print(manufacturer_data["update_date"])
 
     manufacturer_timeseries = build_manufacturer_timeseries(manufacturer_data)
@@ -77,10 +77,10 @@ if __name__ == '__main__':
 
     # Save data as json and csv
     manufacturer_timeseries.to_json(
-        "../dataset/vaccine-manufacturer-timeseries.json",
+        "./dataset/vaccine-manufacturer-timeseries.json",
         orient="records",
         indent=2,
         force_ascii=False,
     )
-    manufacturer_timeseries.to_csv("../dataset/vaccine-manufacturer-timeseries.csv")
+    manufacturer_timeseries.to_csv("./dataset/vaccine-manufacturer-timeseries.csv")
     print("Processed Manufacturer Timeseries")

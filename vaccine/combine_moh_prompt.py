@@ -18,7 +18,7 @@ if __name__ == '__main__':
         2: "2nd",
         3: "3rd",
     }
-    vaccination_data_dir = "../wiki/vaccination/"
+    vaccination_data_dir = "./wiki/vaccination/"
     first_dose = json_load(os.path.join(vaccination_data_dir, "1st-dose-provincial-vaccination.json"))
     second_dose = json_load(os.path.join(vaccination_data_dir, "2nd-dose-provincial-vaccination.json"))
     third_dose = json_load(os.path.join(vaccination_data_dir, "3rd-dose-provincial-vaccination.json"))
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     df_combined = pd.DataFrame(combined_data["data"])
     df_combined["date"] = combined_data["update_date"]
 #%%
-    out_dir = "../dataset/"
+    out_dir = "./dataset/"
     os.makedirs(out_dir, exist_ok=True) # Make sure that we ABSOLUTELY have target dir
     df_combined.to_csv(f"{out_dir}provincial-vaccination.csv")
     with open(os.path.join(out_dir, "provincial-vaccination.json"), "w+", encoding="utf-8") as fout:

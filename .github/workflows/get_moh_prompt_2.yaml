@@ -1,0 +1,254 @@
+name: moh-prompt
+on:
+  schedule:
+    - cron: '0 12 * * *' #06 Hour UTC = 19 Hour GMT+7
+    - cron: '0 17 * * *' #06 Hour UTC = 00 Hour GMT+7
+  workflow_dispatch:
+jobs:
+  get-moh-prompt-0:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Repo
+        uses: actions/checkout@v2.3.4
+      - name: Setup Python Environment
+        uses: actions/setup-python@v2.2.2
+      - name: Cache Python Environment
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+        # mkdir dataset
+      - name: Use 1.1.1.1 DNS
+        run: echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf
+      # - name: Setup Chromedriver
+      #   uses: nanasess/setup-chromedriver@master
+      #   with:
+      #     chromedriver-version: '92.0.4515.107'
+      - name: Scrape data from หมอพร้อม dashboard using selenium (total doses and by manufacturer)
+        # working-directory: vaccine
+        run: python vaccine/scrape_moh_prompt.py 0
+      - name: Display git status
+        run: git status
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: vaccination
+          path: |
+            dataset/*.json
+  get-moh-prompt-1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Repo
+        uses: actions/checkout@v2.3.4
+      - name: Setup Python Environment
+        uses: actions/setup-python@v2.2.2
+      - name: Cache Python Environment
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+        # mkdir dataset
+      - name: Use 1.1.1.1 DNS
+        run: echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf
+      # - name: Setup Chromedriver
+      #   uses: nanasess/setup-chromedriver@master
+      #   with:
+      #     chromedriver-version: '92.0.4515.107'
+      - name: Scrape data from หมอพร้อม dashboard using selenium
+        # working-directory: vaccine
+        run: python vaccine/scrape_moh_prompt.py 1
+      - name: Display git status
+        run: git status
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: vaccination
+          path: |
+            dataset/*.json
+  get-moh-prompt-2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Repo
+        uses: actions/checkout@v2.3.4
+      - name: Setup Python Environment
+        uses: actions/setup-python@v2.2.2
+      - name: Cache Python Environment
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+        # mkdir dataset
+      - name: Use 1.1.1.1 DNS
+        run: echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf
+      - name: Setup Chromedriver
+        uses: nanasess/setup-chromedriver@master
+      - name: Scrape data from หมอพร้อม dashboard using selenium
+        # working-directory: vaccine
+        run: python vaccine/scrape_moh_prompt.py 2
+      - name: Display git status
+        run: git status
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: vaccination
+          path: |
+            dataset/*.json
+
+  get-moh-prompt-3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Repo
+        uses: actions/checkout@v2.3.4
+      - name: Setup Python Environment
+        uses: actions/setup-python@v2.2.2
+      - name: Cache Python Environment
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+        # mkdir dataset
+      - name: Use 1.1.1.1 DNS
+        run: echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf
+      - name: Setup Chromedriver
+        uses: nanasess/setup-chromedriver@master
+      - name: Scrape data from หมอพร้อม dashboard using selenium
+        # working-directory: vaccine
+        run: python vaccine/scrape_moh_prompt.py 3
+      - name: Display git status
+        run: git status
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: vaccination
+          path: |
+            dataset/*.json
+  get-moh-prompt-4:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Repo
+        uses: actions/checkout@v2.3.4
+      - name: Setup Python Environment
+        uses: actions/setup-python@v2.2.2
+      - name: Cache Python Environment
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+        # mkdir dataset
+      - name: Use 1.1.1.1 DNS
+        run: echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf
+      - name: Setup Chromedriver
+        uses: nanasess/setup-chromedriver@master
+      - name: Scrape data from หมอพร้อม dashboard using selenium
+        # working-directory: vaccine
+        run: python vaccine/scrape_moh_prompt.py 4
+      - name: Display git status
+        run: git status
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: vaccination
+          path: |
+            dataset/*
+
+  combine-moh-prompt:
+    needs:
+      [
+        get-moh-prompt-0,
+        get-moh-prompt-1,
+        get-moh-prompt-2,
+        get-moh-prompt-3,
+        get-moh-prompt-4,
+      ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Repo
+        uses: actions/checkout@v2.3.4
+      - name: Download vaccination Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: vaccination
+          path: wiki/vaccination
+      - name: Display git status
+        run: git status
+      - name: Setup Python Environment
+        uses: actions/setup-python@v2.2.2
+      - name: Cache Python Environment
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+        # mkdir dataset
+      - name: Use 1.1.1.1 DNS
+        run: echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf
+      - name: Combined Moh Prompt Data
+        # working-directory: vaccine
+        run: |
+          python vaccine/combine_moh_prompt.py
+          python vaccine/build_national_timeseries.py
+          python vaccine/build_manufacturer_timeseries.py
+      - name: Display git status
+        run: git status
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: vaccination-combined
+          path: dataset/*
+
+  commit-files-to-wiki:
+    needs: [combine-moh-prompt]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Repo
+        uses: actions/checkout@v2.3.4
+      - name: Download Vaccination Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: vaccination
+          path: wiki/vaccination
+      - name: Download vaccination-combined Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: vaccination-combined
+          path: wiki/vaccination
+      - name: Display git status
+        run: git status
+      - name: Display structure of downloaded files
+        run: ls -R
+      # - name: Upload json to wiki
+      #   uses: kai-tub/external-repo-sync-action@v1
+      #   with:
+      #     source-directory: './wiki'
+      #   env:
+      #     GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+      # - name: Commit and Push JSON
+      #   run: |
+      #     git config user.name "nathakits"
+      #     git config user.email nathakit.tan@gmail.com
+      #     git add .
+      #     git commit -m "[bot 🤖] auto update vaccine data"
+      #     git push

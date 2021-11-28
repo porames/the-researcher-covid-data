@@ -46,10 +46,10 @@ if __name__ == "__main__":
 
     # Save data as json and csv
     vaccination_timeseries.to_json(
-        "../dataset/national-vaccination-timeseries.json",
+        "./dataset/national-vaccination-timeseries.json",
         orient="records",
         indent=2,
         force_ascii=False,
     )
-    vaccination_timeseries.to_csv("../dataset/national-vaccination-timeseries.csv", index=False)
+    vaccination_timeseries.to_csv("./dataset/national-vaccination-timeseries.csv", index=False)
     print("Processed National Timeseries")
