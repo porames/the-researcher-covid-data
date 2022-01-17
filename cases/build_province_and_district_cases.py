@@ -7,7 +7,7 @@ import json
 import datetime
 import re
 
-XLS_URL_LATEST = "https://data.go.th/dataset/8a956917-436d-4afd-a2d4-59e4dd8e906e/resource/83373e0f-e2f4-43ce-af08-a50b3ac2a013/download/confirmed-cases-since-271064.csv"
+XLS_URL_LATEST = "https://data.go.th/dataset/8a956917-436d-4afd-a2d4-59e4dd8e906e/resource/1c2f6045-c600-410a-995c-a37a88594ab4/download/confirmed-cases-since-271064.xlsx"
 
 DEATHS_URL = "https://github.com/djay/covidthailand/wiki/cases_by_province.csv"
 
