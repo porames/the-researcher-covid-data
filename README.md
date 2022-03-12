@@ -1,6 +1,7 @@
 # The Researcher COVID data
 
-[![bot-tasks-scheduler](https://github.com/porames/the-researcher-covid-data/actions/workflows/main.yml/badge.svg)](https://github.com/porames/the-researcher-covid-data/actions/workflows/main.yml)
+[![build-cases](https://github.com/porames/the-researcher-covid-data/actions/workflows/build_cases.yaml/badge.svg)](https://github.com/porames/the-researcher-covid-data/actions/workflows/build_cases.yaml)
+[![get-moh-prompt](https://github.com/porames/the-researcher-covid-data/actions/workflows/get_moh_prompt.yaml/badge.svg)](https://github.com/porames/the-researcher-covid-data/actions/workflows/get_moh_prompt.yaml)
 
 Automated data scraper for Thailand COVID-19 data.  
 [The Researcher COVID Tracker](https://covid-19.researcherth.co)
