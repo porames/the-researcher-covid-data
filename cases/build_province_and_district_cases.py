@@ -7,7 +7,7 @@ import json
 import datetime
 import re
 
-XLS_URL_LATEST = "https://data.go.th/dataset/8a956917-436d-4afd-a2d4-59e4dd8e906e/resource/1c2f6045-c600-410a-995c-a37a88594ab4/download/confirmed-cases-since-271064.xlsx"
+XLS_URL_LATEST = "https://data.go.th/dataset/8a956917-436d-4afd-a2d4-59e4dd8e906e/resource/93d228cd-6d50-421d-9d6c-462c52a492f7/download/confirmed-cases-since-280265.xlsx"
 
 DEATHS_URL = "https://github.com/djay/covidthailand/wiki/cases_by_province.csv"
 
@@ -44,10 +44,14 @@ def main():
 
     # Confirmed case from 2020-01-12 to 2021-08-11
     # df = read_dataset_and_merge(df, "confirmed-cases-2020-01-12-2021-08-11.zip")
+
     # Confirmed case from 2021-08-12 to 2021-10-26
     # df = read_dataset_and_merge(df, "confirmed-cases-2021-08-12-2021-10-26.zip")
+
+    # Confirmed case from 2021-10-27 to 2022-02-28
+    df = read_dataset_and_merge(df, "confirmed-cases-2021-10-27-2022-02-28.zip")
     # Format Date for CSV only
-    # df["announce_date"] = pd.to_datetime(df["announce_date"], format="%d/%m/%Y")
+    df["announce_date"] = pd.to_datetime(df["announce_date"], format="%d/%m/%Y")
 
     # Latest Dataset
     print("Downloading Latest Provincial Dataset")
@@ -69,6 +73,7 @@ def main():
         ],
         axis=1,
     )
+    df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
     print(df.info())
 
     # Remove data with unknown province
@@ -149,6 +154,7 @@ def main():
         "caseCount"
     ].astype(int)
 
+    print(df_district_case_14days_with_id)
     # Write df to json
     df_district_case_14days_with_id.to_json(
         district_data_14days_out_path, orient="records", indent=2, force_ascii=False
