@@ -1,8 +1,5 @@
 name: bot-tasks-scheduler
 on:
-  schedule:
-    - cron: '0 1 * * *' #01 Hour UTC = 8 Hour GMT+7
-    - cron: '0 6 * * *' #06 Hour UTC = 13 Hour GMT+7
   workflow_dispatch:
 jobs:
   get-moh-prompt-0:
