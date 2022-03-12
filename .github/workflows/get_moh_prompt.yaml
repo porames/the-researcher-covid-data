@@ -1,8 +1,9 @@
 name: moh-prompt
 on:
   schedule:
-    - cron: '0 12 * * *' #06 Hour UTC = 19 Hour GMT+7
-    - cron: '0 17 * * *' #06 Hour UTC = 00 Hour GMT+7
+    - cron: '10 1 * * *'
+    - cron: '0 12 * * *'
+    - cron: '0 17 * * *'
   workflow_dispatch:
 jobs:
   get-moh-prompt-0:

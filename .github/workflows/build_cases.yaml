@@ -2,8 +2,8 @@ name: build-cases
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 1 * * *' #01 Hour UTC = 8 Hour GMT+7
-    - cron: '0 6 * * *' #06 Hour UTC = 13 Hour GMT+7
+    - cron: '0 1 * * *'
+    - cron: '0 6 * * *'
 jobs:
   get-cases-and-testing-data:
     runs-on: ubuntu-latest
