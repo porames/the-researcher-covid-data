@@ -1,9 +1,9 @@
 name: moh-prompt
 on:
-  schedule:
-    - cron: '10 1 * * *'
-    - cron: '0 12 * * *'
-    - cron: '0 17 * * *'
+  # schedule:
+    # - cron: '10 1 * * *'
+    # - cron: '0 12 * * *'
+    # - cron: '0 17 * * *'
   workflow_dispatch:
 jobs:
   get-moh-prompt-0:
