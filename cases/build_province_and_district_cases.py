@@ -49,9 +49,9 @@ def main():
     # df = read_dataset_and_merge(df, "confirmed-cases-2021-08-12-2021-10-26.zip")
 
     # Confirmed case from 2021-10-27 to 2022-02-28
-    df = read_dataset_and_merge(df, "confirmed-cases-2021-10-27-2022-02-28.zip")
+    # df = read_dataset_and_merge(df, "confirmed-cases-2021-10-27-2022-02-28.zip")
     # Format Date for CSV only
-    df["announce_date"] = pd.to_datetime(df["announce_date"], format="%d/%m/%Y")
+    # df["announce_date"] = pd.to_datetime(df["announce_date"], format="%d/%m/%Y")
 
     # Latest Dataset
     print("Downloading Latest Provincial Dataset")
