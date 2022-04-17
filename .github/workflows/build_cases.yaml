@@ -67,7 +67,7 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
       - name: Upload json to wiki
-        uses: kai-tub/external-repo-sync-action@v1
+        uses: noppakorn/external-repo-sync-action@v1
         with:
           source-directory: './wiki'
         env:
