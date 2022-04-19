@@ -7,7 +7,7 @@ import json
 import datetime
 import re
 
-XLS_URL_LATEST = "https://data.go.th/dataset/8a956917-436d-4afd-a2d4-59e4dd8e906e/resource/93d228cd-6d50-421d-9d6c-462c52a492f7/download/confirmed-cases-since-280265.xlsx"
+XLS_URL_LATEST = "https://data.go.th/dataset/8a956917-436d-4afd-a2d4-59e4dd8e906e/resource/4688036a-cd89-45f7-a0c3-a34dbe35a50c/download/confirmed-cases-since-120465.xlsx"
 
 DEATHS_URL = "https://github.com/djay/covidthailand/wiki/cases_by_province.csv"
 
@@ -50,8 +50,11 @@ def main():
 
     # Confirmed case from 2021-10-27 to 2022-02-28
     # df = read_dataset_and_merge(df, "confirmed-cases-2021-10-27-2022-02-28.zip")
+
+    # Confirmed case from 2022-03-01 to 2022-04-11
+    df = read_dataset_and_merge(df, "confirmed-cases-2021-03-01-2022-04-11.zip")
     # Format Date for CSV only
-    # df["announce_date"] = pd.to_datetime(df["announce_date"], format="%d/%m/%Y")
+    df["announce_date"] = pd.to_datetime(df["announce_date"], format="%d/%m/%Y")
 
     # Latest Dataset
     print("Downloading Latest Provincial Dataset")
